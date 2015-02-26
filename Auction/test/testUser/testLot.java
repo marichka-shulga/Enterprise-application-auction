@@ -91,19 +91,19 @@ public class testLot {
 //	}
 	
 	
-	@Test
-	public void firstLoadAllActiveLots() {
-		
-		LotLogic lotLogic = new LotLogic();
-		Set<Lot> activelots = lotLogic.firstLoadAllActiveLots();
-		Iterator<Lot> it = activelots.iterator();
-		
-		while(it.hasNext()){
-			Lot lot = it.next();
-			System.out.println(lot.getIdLot());
-		}
-
-
-	}
+//	@Test
+//	public void firstLoadAllActiveLots() {
+//		
+//		LotLogic lotLogic = new LotLogic();
+//		Set<Lot> activelots = lotLogic.firstLoadAllActiveLots();
+//		Iterator<Lot> it = activelots.iterator();
+//		
+//		while(it.hasNext()){
+//			Lot lot = it.next();
+//			System.out.println(lot.getIdLot());
+//		}
+//
+//
+//	}
 
 }

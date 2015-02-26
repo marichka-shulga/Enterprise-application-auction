@@ -17,6 +17,8 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name="Lot.getActiveLots",
                 query="SELECT l FROM Lot l WHERE l.state = :state"),
+    @NamedQuery(name="Lot.getAllLots",
+                query="SELECT l FROM Lot l")                
 }) 
 public class Lot implements Serializable {
 	private static final long serialVersionUID = 1L;

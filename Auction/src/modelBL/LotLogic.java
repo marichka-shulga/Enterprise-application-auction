@@ -56,7 +56,7 @@ public class LotLogic {
 						e, lot.getIdLot(), user.getIdUser(), e.getMessage());
 			}
 			
-			String message = "";
+			String message = null;
 			if( res )
 				message = "The addition lot successfully: idLot={}, userLoggin={}";
 		
@@ -106,7 +106,7 @@ public class LotLogic {
 		finishTrades(lot);
 	}		
 	
-	public void finishTrades(Lot lot){
+	private void finishTrades(Lot lot){
 		lot.setState(getStateLotAtFinishedTrades(lot));
 
 		Bid bid = bidDAO.getWinningBid(lot.getIdLot());
@@ -130,8 +130,8 @@ public class LotLogic {
 		
 	}	
 	
-	public Set<Lot> firstLoadAllActiveLots(){
-		Set<Lot> activeLots = lotDAO.getAllActiveLots();
+	public void firstAssignJobToLot(){
+		Set<Lot> activeLots = lotDAO.getLots(true);
 		Iterator<Lot> it = activeLots.iterator();
 		
 		while(it.hasNext()){
@@ -139,9 +139,6 @@ public class LotLogic {
 			Timestamp curTime = new Timestamp(java.util.Calendar.getInstance().getTimeInMillis());
 			if( !lot.getFinashDate().after(curTime) ){
 				finishTrades(lot);
-				
-				//////////////////condition SOLD CANSELED...
-				activeLots.remove(lot);
 			}
 			try {
 				manager.addJob(String.valueOf(lot.getIdLot()),lot.getFinashDate(),FinishTradesJob.class);
@@ -151,8 +148,6 @@ public class LotLogic {
 			}
 
 		}
-		
-		return activeLots;
 	}
 	
 	

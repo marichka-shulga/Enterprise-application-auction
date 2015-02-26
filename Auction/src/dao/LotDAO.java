@@ -18,12 +18,17 @@ public class LotDAO extends GenericDAO<Lot>{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Set<Lot> getAllActiveLots(){
+	public Set<Lot> getLots(boolean getOnlyActiveLots){
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		Set<Lot> results = null;
 		try {
-			Query query = entityManager.createNamedQuery("Lot.getActiveLots");
-			query.setParameter("state", LotState.ACTIVE);
+			Query query = null;
+			if( true == getOnlyActiveLots ){
+				query = entityManager.createNamedQuery("Lot.getActiveLots");
+				query.setParameter("state", LotState.ACTIVE);
+			}else{
+				query = entityManager.createNamedQuery("Lot.getAllLots");
+			}
 
 			List<Lot> resultsList = query.getResultList();
 			if ( null != resultsList ) {
@@ -33,7 +38,8 @@ public class LotDAO extends GenericDAO<Lot>{
 			entityManager.close();
 		}
 		return results;
-	}		
+	}	
 	
+
 
 }

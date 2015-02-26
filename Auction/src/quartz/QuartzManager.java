@@ -1,10 +1,8 @@
 package quartz;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 import log.LogFactory;
-import modelBL.UserLogic;
 
 import org.apache.logging.log4j.Logger;
 import org.quartz.Job;
@@ -64,7 +62,6 @@ public class QuartzManager {
 			sched.scheduleJob(job, trigger);
 		}
 		LOGGRER.info("Add job QuartzManager: idLot={}", triggerId);
-		System.out.println(triggerId+"     "+date);
 	}
 
 	public void removeTrigger(String triggerId) throws SchedulerException {

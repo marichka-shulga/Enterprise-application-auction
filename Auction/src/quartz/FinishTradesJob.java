@@ -15,11 +15,6 @@ public class FinishTradesJob implements Job {
 	
 	private static LotLogic lotLogic;
 	
-//	private FinishTradesJob(){
-//		if( null == lotLogic )
-//			lotLogic = new LotLogic();	
-//	}
-
 	@Override
 	public void execute(final JobExecutionContext context) throws JobExecutionException {
 		
@@ -27,12 +22,7 @@ public class FinishTradesJob implements Job {
 		Object someId = null;
 		try {
 			someId = context.getScheduler().getContext().get(context.getTrigger().getKey().toString());
-			System.out.println((String)someId);
 			lotLogic.finishTrades(Integer.parseInt(someId.toString()));
-			
-			
-			// SYSOUT int's a bad practice, use debug or trace logs =)
-			//System.out.println(someId + ", real time is: " + realTime + "ms");
 			
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied: execute job idLot={}, reason={}", (String)someId, e.getMessage());	
