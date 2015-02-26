@@ -1,0 +1,102 @@
+2015-02-24 23:22:14,384 INFO  [main] modelBL.UserLogic (UserLogic.java:38) - Registration user successful: logginUser=qwerty
+2015-02-24 23:23:17,419 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=qwerty
+2015-02-25 00:35:24,100 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=qwerty
+2015-02-25 00:35:24,190 INFO  [main] modelBL.UserLogic (UserLogic.java:38) - Registration user successful: logginUser=marichka
+2015-02-25 00:35:24,192 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=marichka
+2015-02-25 00:45:06,885 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=qwerty
+2015-02-25 00:45:06,926 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=marichka
+2015-02-25 00:45:06,934 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=marichka
+2015-02-25 00:45:06,942 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=marichka
+2015-02-25 00:49:52,804 INFO  [main] modelBL.UserLogic (UserLogic.java:38) - Registration user successful: logginUser=marichka
+2015-02-25 00:49:52,813 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=marichka
+2015-02-25 00:49:52,815 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=marichka
+2015-02-25 00:49:52,822 INFO  [main] modelBL.UserLogic (UserLogic.java:38) - Registration user successful: logginUser=qwerty
+2015-02-25 00:56:24,902 INFO  [main] modelBL.UserLogic (UserLogic.java:38) - Registration user successful: logginUser=qwerty
+2015-02-25 00:56:24,917 INFO  [main] modelBL.UserLogic (UserLogic.java:38) - Registration user successful: logginUser=marichka
+2015-02-25 00:56:24,931 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=marichka
+2015-02-25 00:56:24,944 INFO  [main] modelBL.UserLogic (UserLogic.java:20) - Authorization user successful: logginUser=marichka
+2015-02-25 00:56:24,957 INFO  [main] modelBL.UserLogic (UserLogic.java:22) - Authorization user not successful: logginUser=qwer
+2015-02-25 01:46:24,912 ERROR [main] modelBL.LotLogic (LotLogic.java:48) - Is not satisfied: addLot idLot=null, logginUser=qwerty, reason=Exception [EclipseLink-28019] (Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd): org.eclipse.persistence.exceptions.EntityManagerSetupException
+Exception Description: Deployment of PersistenceUnit [auction] failed. Close all factories for this PersistenceUnit.
+Internal Exception: Exception [EclipseLink-0] (Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd): org.eclipse.persistence.exceptions.JPQLException
+Exception Description: Syntax error parsing [UPDATE Lot l SET l.state = :stateWHERE l.state = ACTIVE AND l.finash_date <= :curDate]. 
+[38, 39] The UPDATE clause has 'l.state = :stateWHERE' and 'l.state = ACTIVE' that are not separated by a comma.
+[55, 56] The UPDATE clause has 'l.state = ACTIVE' and 'AND l.finash_date <= :curDate' that are not separated by a comma.
+[85, 85] The equal sign must be specified.
+[56, 85]  The expression is invalid, which means it does not follow the JPQL grammar.
+2015-02-25 01:47:53,142 ERROR [main] dao.GenericDAO (GenericDAO.java:81) - Is not satisfied: update class model.User, reason=Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: org.postgresql.util.PSQLException: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "users_pkey"
+  Подробности: Ключ "(id_user)=(5)" уже существует.
+Error Code: 0
+Call: INSERT INTO users (id_user, first_name, last_name, LOGGIN, PASSWORD) VALUES (?, ?, ?, ?, ?)
+	bind => [5 parameters bound]
+Query: InsertObjectQuery(model.Lot@7f4701b1)
+2015-02-25 01:47:53,146 ERROR [main] modelBL.LotLogic (LotLogic.java:48) - Is not satisfied: addLot idLot=null, logginUser=qwerty, reason=Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: org.postgresql.util.PSQLException: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "users_pkey"
+  Подробности: Ключ "(id_user)=(5)" уже существует.
+Error Code: 0
+Call: INSERT INTO users (id_user, first_name, last_name, LOGGIN, PASSWORD) VALUES (?, ?, ?, ?, ?)
+	bind => [5 parameters bound]
+Query: InsertObjectQuery(model.Lot@7f4701b1)
+2015-02-25 13:58:03,222 INFO  [main] modelBL.UserLogic (UserLogic.java:38) - Registration user successful: logginUser=qwerty
+2015-02-25 13:58:03,254 INFO  [main] modelBL.UserLogic (UserLogic.java:38) - Registration user successful: logginUser=marichka
+2015-02-25 13:58:03,258 INFO  [main] modelBL.UserLogic (UserLogic.java:40) - Registration user not successful: logginUser=marichka
+2015-02-25 13:58:03,270 INFO  [main] modelBL.UserLogic (UserLogic.java:20) - Authorization user successful: logginUser=marichka
+2015-02-25 13:58:03,280 INFO  [main] modelBL.UserLogic (UserLogic.java:22) - Authorization user not successful: logginUser=qwer
+2015-02-25 15:42:13,011 ERROR [main] dao.GenericDAO (GenericDAO.java:81) - Is not satisfied: update class model.User, reason=Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: org.postgresql.util.PSQLException: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "lot_pkey"
+  Подробности: Ключ "(id_lot)=(2)" уже существует.
+Error Code: 0
+Call: INSERT INTO LOT (id_lot, CODE, DESCRIPTIONS, finash_date, name, start_price, STATE, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+	bind => [8 parameters bound]
+2015-02-25 15:42:13,011 ERROR [main] modelBL.LotLogic (LotLogic.java:46) - Is not satisfied: addLot idLot=null, logginUser=marichka, reason=Exception [EclipseLink-4002] (Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd): org.eclipse.persistence.exceptions.DatabaseException
+Internal Exception: org.postgresql.util.PSQLException: ОШИБКА: повторяющееся значение ключа нарушает ограничение уникальности "lot_pkey"
+  Подробности: Ключ "(id_lot)=(2)" уже существует.
+Error Code: 0
+Call: INSERT INTO LOT (id_lot, CODE, DESCRIPTIONS, finash_date, name, start_price, STATE, id_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+	bind => [8 parameters bound]
+2015-02-25 19:23:59,598 INFO  [main] quartz.QuartzManager (QuartzManager.java:65) - Add job QuartzManager: idLot=2
+2015-02-25 19:23:59,598 INFO  [main] quartz.QuartzManager (QuartzManager.java:65) - Add job QuartzManager: idLot=3
+2015-02-25 19:23:59,598 INFO  [main] quartz.QuartzManager (QuartzManager.java:65) - Add job QuartzManager: idLot=4
+2015-02-25 19:32:49,620 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=2
+2015-02-25 19:32:49,626 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=3
+2015-02-25 19:32:49,628 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=4
+2015-02-25 19:37:54,458 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=2
+2015-02-25 19:37:54,462 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=3
+2015-02-25 19:37:54,462 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=4
+2015-02-25 19:38:25,778 ERROR [DefaultQuartzScheduler_Worker-1] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=2, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:38:54,464 ERROR [DefaultQuartzScheduler_Worker-2] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=3, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:39:24,463 ERROR [DefaultQuartzScheduler_Worker-3] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=4, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:41:23,275 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=2
+2015-02-25 19:41:23,293 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=3
+2015-02-25 19:41:23,295 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=4
+2015-02-25 19:41:26,670 ERROR [DefaultQuartzScheduler_Worker-1] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=2, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:41:26,671 ERROR [DefaultQuartzScheduler_Worker-2] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=3, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:41:27,294 ERROR [DefaultQuartzScheduler_Worker-3] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=4, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:44:51,587 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=2
+2015-02-25 19:44:51,610 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=3
+2015-02-25 19:44:51,611 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=4
+2015-02-25 19:44:54,906 ERROR [DefaultQuartzScheduler_Worker-1] quartz.FinishTradesJob (FinishTradesJob.java:39) - Is not satisfied: execute job idLot=2, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:44:54,907 ERROR [DefaultQuartzScheduler_Worker-2] quartz.FinishTradesJob (FinishTradesJob.java:39) - Is not satisfied: execute job idLot=3, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:44:55,614 ERROR [DefaultQuartzScheduler_Worker-3] quartz.FinishTradesJob (FinishTradesJob.java:39) - Is not satisfied: execute job idLot=4, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:46:00,077 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=2
+2015-02-25 19:46:00,088 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=3
+2015-02-25 19:46:00,089 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=4
+2015-02-25 19:46:03,648 ERROR [DefaultQuartzScheduler_Worker-1] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=2, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:46:03,655 ERROR [DefaultQuartzScheduler_Worker-2] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=3, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:46:04,089 ERROR [DefaultQuartzScheduler_Worker-3] quartz.FinishTradesJob (FinishTradesJob.java:38) - Is not satisfied: execute job idLot=4, reason=java.lang.String cannot be cast to java.lang.Integer
+2015-02-25 19:52:04,964 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=2
+2015-02-25 19:52:04,981 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=3
+2015-02-25 19:52:04,982 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=4
+2015-02-25 20:05:47,316 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=2
+2015-02-25 20:05:47,321 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=3
+2015-02-25 20:05:47,322 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=4
+2015-02-25 20:10:07,776 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=2
+2015-02-25 20:10:07,784 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=3
+2015-02-25 20:10:07,785 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=4
+2015-02-25 22:39:16,196 INFO  [main] modelBL.UserLogic (UserLogic.java:48) - Registration user not successful: logginUser=qwerty
+2015-02-25 22:39:16,254 INFO  [main] modelBL.UserLogic (UserLogic.java:48) - Registration user not successful: logginUser=marichka
+2015-02-25 22:39:16,263 INFO  [main] modelBL.UserLogic (UserLogic.java:48) - Registration user not successful: logginUser=marichka
+2015-02-25 22:39:16,284 ERROR [main] dao.UserDAO (UserDAO.java:31) - Is not satisfied: getUserjavax.persistence.NoResultException: getSingleResult() did not retrieve any entities., reason=class model.User
+2015-02-25 22:39:16,284 INFO  [main] modelBL.UserLogic (UserLogic.java:25) - Authorization user not successful: logginUser=qwer
+2015-02-25 23:25:45,321 INFO  [main] quartz.QuartzManager (QuartzManager.java:66) - Add job QuartzManager: idLot=5

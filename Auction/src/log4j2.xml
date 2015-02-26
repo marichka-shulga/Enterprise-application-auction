@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<File name="file" fileName="d:\TestTask\Auction\Logs\log4j-application.log"
+			append="true">
+			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+		</File>
+	</Appenders>
+	<Loggers>
+		<Logger name="org.apache.log4j.xml" level="info">
+			<AppenderRef ref="file" />
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="file" />
+		</Root>
+	</Loggers>
+</Configuration>
