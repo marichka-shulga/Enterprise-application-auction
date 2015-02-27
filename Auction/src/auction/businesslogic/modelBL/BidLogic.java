@@ -40,15 +40,15 @@ public class BidLogic {
 			}
 		
 			} catch( Exception e ){
-				LOGGRER.error("Is not satisfied addBid: idBid={}, idLot={}, userLoggin={}, reason={}", 
+				LOGGRER.error("Is not satisfied addBid: idBid={}, idLot={}, userLogin={}, reason={}", 
 						bid.getIdBid(), lot.getIdLot(), user.getLogin(), e.getMessage());						
 			}
 		String message = "";
 		if( res )
-			message = "The addition bid successfully: idBid={}, idLot={}, userLoggin={}";
+			message = "The addition bid successfully: idBid={}, idLot={}, userLogin={}";
 	
 		else
-			message = "The addition bid not successfully: idBid={}, idLot={}, userLoggin={}";
+			message = "The addition bid not successfully: idBid={}, idLot={}, userLogin={}";
 		
 		LOGGRER.info(message, bid.getIdBid(), lot.getIdLot(), user.getLogin());
 		

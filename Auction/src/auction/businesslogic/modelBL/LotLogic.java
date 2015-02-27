@@ -46,7 +46,7 @@ public class LotLogic {
 		try {
 			userDAO.update(user);
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied: addLot idLot={}, logginUser={}, reason={}", 
+			LOGGRER.error("Is not satisfied: addLot idLot={}, loginUser={}, reason={}", 
 							lot.getIdLot(), user.getLogin(), e.getMessage());
 		}
 		try {
@@ -59,9 +59,9 @@ public class LotLogic {
 		
 		String message = null;
 		if( res )
-			message = "The addition lot successfully: idLot={}, userLoggin={}";
+			message = "The addition lot successfully: idLot={}, userLogin={}";
 		else
-			message = "The addition lot not successfully: idLot={}, userLoggin={}";
+			message = "The addition lot not successfully: idLot={}, userLogin={}";
 		
 		LOGGRER.info(message, lot.getIdLot(), user.getLogin());
 

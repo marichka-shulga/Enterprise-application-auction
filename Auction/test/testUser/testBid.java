@@ -46,7 +46,7 @@ public class testBid {
 
 		BidLogic lotLogic = new BidLogic();
 
-		Assert.assertFalse(lotLogic.addBid(user,lot,bid));
+		Assert.assertFalse(lotLogic.addBid(lot,bid));
 
 	}
 	@Test
@@ -65,7 +65,7 @@ public class testBid {
 
 		BidLogic lotLogic = new BidLogic();
 
-		Assert.assertTrue(lotLogic.addBid(user,lot,bid));
+		Assert.assertTrue(lotLogic.addBid(lot,bid));
 
 	}
 	
@@ -85,7 +85,7 @@ public class testBid {
 
 		BidLogic lotLogic = new BidLogic();
 
-		Assert.assertFalse(lotLogic.addBid(user,lot,bid));
+		Assert.assertFalse(lotLogic.addBid(lot,bid));
 
 	}
 	
