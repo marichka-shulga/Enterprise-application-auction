@@ -28,24 +28,6 @@ public abstract class GenericDAO<T> {
 		return res;
 	}
 	
-//	@SuppressWarnings("unchecked")
-//	public Set<T> getAll() {
-//		EntityManager entityManager = entityManagerFactory.createEntityManager();
-//		Set<T> results = null;
-//		try {
-//			String qr = "SELECT x FROM " + getPersistentClass().getSimpleName()	+ " x ";
-//			Query query = entityManager.createQuery(qr);
-//
-//			List<T> resultsList = query.getResultList();
-//			if ( null != resultsList ) {
-//				results = new HashSet<T>(resultsList);
-//			}
-//		} finally {
-//			entityManager.close();
-//		}
-//		return results;
-//	}
-
 	public void save(T object) throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -85,4 +67,11 @@ public abstract class GenericDAO<T> {
 			}
 		}
 	}
+	
+	public void closeEntityManagerFactory(){
+		Resource.closeEntityManagerFactory();
+	}
+	
+	
+	
 }

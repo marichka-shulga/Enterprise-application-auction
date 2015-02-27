@@ -31,40 +31,39 @@ public class LotLogic {
 		lotDAO = new LotDAO();
 		userDAO = new UserDAO();
 		bidDAO = new BidDAO();
-		//////////////////////////////
-		//когда закрывать????? 	manager.shutdown();
 		manager = new QuartzManager();
 		
 	}
 	
-	public boolean addLot(Lot lot, User user){
+	public void closeQuartzManager(){
+		manager.shutdown();
+	}
+	
+	public boolean addLot(Lot lot){
 		boolean res = false;
-
-			user.addLot(lot);
-			try {
-				userDAO.update(user);
-				res = true;
-			} catch (Exception e) {
-				LOGGRER.error("Is not satisfied: addLot idLot={}, logginUser={}, reason={}", 
-								lot.getIdLot(), user.getLogin(), e.getMessage());
-			}
-
-			try {
-				manager.addJob(String.valueOf(lot.getIdLot()),lot.getFinashDate(),FinishTradesJob.class);
-			} catch (SchedulerException e) {
-				LOGGRER.error("Is not satisfied: addLot{}, idLot={}, idUser{}, reason={}", 
-						e, lot.getIdLot(), user.getIdUser(), e.getMessage());
-			}
-			
-			String message = null;
-			if( res )
-				message = "The addition lot successfully: idLot={}, userLoggin={}";
+		User user = lot.getUser();
+		user.addLot(lot);
+		try {
+			userDAO.update(user);
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied: addLot idLot={}, logginUser={}, reason={}", 
+							lot.getIdLot(), user.getLogin(), e.getMessage());
+		}
+		try {
+			manager.addJob(String.valueOf(lot.getIdLot()),lot.getFinashDate(),FinishTradesJob.class);
+			res = true;
+		} catch (SchedulerException e) {
+			LOGGRER.error("Is not satisfied: addLot{}, idLot={}, idUser{}, reason={}", 
+					e, lot.getIdLot(), user.getIdUser(), e.getMessage());
+		}
 		
-			else
-				message = "The addition lot not successfully: idLot={}, userLoggin={}";
-			
-			LOGGRER.info(message, lot.getIdLot(), user.getLogin());
-			
+		String message = null;
+		if( res )
+			message = "The addition lot successfully: idLot={}, userLoggin={}";
+		else
+			message = "The addition lot not successfully: idLot={}, userLoggin={}";
+		
+		LOGGRER.info(message, lot.getIdLot(), user.getLogin());
 
 		return res;
 	}
@@ -130,7 +129,8 @@ public class LotLogic {
 		
 	}	
 	
-	public void firstAssignJobToLot(){
+	public boolean firstAssignJobToLot(){
+		boolean res = false;
 		Set<Lot> activeLots = lotDAO.getLots(true);
 		Iterator<Lot> it = activeLots.iterator();
 		
@@ -142,16 +142,16 @@ public class LotLogic {
 			}
 			try {
 				manager.addJob(String.valueOf(lot.getIdLot()),lot.getFinashDate(),FinishTradesJob.class);
+				res = true;
 			} catch (SchedulerException e) {
 				LOGGRER.error("Is not satisfied: firstLoadAllActiveLots{}, idLot={}, reason={}", 
 						e, lot.getIdLot(), e.getMessage());
 			}
 
 		}
+		
+		return res;
 	}
-	
-	
-	
-	
+
 	
 }

@@ -21,8 +21,9 @@ public class BidLogic {
 		bidDAO = new BidDAO();
 	}
 
-	public boolean addBid(User user, Lot lot, Bid bid){
+	public boolean addBid(Lot lot, Bid bid){
 		boolean res = false;
+		User user = bid.getUser();
 		try {
 			if( lot.getState() == LotState.ACTIVE ){
 				int rateIsMore = bid.getRate().compareTo(lot.getStartPrice());

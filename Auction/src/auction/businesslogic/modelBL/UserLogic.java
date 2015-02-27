@@ -14,14 +14,14 @@ public class UserLogic {
 		userDAO = new UserDAO();
 	}
 	
-	public User authorization(String login, String password){
+	public User authentication(String login, String password){
 		User user = null;
 		String message = "";
 		try {
 			user = userDAO.getUser(login, password);
-			message = "Authorization user successful: logginUser={}";
+			message = "Authorization user successful: loginUser={}";
 		} catch (Exception e) {
-			message = "Authorization user not successful: logginUser={}";	
+			message = "Authorization user not successful: loginUser={}";	
 			LOGGRER.info(message, login);
 		}
 			
@@ -41,9 +41,9 @@ public class UserLogic {
 		
 		String message = "";
 		if( res )
-			message = "Registration user successful: logginUser={}";
+			message = "Registration user successful: loginUser={}";
 		else
-			message = "Registration user not successful: logginUser={}";	
+			message = "Registration user not successful: loginUser={}";	
 
 		LOGGRER.info(message, user.getLogin());		
 		

@@ -59,13 +59,13 @@ public class testUser {
 	@Test
 	public void authorizationUser1() {
 		UserLogic userLogic = new UserLogic();
-		Assert.assertNotNull(userLogic.authorization("marichka", "marichka"));
+		Assert.assertNotNull(userLogic.authentication("marichka", "marichka"));
 	}
 	
 	@Test
 	public void authorizationUser2() {
 		UserLogic userLogic = new UserLogic();
-		Assert.assertNull(userLogic.authorization("qwer", "qwer"));
+		Assert.assertNull(userLogic.authentication("qwer", "qwer"));
 	}
 
 }

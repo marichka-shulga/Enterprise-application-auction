@@ -14,11 +14,11 @@ import java.util.Set;
 @Entity
 @Table(name="users")
 @NamedQueries({
-    @NamedQuery(name="User.getUserByLoggin",
-                query="SELECT u FROM User u WHERE u.loggin = :loggin"),
+    @NamedQuery(name="User.getUserByLogin",
+                query="SELECT u FROM User u WHERE u.login = :login"),
                 
     @NamedQuery(name="User.getUser",
-                query="SELECT u FROM User u WHERE u.loggin = :loggin AND u.password = :password"),
+                query="SELECT u FROM User u WHERE u.login = :login AND u.password = :password"),
 }) 
 //@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {

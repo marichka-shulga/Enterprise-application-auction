@@ -19,12 +19,12 @@ public class UserDAO extends GenericDAO<User> {
 		return User.class;
 	}
 	
-	public User getUser(String loggin, String password) throws Exception {
+	public User getUser(String login, String password) throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		User user = null;
 		try {
 			Query query = entityManager.createNamedQuery("User.getUser");
-			query.setParameter("loggin", loggin);
+			query.setParameter("login", login);
 			query.setParameter("password", password);
 			user = (User)query.getSingleResult();
 		} catch(Exception e){
@@ -37,12 +37,12 @@ public class UserDAO extends GenericDAO<User> {
 		return user;
 	}
 	
-	public boolean isUserLogginExist(String loggin){
+	public boolean isUserLogginExist(String login){
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		boolean res = true;
 		try {
-			Query query = entityManager.createNamedQuery("User.getUserByLoggin");
-			query.setParameter("loggin", loggin);
+			Query query = entityManager.createNamedQuery("User.getUserByLogin");
+			query.setParameter("login", login);
 			
 			if( query.getResultList().isEmpty() )
 				res = false;
