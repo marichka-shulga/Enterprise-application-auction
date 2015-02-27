@@ -6,17 +6,16 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.Set;
 
-import model.Bid;
-import model.Lot;
-import model.User;
-import modelBL.BidLogic;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import dao.BidDAO;
-import dao.LotDAO;
-import dao.UserDAO;
+import auction.businesslogic.modelBL.BidLogic;
+import auction.dao.BidDAO;
+import auction.dao.LotDAO;
+import auction.dao.UserDAO;
+import auction.model.Bid;
+import auction.model.Lot;
+import auction.model.User;
 
 public class testBid {
 

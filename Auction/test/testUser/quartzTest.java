@@ -5,8 +5,8 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import quartz.FinishTradesJob;
-import quartz.QuartzManager;
+import auction.businesslogic.quartz.FinishTradesJob;
+import auction.businesslogic.quartz.QuartzManager;
 
 
 public class quartzTest {

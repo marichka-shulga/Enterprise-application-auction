@@ -2,13 +2,13 @@ package testUser;
 
 import java.util.HashSet;
 
-import model.Bid;
-import model.Lot;
-import model.User;
-import modelBL.UserLogic;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import auction.businesslogic.modelBL.UserLogic;
+import auction.model.Bid;
+import auction.model.Lot;
+import auction.model.User;
 
 public class testUser {
 

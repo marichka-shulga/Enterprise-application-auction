@@ -8,18 +8,17 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import model.Bid;
-import model.Lot;
-import model.LotState;
-import model.User;
-import modelBL.LotLogic;
-import modelBL.UserLogic;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import dao.LotDAO;
-import dao.UserDAO;
+import auction.businesslogic.modelBL.LotLogic;
+import auction.businesslogic.modelBL.UserLogic;
+import auction.dao.LotDAO;
+import auction.dao.UserDAO;
+import auction.model.Bid;
+import auction.model.Lot;
+import auction.model.LotState;
+import auction.model.User;
 
 public class testLot {
 
