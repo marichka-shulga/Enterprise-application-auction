@@ -14,9 +14,9 @@ import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.User;
 
-@WebService(serviceName = "AuctionSerce",
-			portName = "AuctionSercePort",	
-			targetNamespace = "http://auction.facadeservice/jaxws/AuctionSercePort")
+@WebService(serviceName = "AuctionService",
+			portName = "AuctionServicePort",	
+			targetNamespace = "http://auction.facadeservice/jaxws/auctionservice")
 
 @SOAPBinding(style=SOAPBinding.Style.DOCUMENT,use=SOAPBinding.Use.LITERAL,
 			parameterStyle=SOAPBinding.ParameterStyle.WRAPPED)

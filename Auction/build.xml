@@ -16,62 +16,69 @@
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/catalina-ha.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/catalina-tribes.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/catalina.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/commons-lang3-3.3.2.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/ecj-4.3.1.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/eclipselink.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/el-api.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/jasper-el.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/jasper.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/javax.persistence_2.1.0.v201304241213.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/jaxws-rt.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/jsp-api.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/junit4.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/log4j-api-2.1.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/log4j-core-2.1.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/postgresql-9.2-1004.jdbc4.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/quartz-2.1.7.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/servlet-api.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/slf4j-api-1.7.10.jar"/>
+        <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/slf4j-ext-1.7.10.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/tomcat-coyote.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/tomcat-dbcp.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/tomcat-i18n-es.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/tomcat-i18n-fr.jar"/>
         <pathelement location="D:/TestTask/tomcat/apache-tomcat-6.0.43/lib/tomcat-i18n-ja.jar"/>
     </path>
-    <path id="Web App Libraries.libraryclasspath"/>
     <path id="EAR Libraries.libraryclasspath"/>
-    <path id="eclipselink.userclasspath">
+    <path id="eclipselinkAuction.userclasspath">
         <pathelement location="../../../../../../Auction/lib/eclipselink/eclipselink.jar"/>
         <pathelement location="../../../../../../Auction/lib/eclipselink/javax.persistence_2.1.0.v201304241213.jar"/>
     </path>
-    <path id="log4j.userclasspath">
-        <pathelement location="../../../../../../Auction/lib/log4j/log4j-api-2.1.jar"/>
-        <pathelement location="../../../../../../Auction/lib/log4j/log4j-core-2.1.jar"/>
-        <pathelement location="../../../../../../Auction/lib/log4j/commons-lang3-3.3.2.jar"/>
-        <pathelement location="../../../../../../Auction/lib/log4j/slf4j-api-1.7.10.jar"/>
-        <pathelement location="../../../../../../Auction/lib/log4j/slf4j-ext-1.7.10.jar"/>
+    <path id="jUnitAuction.userclasspath">
+        <pathelement location="../../../../../../Auction/lib/JUnit/junit4.jar"/>
     </path>
-    <path id="postgresql.userclasspath">
+    <path id="log4jAuction.userclasspath">
+        <pathelement location="../../../../../../Auction/lib/log4j/slf4j-ext-1.7.10.jar"/>
+        <pathelement location="../../../../../../Auction/lib/log4j/slf4j-api-1.7.10.jar"/>
+        <pathelement location="../../../../../../Auction/lib/log4j/log4j-core-2.1.jar"/>
+        <pathelement location="../../../../../../Auction/lib/log4j/log4j-api-2.1.jar"/>
+        <pathelement location="../../../../../../Auction/lib/log4j/commons-lang3-3.3.2.jar"/>
+    </path>
+    <path id="postgresAuction.userclasspath">
         <pathelement location="../../../../../../Auction/lib/postgresql-9.2-1004.jdbc4.jar"/>
     </path>
-    <path id="quartz.userclasspath">
+    <path id="quartzAuction.userclasspath">
         <pathelement location="../../../../../../Auction/lib/quartz/quartz-2.1.7.jar"/>
-    </path>
-    <path id="jUnit4.userclasspath">
-        <pathelement location="../../../../../../Auction/lib/JUnit/junit4.jar"/>
     </path>
     <path id="Auction.classpath">
         <pathelement location="build/classes"/>
         <path refid="Apache Tomcat v6.0 [Apache Tomcat v6.0].libraryclasspath"/>
-        <path refid="Web App Libraries.libraryclasspath"/>
         <path refid="EAR Libraries.libraryclasspath"/>
-        <path refid="eclipselink.userclasspath"/>
-        <path refid="log4j.userclasspath"/>
-        <path refid="postgresql.userclasspath"/>
-        <path refid="quartz.userclasspath"/>
-        <path refid="jUnit4.userclasspath"/>
+        <path refid="eclipselinkAuction.userclasspath"/>
+        <path refid="jUnitAuction.userclasspath"/>
+        <path refid="log4jAuction.userclasspath"/>
+        <path refid="postgresAuction.userclasspath"/>
+        <path refid="quartzAuction.userclasspath"/>
     </path>
     <target name="init">
         <mkdir dir="build/classes"/>
         <copy includeemptydirs="false" todir="build/classes">
             <fileset dir="src">
-                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
         <copy includeemptydirs="false" todir="build/classes">
             <fileset dir="test">
-                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>

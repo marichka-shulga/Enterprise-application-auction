@@ -34,7 +34,7 @@
 <table id="8f65da:14b9d77ebf3:-7ff1" name="lot">
 <column-list>
 <column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="8f65da:14b9d77ebf3:-7fe9" mandatory="true" name="id_lot">
-<data-type name="SERIAL" selected-variant-pattern="SERIAL"/>
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
 </column>
 <column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="8f65da:14b9d77ebf3:-7fe8" mandatory="true" name="code">
 <data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
@@ -70,7 +70,7 @@
 <table id="8f65da:14b9d77ebf3:-7fce" name="users">
 <column-list>
 <column auto-increment="false" column-size="0" decimal-digits="0" default-value="" id="8f65da:14b9d77ebf3:-7fca" mandatory="true" name="id_user">
-<data-type name="SERIAL" selected-variant-pattern="SERIAL"/>
+<data-type name="INTEGER" selected-variant-pattern="INTEGER"/>
 </column>
 <column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="8f65da:14b9d77ebf3:-7fc9" mandatory="true" name="first_name">
 <data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
@@ -78,7 +78,7 @@
 <column auto-increment="false" column-size="20" decimal-digits="0" default-value="" id="8f65da:14b9d77ebf3:-7fc8" mandatory="true" name="last_name">
 <data-type name="VARCHAR" selected-variant-pattern="VARCHAR(%n)"/>
 </column>
-<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="c3d056:14b9dfede84:-7fc3" mandatory="true" name="loggin">
+<column auto-increment="false" column-size="10" decimal-digits="0" default-value="" id="c3d056:14b9dfede84:-7fc3" mandatory="true" name="login">
 <data-type name="CHAR" selected-variant-pattern="CHAR(%n)"/>
 </column>
 <column auto-increment="false" column-size="32" decimal-digits="0" default-value="" id="c3d056:14b9dfede84:-7fc0" mandatory="true" name="password">
