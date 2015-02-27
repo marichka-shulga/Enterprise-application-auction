@@ -46,7 +46,7 @@ public class LotLogic {
 				res = true;
 			} catch (Exception e) {
 				LOGGRER.error("Is not satisfied: addLot idLot={}, logginUser={}, reason={}", 
-								lot.getIdLot(), user.getLoggin(), e.getMessage());
+								lot.getIdLot(), user.getLogin(), e.getMessage());
 			}
 
 			try {
@@ -63,7 +63,7 @@ public class LotLogic {
 			else
 				message = "The addition lot not successfully: idLot={}, userLoggin={}";
 			
-			LOGGRER.info(message, lot.getIdLot(), user.getLoggin());
+			LOGGRER.info(message, lot.getIdLot(), user.getLogin());
 			
 
 		return res;

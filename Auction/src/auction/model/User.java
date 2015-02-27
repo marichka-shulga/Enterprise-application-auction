@@ -35,9 +35,11 @@ public class User implements Serializable {
 
 	@Column(name="last_name")
 	private String lastName;
-
-	private String loggin;
-
+	
+	@Column(name="login")
+	private String login;
+	
+	@Column(name="password")
 	private String password;
 
 	//bi-directional many-to-one association to Bid
@@ -75,12 +77,12 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getLoggin() {
-		return this.loggin;
+	public String getLogin() {
+		return this.login;
 	}
 
-	public void setLoggin(String loggin) {
-		this.loggin = loggin;
+	public void setLoggin(String login) {
+		this.login = login;
 	}
 
 	public String getPassword() {

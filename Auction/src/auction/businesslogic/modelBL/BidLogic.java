@@ -40,7 +40,7 @@ public class BidLogic {
 		
 			} catch( Exception e ){
 				LOGGRER.error("Is not satisfied addBid: idBid={}, idLot={}, userLoggin={}, reason={}", 
-						bid.getIdBid(), lot.getIdLot(), user.getLoggin(), e.getMessage());						
+						bid.getIdBid(), lot.getIdLot(), user.getLogin(), e.getMessage());						
 			}
 		String message = "";
 		if( res )
@@ -49,7 +49,7 @@ public class BidLogic {
 		else
 			message = "The addition bid not successfully: idBid={}, idLot={}, userLoggin={}";
 		
-		LOGGRER.info(message, bid.getIdBid(), lot.getIdLot(), user.getLoggin());
+		LOGGRER.info(message, bid.getIdBid(), lot.getIdLot(), user.getLogin());
 		
 		return res;
 	}
