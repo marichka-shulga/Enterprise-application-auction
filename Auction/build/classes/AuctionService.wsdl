@@ -12,29 +12,17 @@
   <message name="userAuthenticationResponse">
     <part name="parameters" element="tns:userAuthenticationResponse"/>
   </message>
-  <message name="releaseResource">
-    <part name="parameters" element="tns:releaseResource"/>
-  </message>
-  <message name="releaseResourceResponse">
-    <part name="parameters" element="tns:releaseResourceResponse"/>
-  </message>
-  <message name="firstLoadSystem">
-    <part name="parameters" element="tns:firstLoadSystem"/>
-  </message>
-  <message name="firstLoadSystemResponse">
-    <part name="parameters" element="tns:firstLoadSystemResponse"/>
-  </message>
   <message name="userRegistration">
     <part name="parameters" element="tns:userRegistration"/>
   </message>
   <message name="userRegistrationResponse">
     <part name="parameters" element="tns:userRegistrationResponse"/>
   </message>
-  <message name="loadAllLots">
-    <part name="parameters" element="tns:loadAllLots"/>
+  <message name="getAllLots">
+    <part name="parameters" element="tns:getAllLots"/>
   </message>
-  <message name="loadAllLotsResponse">
-    <part name="parameters" element="tns:loadAllLotsResponse"/>
+  <message name="getAllLotsResponse">
+    <part name="parameters" element="tns:getAllLotsResponse"/>
   </message>
   <message name="addLot">
     <part name="parameters" element="tns:addLot"/>
@@ -59,21 +47,13 @@
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationRequest" message="tns:userAuthentication"/>
       <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationResponse" message="tns:userAuthenticationResponse"/>
     </operation>
-    <operation name="releaseResource">
-      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/releaseResourceRequest" message="tns:releaseResource"/>
-      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/releaseResourceResponse" message="tns:releaseResourceResponse"/>
-    </operation>
-    <operation name="firstLoadSystem">
-      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/firstLoadSystemRequest" message="tns:firstLoadSystem"/>
-      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/firstLoadSystemResponse" message="tns:firstLoadSystemResponse"/>
-    </operation>
     <operation name="userRegistration">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userRegistrationRequest" message="tns:userRegistration"/>
       <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userRegistrationResponse" message="tns:userRegistrationResponse"/>
     </operation>
-    <operation name="loadAllLots">
-      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/loadAllLotsRequest" message="tns:loadAllLots"/>
-      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/loadAllLotsResponse" message="tns:loadAllLotsResponse"/>
+    <operation name="getAllLots">
+      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getAllLotsRequest" message="tns:getAllLots"/>
+      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getAllLotsResponse" message="tns:getAllLotsResponse"/>
     </operation>
     <operation name="addLot">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotRequest" message="tns:addLot"/>
@@ -99,24 +79,6 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="releaseResource">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="firstLoadSystem">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
     <operation name="userRegistration">
       <soap:operation soapAction=""/>
       <input>
@@ -126,7 +88,7 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="loadAllLots">
+    <operation name="getAllLots">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
