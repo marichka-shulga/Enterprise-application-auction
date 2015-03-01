@@ -28,7 +28,7 @@ public class UserDAO extends GenericDAO<User> {
 			query.setParameter("password", password);
 			user = (User)query.getSingleResult();
 		} catch(Exception e){
-			LOGGRER.error("Is not satisfied: getUser{}, reason={}", e, getPersistentClass(), e.getMessage());	
+			LOGGRER.error("Is not satisfied: getUser={}, reason={}", e, e.getMessage());	
 		    throw e;
 		}
 		finally {

@@ -1,6 +1,5 @@
 package auction.service;
 
-import java.util.Set;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -13,6 +12,9 @@ import auction.dao.LotDAO;
 import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.User;
+import auction.service.response.BaseResponse;
+import auction.service.response.GetLotsResponse;
+import auction.service.response.UserAuthenticResponse;
 
 @WebService(serviceName = "AuctionService",
 			portName = "AuctionServicePort",	
@@ -36,34 +38,34 @@ public class FacadeService {
 
 
 	@WebMethod
-	public User userAuthentication(String login, String password){
+	public UserAuthenticResponse userAuthentication(String login, String password){
 		return userLogic.authentication(login, password);
 	}
 	
 	@WebMethod
-	public boolean userRegistration(User user){
+	public BaseResponse userRegistration(User user){
 		return userLogic.registration(user);
 	}
-
+	
 	@WebMethod
-	public Set<Lot> loadAllLots(){
+	public GetLotsResponse getAllLots(){
 		return lotDAO.getLots(false);
 	}	
 
 	//do not forgot add user in lot (lot.setUser(user))
 	@WebMethod
-	public boolean addLot(Lot lot){
+	public BaseResponse addLot(Lot lot){
 		return lotLogic.addLot(lot);
 	}		
 	
 	@WebMethod
-	public boolean cancelLot(Lot lot){
+	public BaseResponse cancelLot(Lot lot){
 		return lotLogic.cancelOfTrades(lot);
 	}	
 	
 	//do not forgot add user in bid (bid.setUser(user))	
 	@WebMethod
-	public boolean addBid(Lot lot, Bid bid){
+	public BaseResponse addBid(Lot lot, Bid bid){
 		return bidLogic.addBid(lot, bid);
 	}		
 	

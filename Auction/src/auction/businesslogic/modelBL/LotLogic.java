@@ -18,6 +18,8 @@ import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.LotState;
 import auction.model.User;
+import auction.service.response.BaseResponse;
+import auction.service.response.StateResult;
 
 public class LotLogic {
 	private LotDAO lotDAO;
@@ -32,54 +34,48 @@ public class LotLogic {
 		userDAO = new UserDAO();
 		bidDAO = new BidDAO();
 		manager = new QuartzManager();
-		
 	}
 	
-	public boolean addLot(Lot lot){
-		boolean res = false;
+	public BaseResponse addLot(Lot lot){
+		BaseResponse res = new BaseResponse();
+		
 		User user = lot.getUser();
 		user.addLot(lot);
 		try {
 			userDAO.update(user);
-		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied: addLot idLot={}, loginUser={}, reason={}", 
-							lot.getIdLot(), user.getLogin(), e.getMessage());
-		}
-		try {
 			manager.addJob(String.valueOf(lot.getIdLot()),lot.getFinashDate(),FinishTradesJob.class);
-			res = true;
-		} catch (SchedulerException e) {
-			LOGGRER.error("Is not satisfied: addLot{}, idLot={}, idUser{}, reason={}", 
-					e, lot.getIdLot(), user.getIdUser(), e.getMessage());
+			
+			res.setStateResult(StateResult.SUCCESS);
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied addLot={}, reason={}, idLot={}, userLogin={}", 
+					e, e.getMessage(), lot.getIdLot(), user.getLogin());
+			res.setStateResult(StateResult.ERROR);
+			res.setErrorMessage(e.getMessage());
 		}
 		
-		String message = null;
-		if( res )
-			message = "The addition lot successfully: idLot={}, userLogin={}";
-		else
-			message = "The addition lot not successfully: idLot={}, userLogin={}";
-		
-		LOGGRER.info(message, lot.getIdLot(), user.getLogin());
+		LOGGRER.info("The addition lot successfully idLot={}, userLogin={}", 
+					lot.getIdLot(), user.getLogin());
 
 		return res;
 	}
 	
 	
-	public boolean cancelOfTrades(Lot lot){
-		boolean res = false;
+	public BaseResponse cancelOfTrades(Lot lot){
+		BaseResponse res = new BaseResponse();
+		lot.setState(LotState.CANCELLED);		
 		try {
-			lot.setState(LotState.CANCELLED);
 			lotDAO.update(lot);
-
 			manager.removeTrigger(String.valueOf(lot.getIdLot()));
 			
-			res = true;
+			res.setStateResult(StateResult.SUCCESS);
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied: cancelOfTrades{}, idLot={}, reason={}", 
-					e, lot.getIdLot(), e.getMessage());
+			LOGGRER.error("Is not satisfied cancelOfTrades={}, reason={}, idLot={}", 
+					e, e.getMessage(), lot.getIdLot());
+			res.setStateResult(StateResult.ERROR);
+			res.setErrorMessage(e.getMessage());	
 		}
 		
-		LOGGRER.info("Trades canceled: idLot={}", lot.getIdLot());
+		LOGGRER.info("Trades canceled idLot={}", lot.getIdLot());
 		
 		
 		return res;
@@ -96,37 +92,37 @@ public class LotLogic {
 	}
 
 	public void finishTrades(Integer idLot){
-		Lot lot = lotDAO.getObjectById(idLot);
+		Lot lot = null;
+		try {
+			lot = lotDAO.getObjectById(idLot);
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied finishTrades getObjectById={}, reason={}, idLot={}", 
+					e, e.getMessage(), idLot);
+		}
 		finishTrades(lot);
 	}		
 	
 	private void finishTrades(Lot lot){
 		lot.setState(getStateLotAtFinishedTrades(lot));
-
-		Bid bid = bidDAO.getWinningBid(lot.getIdLot());
-
-		if( null != bid){
-			bid.setIsWinningBid(true);
-			try {
-				bidDAO.update(bid);
-			} catch (Exception e) {
-				LOGGRER.error("Is not satisfied: finishTrades{}, idBit={}, reason={}", 
-						e, bid.getIdBid(), e.getMessage());
-			}
-		}	
+		Bid bid = null;
 		try {
-			lotDAO.update(lot);
-
+			bid = bidDAO.getWinningBid(lot.getIdLot());			
+			if( null != bid){
+				bid.setIsWinningBid(true);
+				bidDAO.update(bid);
+				lotDAO.update(lot);
+			}
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied: finishTrades{}, idLot={}, reason={}", 
-					e, lot.getIdLot(), e.getMessage());
+			LOGGRER.error("Is not satisfied finishTrades={}, reason={}, idLot={}, idBit={}", 
+					e, e.getMessage(), lot.getIdLot(), bid.getIdBid());
 		}
+		
+		LOGGRER.info("Finish trades idLot={}, idBid={}", lot.getIdLot(), bid.getIdBid());
 		
 	}	
 	
-	public boolean firstAssignJobToLot(){
-		boolean res = false;
-		Set<Lot> activeLots = lotDAO.getLots(true);
+	public void firstAssignJobToLot(){
+		Set<Lot> activeLots = (lotDAO.getLots(true)).getListLots();
 		Iterator<Lot> it = activeLots.iterator();
 		
 		while(it.hasNext()){
@@ -137,15 +133,13 @@ public class LotLogic {
 			}
 			try {
 				manager.addJob(String.valueOf(lot.getIdLot()),lot.getFinashDate(),FinishTradesJob.class);
-				res = true;
 			} catch (SchedulerException e) {
-				LOGGRER.error("Is not satisfied: firstLoadAllActiveLots{}, idLot={}, reason={}", 
-						e, lot.getIdLot(), e.getMessage());
+				LOGGRER.error("Is not satisfied firstLoadAllActiveLots={}, reason={}, idLot={}", 
+						e, e.getMessage(), lot.getIdLot());
 			}
 
 		}
 		
-		return res;
 	}
 
 	

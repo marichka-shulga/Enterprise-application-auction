@@ -25,7 +25,7 @@ public class FinishTradesJob implements Job {
 			lotLogic.finishTrades(Integer.parseInt(someId.toString()));
 			
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied: execute job idLot={}, reason={}", (String)someId, e.getMessage());	
+			LOGGRER.error("Is not satisfied job execute={}, idLot={}, reason={}", e, e.getMessage(), (String)someId);	
 		}
 
 	}

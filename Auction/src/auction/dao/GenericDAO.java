@@ -36,7 +36,7 @@ public abstract class GenericDAO<T> {
 			entityManager.persist(object);
 			entityTransaction.commit();
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied: save {}, reason={}", e, getPersistentClass(), e.getMessage());
+			LOGGRER.error("Is not satisfied save={}, persistentClass={}, reason={}", e, getPersistentClass(), e.getMessage());
 			if ( null != entityTransaction && entityTransaction.isActive() ) {
 				entityTransaction.rollback();
 			}
@@ -56,7 +56,7 @@ public abstract class GenericDAO<T> {
 			entityManager.merge(object);
 			entityTransaction.commit();
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied: update {}, reason={}", e, getPersistentClass(), e.getMessage());			
+			LOGGRER.error("Is not satisfied update={}, persistentClass={}, reason={}", e, getPersistentClass(), e.getMessage());			
 			if ( null != entityTransaction && entityTransaction.isActive() ) {
 				entityTransaction.rollback();
 			}

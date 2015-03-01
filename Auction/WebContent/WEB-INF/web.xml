@@ -2,6 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>Auction</display-name>
   
+
     <listener>
         <listener-class>
             com.sun.xml.ws.transport.http.servlet.WSServletContextListener
@@ -25,4 +26,5 @@
         <servlet-name>AuctionService</servlet-name>
         <url-pattern>/AuctionService</url-pattern>
     </servlet-mapping>
+
 </web-app>

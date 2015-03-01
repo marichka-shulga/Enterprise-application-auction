@@ -27,9 +27,9 @@ public class QuartzManager {
 
 	public static void intitQuartzManager(){
 		try {
-		schedFactory = new org.quartz.impl.StdSchedulerFactory();
+			schedFactory = new org.quartz.impl.StdSchedulerFactory();
 		} catch (Exception e) {
-			LOGGRER.error("Some problem with eclipse reason={}", e.getMessage());
+			LOGGRER.error("Is not satisfied intitQuartzManager={}, reason={}", e, e.getMessage());
 		}
 	}
 
@@ -38,7 +38,7 @@ public class QuartzManager {
 			if( null != schedFactory )
 				schedFactory.getScheduler().shutdown(true);
 		} catch (SchedulerException e) {
-			LOGGRER.error("Is not satisfied: shutdown QuartzManager reason={}", e.getMessage());	
+			LOGGRER.error("Is not satisfied QuartzManager shutdown={}, reason={}", e, e.getMessage());	
 		}
 	}
 	
@@ -61,7 +61,7 @@ public class QuartzManager {
 		} else {
 			sched.scheduleJob(job, trigger);
 		}
-		LOGGRER.info("Add job QuartzManager: idLot={}", triggerId);
+		LOGGRER.info("Add job QuartzManager idLot={}", triggerId);
 	}
 
 	public void removeTrigger(String triggerId) throws SchedulerException {
@@ -69,7 +69,7 @@ public class QuartzManager {
 		Scheduler sched = schedulerFactory.getScheduler();
 		sched.unscheduleJob(new TriggerKey(triggerId, JOB_GROUP));
 		sched.getContext().remove(new TriggerKey(triggerId, JOB_GROUP));
-		LOGGRER.info("Remove job QuartzManager: idLot={}", triggerId);	
+		LOGGRER.info("Remove job QuartzManager idLot={}", triggerId);	
 	}
 
 }

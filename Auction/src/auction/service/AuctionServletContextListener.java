@@ -20,7 +20,6 @@ public class AuctionServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		Resource.getEntityManagerFactory();
 		lotLogic = new LotLogic();
 		QuartzManager.intitQuartzManager();
 		lotLogic.firstAssignJobToLot();		

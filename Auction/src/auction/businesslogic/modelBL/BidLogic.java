@@ -9,6 +9,8 @@ import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.LotState;
 import auction.model.User;
+import auction.service.response.BaseResponse;
+import auction.service.response.StateResult;
 
 public class BidLogic {
 	private UserDAO userDAO;
@@ -21,8 +23,8 @@ public class BidLogic {
 		bidDAO = new BidDAO();
 	}
 
-	public boolean addBid(Lot lot, Bid bid){
-		boolean res = false;
+	public BaseResponse addBid(Lot lot, Bid bid){
+		BaseResponse res = new BaseResponse();
 		User user = bid.getUser();
 		try {
 			if( lot.getState() == LotState.ACTIVE ){
@@ -34,23 +36,20 @@ public class BidLogic {
 						lot.addBid(bid);
 						userDAO.update(user);
 
-						res = true;
+						res.setStateResult(StateResult.SUCCESS);
 					}
 				}
 			}
 		
 			} catch( Exception e ){
-				LOGGRER.error("Is not satisfied addBid: idBid={}, idLot={}, userLogin={}, reason={}", 
-						bid.getIdBid(), lot.getIdLot(), user.getLogin(), e.getMessage());						
+				LOGGRER.error("Is not satisfied addBid{}, reason={}, idBid={}, idLot={}, userLogin={}", 
+						e, e.getMessage(), bid.getIdBid(), lot.getIdLot(), user.getLogin());	
+				res.setStateResult(StateResult.ERROR);
+				res.setErrorMessage(e.getMessage());	
 			}
-		String message = "";
-		if( res )
-			message = "The addition bid successfully: idBid={}, idLot={}, userLogin={}";
-	
-		else
-			message = "The addition bid not successfully: idBid={}, idLot={}, userLogin={}";
 		
-		LOGGRER.info(message, bid.getIdBid(), lot.getIdLot(), user.getLogin());
+		LOGGRER.info("The addition bid successfully idBid={}, idLot={}, userLogin={}",
+					bid.getIdBid(), lot.getIdLot(), user.getLogin());
 		
 		return res;
 	}

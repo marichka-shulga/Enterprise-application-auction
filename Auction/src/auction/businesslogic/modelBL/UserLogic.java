@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Logger;
 import auction.dao.UserDAO;
 import auction.log.LogFactory;
 import auction.model.User;
+import auction.service.response.BaseResponse;
+import auction.service.response.StateResult;
+import auction.service.response.UserAuthenticResponse;
 
 public class UserLogic {
 	private UserDAO userDAO;
@@ -14,36 +17,42 @@ public class UserLogic {
 		userDAO = new UserDAO();
 	}
 	
-	public User authentication(String login, String password){
-		User user = null;
-		String message = "";
+	public UserAuthenticResponse authentication(String login, String password){
+		UserAuthenticResponse res = new UserAuthenticResponse();
+		String message = null;
 		try {
-			user = userDAO.getUser(login, password);
-			message = "Authorization user successful: loginUser={}";
-		} catch (Exception e) {
-			message = "Authorization user not successful: loginUser={}";	
+			res.setUser(userDAO.getUser(login, password));
+			message = "Authorization user successful loginUser={}";
 			LOGGRER.info(message, login);
+			res.setStateResult(StateResult.SUCCESS);
+		} catch (Exception e) {
+			message = "Authorization user not successful={}, reason={}, loginUser={}";	
+			LOGGRER.info(message, e, e.getMessage(), login);
+			res.setStateResult(StateResult.ERROR);
+			res.setErrorMessage(e.getMessage());
 		}
-			
-		return user;
+
+		return res;
 	}
 
-	public boolean registration(User user) {
-		boolean res = false;
-		if( !(userDAO.isUserLogginExist(user.getLogin())) ){
-			try {
+	public BaseResponse registration(User user) {
+		BaseResponse res = new BaseResponse();
+		res.setStateResult(StateResult.NOT_SUCCESS);
+		try {
+			if( !(userDAO.isUserLogginExist(user.getLogin())) ){
 				userDAO.save(user);
-				res = true;
-			} catch (Exception e) {
-				LOGGRER.error("Is not satisfied: registration{} reason={}", e, e.getMessage());	
+				res.setStateResult(StateResult.SUCCESS);
 			}
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied registration={} reason={}", e, e.getMessage());	
+			res.setStateResult(StateResult.ERROR);
+			res.setErrorMessage(e.getMessage());
 		}
-		
 		String message = "";
-		if( res )
-			message = "Registration user successful: loginUser={}";
+		if( res.getStateResult().equals(StateResult.SUCCESS) )
+			message = "Registration user successful loginUser={}";
 		else
-			message = "Registration user not successful: loginUser={}";	
+			message = "Registration user not successful loginUser={}";	
 
 		LOGGRER.info(message, user.getLogin());		
 		
