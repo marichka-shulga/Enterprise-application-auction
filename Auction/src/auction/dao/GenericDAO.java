@@ -68,10 +68,4 @@ public abstract class GenericDAO<T> {
 		}
 	}
 	
-	public void closeEntityManagerFactory(){
-		Resource.closeEntityManagerFactory();
-	}
-	
-	
-	
 }

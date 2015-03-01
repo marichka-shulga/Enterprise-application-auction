@@ -34,19 +34,7 @@ public class FacadeService {
 		lotDAO = new LotDAO();
 	}
 
-	//invoke at load system
-	@WebMethod
-	public boolean firstLoadSystem(){
-		return lotLogic.firstAssignJobToLot();
-	}		
-	
-	//invoke at close system
-	@WebMethod
-	public void releaseResource(){
-		lotLogic.closeQuartzManager();
-		lotDAO.closeEntityManagerFactory();
-	}	
-	
+
 	@WebMethod
 	public User userAuthentication(String login, String password){
 		return userLogic.authentication(login, password);

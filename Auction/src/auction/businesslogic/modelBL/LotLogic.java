@@ -35,10 +35,6 @@ public class LotLogic {
 		
 	}
 	
-	public void closeQuartzManager(){
-		manager.shutdown();
-	}
-	
 	public boolean addLot(Lot lot){
 		boolean res = false;
 		User user = lot.getUser();
@@ -99,7 +95,6 @@ public class LotLogic {
 		return res;
 	}
 
-	
 	public void finishTrades(Integer idLot){
 		Lot lot = lotDAO.getObjectById(idLot);
 		finishTrades(lot);

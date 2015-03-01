@@ -21,27 +21,27 @@ public class QuartzManager {
 
 	private static final String JOB_GROUP = "JOB_GROUP";
 
-	private SchedulerFactory schedFactory;
+	private static SchedulerFactory schedFactory;
 	
 	private static final Logger LOGGRER = LogFactory.getLogger(QuartzManager.class);
 
-	public QuartzManager() {
-		
+	public static void intitQuartzManager(){
 		try {
 		schedFactory = new org.quartz.impl.StdSchedulerFactory();
 		} catch (Exception e) {
 			LOGGRER.error("Some problem with eclipse reason={}", e.getMessage());
 		}
-		
 	}
 
-	public void shutdown() {
+	public static void shutdown() {
 		try {
-			schedFactory.getScheduler().shutdown(true);
+			if( null != schedFactory )
+				schedFactory.getScheduler().shutdown(true);
 		} catch (SchedulerException e) {
 			LOGGRER.error("Is not satisfied: shutdown QuartzManager reason={}", e.getMessage());	
 		}
 	}
+	
 
 	public void addJob(final String triggerId, final Timestamp date, final Class<? extends Job> jobClass) throws SchedulerException {
 		Scheduler sched = schedFactory.getScheduler();
