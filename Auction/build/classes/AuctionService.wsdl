@@ -24,6 +24,12 @@
   <message name="getAllLotsResponse">
     <part name="parameters" element="tns:getAllLotsResponse"/>
   </message>
+  <message name="getLot">
+    <part name="parameters" element="tns:getLot"/>
+  </message>
+  <message name="getLotResponse">
+    <part name="parameters" element="tns:getLotResponse"/>
+  </message>
   <message name="addLot">
     <part name="parameters" element="tns:addLot"/>
   </message>
@@ -54,6 +60,10 @@
     <operation name="getAllLots">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getAllLotsRequest" message="tns:getAllLots"/>
       <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getAllLotsResponse" message="tns:getAllLotsResponse"/>
+    </operation>
+    <operation name="getLot">
+      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getLotRequest" message="tns:getLot"/>
+      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getLotResponse" message="tns:getLotResponse"/>
     </operation>
     <operation name="addLot">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotRequest" message="tns:addLot"/>
@@ -89,6 +99,15 @@
       </output>
     </operation>
     <operation name="getAllLots">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getLot">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

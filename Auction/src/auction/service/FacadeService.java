@@ -13,6 +13,7 @@ import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.User;
 import auction.service.response.BaseResponse;
+import auction.service.response.GetLotByIdResponse;
 import auction.service.response.GetLotsResponse;
 import auction.service.response.UserAuthenticResponse;
 
@@ -51,6 +52,12 @@ public class FacadeService {
 	public GetLotsResponse getAllLots(){
 		return lotDAO.getLots(false);
 	}	
+	
+	@WebMethod
+	public GetLotByIdResponse getLot(Integer idLot){
+		return lotLogic.getLotById(idLot);
+	}	
+	
 
 	//do not forgot add user in lot (lot.setUser(user))
 	@WebMethod

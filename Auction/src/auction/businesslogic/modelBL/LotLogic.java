@@ -19,6 +19,7 @@ import auction.model.Lot;
 import auction.model.LotState;
 import auction.model.User;
 import auction.service.response.BaseResponse;
+import auction.service.response.GetLotByIdResponse;
 import auction.service.response.StateResult;
 
 public class LotLogic {
@@ -80,6 +81,25 @@ public class LotLogic {
 		
 		return res;
 	}	
+	
+	public GetLotByIdResponse getLotById(Integer idLot){
+		GetLotByIdResponse res = new GetLotByIdResponse();
+		try {
+			res.setLot(lotDAO.getObjectById(idLot));
+			res.setStateResult(StateResult.SUCCESS);
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied gelLotById={}, reason={}, idLot={}", 
+					e, e.getMessage(),idLot);
+			res.setStateResult(StateResult.ERROR);
+			res.setErrorMessage(e.getMessage());	
+		}
+
+		return res;
+	}	
+	
+	
+	
+	
 
 	private LotState getStateLotAtFinishedTrades(Lot lot){
 		LotState res = LotState.NOT_SOLD;

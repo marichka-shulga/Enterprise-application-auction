@@ -17,6 +17,10 @@
 
   <xs:element name="getAllLotsResponse" type="tns:getAllLotsResponse"/>
 
+  <xs:element name="getLot" type="tns:getLot"/>
+
+  <xs:element name="getLotResponse" type="tns:getLotResponse"/>
+
   <xs:element name="userAuthentication" type="tns:userAuthentication"/>
 
   <xs:element name="userAuthenticationResponse" type="tns:userAuthenticationResponse"/>
@@ -152,6 +156,28 @@
     <xs:sequence>
       <xs:element name="return" type="tns:baseResponse" minOccurs="0"/>
     </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLot">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLotResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getLotByIdResponse" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLotByIdResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:baseResponse">
+        <xs:sequence>
+          <xs:element name="lot" type="tns:lot" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="cancelLot">
