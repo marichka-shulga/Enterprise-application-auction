@@ -11,11 +11,12 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/eclipselinkAuction"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jUnitAuction"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/log4jAuction"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/postgresAuction"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/quartzAuction"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/eclipselink"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/jUnit4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/log4j"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/postgresql"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/quartz"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

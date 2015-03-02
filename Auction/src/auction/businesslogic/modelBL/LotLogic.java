@@ -48,13 +48,13 @@ public class LotLogic {
 			res.setStateResult(StateResult.SUCCESS);
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied addLot={}, reason={}, idLot={}, userLogin={}", 
-					e, e.getMessage(), lot.getIdLot(), user.getLogin());
+					e, e.getMessage(), lot.getIdLot(), user.getUserLogin());
 			res.setStateResult(StateResult.ERROR);
 			res.setErrorMessage(e.getMessage());
 		}
 		
 		LOGGRER.info("The addition lot successfully idLot={}, userLogin={}", 
-					lot.getIdLot(), user.getLogin());
+					lot.getIdLot(), user.getUserLogin());
 
 		return res;
 	}

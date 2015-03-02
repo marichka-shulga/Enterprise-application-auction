@@ -1,5 +1,7 @@
 package auction.businesslogic.modelBL;
 
+import javax.persistence.NoResultException;
+
 import org.apache.logging.log4j.Logger;
 
 import auction.dao.UserDAO;
@@ -25,9 +27,13 @@ public class UserLogic {
 			message = "Authorization user successful loginUser={}";
 			LOGGRER.info(message, login);
 			res.setStateResult(StateResult.SUCCESS);
+		} catch (NoResultException e1) {
+			message = "Authorization user not successful, not exist user with userLogin={}";	
+			LOGGRER.info(message, login);
+			res.setStateResult(StateResult.NOT_SUCCESS);
 		} catch (Exception e) {
 			message = "Authorization user not successful={}, reason={}, loginUser={}";	
-			LOGGRER.info(message, e, e.getMessage(), login);
+			LOGGRER.error(message, e, e.getMessage(), login);
 			res.setStateResult(StateResult.ERROR);
 			res.setErrorMessage(e.getMessage());
 		}
@@ -39,7 +45,7 @@ public class UserLogic {
 		BaseResponse res = new BaseResponse();
 		res.setStateResult(StateResult.NOT_SUCCESS);
 		try {
-			if( !(userDAO.isUserLogginExist(user.getLogin())) ){
+			if( !(userDAO.isUserLogginExist(user.getUserLogin())) ){
 				userDAO.save(user);
 				res.setStateResult(StateResult.SUCCESS);
 			}
@@ -54,7 +60,7 @@ public class UserLogic {
 		else
 			message = "Registration user not successful loginUser={}";	
 
-		LOGGRER.info(message, user.getLogin());		
+		LOGGRER.info(message, user.getUserLogin());		
 		
 		return res;
 	}

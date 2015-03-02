@@ -24,7 +24,7 @@ public class UserDAO extends GenericDAO<User> {
 		User user = null;
 		try {
 			Query query = entityManager.createNamedQuery("User.getUser");
-			query.setParameter("login", login);
+			query.setParameter("userLogin", login);
 			query.setParameter("password", password);
 			user = (User)query.getSingleResult();
 		} catch(Exception e){
@@ -42,7 +42,7 @@ public class UserDAO extends GenericDAO<User> {
 		boolean res = true;
 		try {
 			Query query = entityManager.createNamedQuery("User.getUserByLogin");
-			query.setParameter("login", login);
+			query.setParameter("userLogin", login);
 			
 			if( query.getResultList().isEmpty() )
 				res = false;

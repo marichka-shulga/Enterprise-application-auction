@@ -9,7 +9,7 @@ public class UserAuthenticResponse extends BaseResponse {
 	public void setUser(User user){
 		this.user = user;
 	}
-	public User getuser(){
+	public User getUser(){
 		return this.user;
 	}	
 }

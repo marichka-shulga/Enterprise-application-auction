@@ -13,7 +13,7 @@ CREATE TABLE public.users (
        id_user INTEGER NOT NULL DEFAULT NEXTVAL('user_id_seq')
      , first_name VARCHAR(20) NOT NULL
      , last_name VARCHAR(20) NOT NULL
-     , login CHAR(10) NOT NULL
+     , user_login CHAR(10) NOT NULL
      , password CHAR(32) NOT NULL
      , PRIMARY KEY (id_user)
 );

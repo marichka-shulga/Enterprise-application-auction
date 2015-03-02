@@ -18,7 +18,7 @@ import java.math.BigDecimal;
     @NamedQuery(name="Bid.getWinningBid",
                 query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot AND b.rate = :rate"),
     @NamedQuery(name="Bid.getAllBidsForLot",
-                query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot"), 
+                query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot")
 }) 
 
 public class Bid implements Serializable {
@@ -32,7 +32,8 @@ public class Bid implements Serializable {
 
 	@Column(name="is_winning_bid")
 	private Boolean isWinningBid;
-
+	
+	@Column(name="rate")
 	private BigDecimal rate;
 
 	//bi-directional many-to-one association to Lot

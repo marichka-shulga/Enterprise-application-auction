@@ -43,13 +43,13 @@ public class BidLogic {
 		
 			} catch( Exception e ){
 				LOGGRER.error("Is not satisfied addBid{}, reason={}, idBid={}, idLot={}, userLogin={}", 
-						e, e.getMessage(), bid.getIdBid(), lot.getIdLot(), user.getLogin());	
+						e, e.getMessage(), bid.getIdBid(), lot.getIdLot(), user.getUserLogin());	
 				res.setStateResult(StateResult.ERROR);
 				res.setErrorMessage(e.getMessage());	
 			}
 		
 		LOGGRER.info("The addition bid successfully idBid={}, idLot={}, userLogin={}",
-					bid.getIdBid(), lot.getIdLot(), user.getLogin());
+					bid.getIdBid(), lot.getIdLot(), user.getUserLogin());
 		
 		return res;
 	}

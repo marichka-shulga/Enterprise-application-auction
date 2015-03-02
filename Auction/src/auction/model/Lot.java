@@ -42,6 +42,7 @@ public class Lot implements Serializable {
 	@Column(name="start_price")
 	private BigDecimal startPrice;
 	
+	@Column(name="state")
 	@Enumerated(EnumType.STRING)
 	private LotState state;
 

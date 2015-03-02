@@ -15,12 +15,12 @@ import java.util.Set;
 @Table(name="users")
 @NamedQueries({
     @NamedQuery(name="User.getUserByLogin",
-                query="SELECT u FROM User u WHERE u.login = :login"),
+                query="SELECT u FROM User u WHERE u.userLogin = :userLogin"),
                 
     @NamedQuery(name="User.getUser",
-                query="SELECT u FROM User u WHERE u.login = :login AND u.password = :password"),
+                query="SELECT u FROM User u WHERE u.userLogin = :userLogin AND u.password = :password")
 }) 
-//@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -36,11 +36,11 @@ public class User implements Serializable {
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Column(name="login")
-	private String login;
-	
 	@Column(name="password")
 	private String password;
+
+	@Column(name="user_login")
+	private String userLogin;
 
 	//bi-directional many-to-one association to Bid
 	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
@@ -77,20 +77,20 @@ public class User implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getLogin() {
-		return this.login;
-	}
-
-	public void setLoggin(String login) {
-		this.login = login;
-	}
-
 	public String getPassword() {
 		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getUserLogin() {
+		return this.userLogin;
+	}
+
+	public void setUserLogin(String userLogin) {
+		this.userLogin = userLogin;
 	}
 
 	public Set<Bid> getBids() {
@@ -136,5 +136,4 @@ public class User implements Serializable {
 
 		return lot;
 	}
-
 }
