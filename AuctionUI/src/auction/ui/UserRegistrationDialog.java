@@ -26,35 +26,22 @@ public class UserRegistrationDialog extends Window {
 	private Button cancelButton;	
 	
 	private HorizontalLayout footer;
+	private VerticalLayout body;	
 	
 	public void attach() {
 		
 		this.setCaption("Registration");
 		this.center();
 		this.setResizable(false);
-
 		
 		VerticalLayout mainVerticalLayout = new VerticalLayout();
 		setContent(mainVerticalLayout);		
 		mainVerticalLayout.setSizeFull();
 
-		
-		VerticalLayout verticalLayout = new VerticalLayout();
-		verticalLayout.setMargin(false, true, false, true);
-		getFrom().addField("login", getLoginField());
-		getFrom().addField("password", getPasswordField());
-		getFrom().addField("firstName", getFirstNameField());
-		getFrom().addField("lastName", getLastNameField());
-
-		verticalLayout.addComponent(getFrom());
-		verticalLayout.setWidth(350, UNITS_PIXELS);
-		//verticalLayout.setSizeFull();
-		
-		
-		mainVerticalLayout.addComponent(verticalLayout);
+		mainVerticalLayout.addComponent(getVerticalLayoutWithFields());
 		mainVerticalLayout.addComponent(getHozizontalLayoutWithButtons());
 		mainVerticalLayout.setComponentAlignment(getHozizontalLayoutWithButtons(),Alignment.MIDDLE_RIGHT);
-		mainVerticalLayout.setExpandRatio(verticalLayout,1);		
+		mainVerticalLayout.setExpandRatio(getVerticalLayoutWithFields(),1);		
 		mainVerticalLayout.setExpandRatio(getHozizontalLayoutWithButtons(), 0);
 
 		mainVerticalLayout.setSizeUndefined();
@@ -62,8 +49,23 @@ public class UserRegistrationDialog extends Window {
 		buttonRegisterClick();
 		buttonCancelClick();
 	}
+	
 	private UserRegistrationDialog getThisWindow(){
 		return this;
+	}
+
+	private VerticalLayout getVerticalLayoutWithFields(){
+		if( null == body){
+			body = new VerticalLayout();
+			body.setMargin(false, true, false, true);
+			getFrom().addField("login", getLoginField());
+			getFrom().addField("password", getPasswordField());
+			getFrom().addField("firstName", getFirstNameField());
+			getFrom().addField("lastName", getLastNameField());
+			body.addComponent(getFrom());
+			body.setWidth(350, UNITS_PIXELS);
+		}
+		return body;
 	}
 	
 	private HorizontalLayout getHozizontalLayoutWithButtons(){
@@ -76,9 +78,6 @@ public class UserRegistrationDialog extends Window {
 			footer.setSizeUndefined();			
 			footer.setComponentAlignment(getRegisterButton(),Alignment.MIDDLE_RIGHT);
 			footer.setComponentAlignment(getCancelButton(),Alignment.MIDDLE_RIGHT);
-//			footer.setWidth(100, UNITS_PERCENTAGE);		
-//			footer.setSizeFull();
-
 		}
 		return footer;
 	}
@@ -119,7 +118,7 @@ public class UserRegistrationDialog extends Window {
 	public Button getRegisterButton() {
 		if (registerButton == null) {
 			registerButton = new Button("Register");
-
+			registerButton.setWidth(80, UNITS_PIXELS);
 		}
 		return registerButton;
 	}
@@ -127,8 +126,7 @@ public class UserRegistrationDialog extends Window {
 	public Button getCancelButton() {
 		if (cancelButton == null) {
 			cancelButton = new Button("Cancel");
-//			cancelButton.setWidth(registerButton.getWidthUnits(),UNITS_PIXELS);
-//			//cancelButton.setSizeFull();
+			cancelButton.setWidth(80, UNITS_PIXELS);
 		}
 		return cancelButton;
 	}	
@@ -142,8 +140,6 @@ public class UserRegistrationDialog extends Window {
 			loginField.setRequiredError("Empty field login");
 			loginField.setWidth(100, UNITS_PERCENTAGE);	
 			loginField.addValidator(new StringLengthValidator("The login must be 6-15 letters",6, 15, true));
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!validator
-			//nameField.addValidator(new DoubleValidator("234234234"));
 		}
 		return loginField;
 	}
@@ -156,8 +152,6 @@ public class UserRegistrationDialog extends Window {
 			passwordField.setRequiredError("Empty field password");			
 			passwordField.setWidth(100, UNITS_PERCENTAGE);
 			passwordField.addValidator(new StringLengthValidator("The password must be 6-15 letters",6, 15, true));
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!validator
-			//nameField.addValidator(new DoubleValidator("234234234"))
 		}
 		return passwordField;
 	}
@@ -168,7 +162,6 @@ public class UserRegistrationDialog extends Window {
 			firstNameField.setCaption("First Name");
 			firstNameField.setRequired(true);
 			firstNameField.setRequiredError("Empty field first name");
-			//firstNameField.addValidator(new DoubleValidator("Incorrectly set the starting price"));			
 			firstNameField.setWidth(100, UNITS_PERCENTAGE);
 		}
 		return firstNameField;
@@ -182,7 +175,6 @@ public class UserRegistrationDialog extends Window {
 			lastNameField.setRequired(true);
 			lastNameField.setRequiredError("Empty field last name");
 			lastNameField.setWidth(100, UNITS_PERCENTAGE);
-			//firstNameField.addValidator(new DoubleValidator("Incorrectly set the starting price"));	
 		}
 		return lastNameField;
 	}
@@ -193,8 +185,5 @@ public class UserRegistrationDialog extends Window {
 		}
 		return from;
 	}
-	
-	
-	
 	
 }

@@ -1,8 +1,5 @@
 package auction.ui;
 
-import static com.vaadin.terminal.Sizeable.UNITS_PERCENTAGE;
-
-import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.validator.DoubleValidator;
 import com.vaadin.ui.Button;
@@ -10,7 +7,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -29,35 +25,23 @@ public class AddLotDialog extends Window {
 	
 	private Button createButton;
 	private Button cancelButton;	
+	
 	private HorizontalLayout footer;
+	private VerticalLayout body;	
 	
 	public void attach() {
 		this.setCaption("New lot");
 		this.center();
 		this.setResizable(false);
 
-		
 		VerticalLayout mainVerticalLayout = new VerticalLayout();
 		setContent(mainVerticalLayout);		
 		mainVerticalLayout.setSizeFull();
-
 		
-		VerticalLayout verticalLayout = new VerticalLayout();
-		verticalLayout.setMargin(false, true, false, true);
-		getFrom().addField("name", getNameField());
-		getFrom().addField("finishDate", getFinishDateField());
-		getFrom().addField("startPrice", getStartPriceField());
-		getFrom().addField("description", getDescriptionField());
-
-		verticalLayout.addComponent(getFrom());
-		verticalLayout.setWidth(350, UNITS_PIXELS);
-		//verticalLayout.setSizeFull();
-		
-		
-		mainVerticalLayout.addComponent(verticalLayout);
+		mainVerticalLayout.addComponent(getVerticalLayoutWithFields());
 		mainVerticalLayout.addComponent(getHozizontalLayoutWithButtons());
 		mainVerticalLayout.setComponentAlignment(getHozizontalLayoutWithButtons(),Alignment.MIDDLE_RIGHT);
-		mainVerticalLayout.setExpandRatio(verticalLayout,1);		
+		mainVerticalLayout.setExpandRatio(getVerticalLayoutWithFields(),1);		
 		mainVerticalLayout.setExpandRatio(getHozizontalLayoutWithButtons(), 0);
 
 		mainVerticalLayout.setSizeUndefined();
@@ -65,10 +49,25 @@ public class AddLotDialog extends Window {
 		buttonCreateClick();
 		buttonCancelClick();
 	}
+	
 	private AddLotDialog getThisWindow(){
 		return this;
 	}
-	
+
+	private VerticalLayout getVerticalLayoutWithFields(){
+		if( null == body){
+			body = new VerticalLayout();
+			body.setMargin(false, true, false, true);
+			getFrom().addField("name", getNameField());
+			getFrom().addField("finishDate", getFinishDateField());
+			getFrom().addField("startPrice", getStartPriceField());
+			getFrom().addField("description", getDescriptionField());
+			body.addComponent(getFrom());
+			body.setWidth(350, UNITS_PIXELS);		
+		}
+		return body;
+		
+	}
 	private HorizontalLayout getHozizontalLayoutWithButtons(){
 		if( null == footer ){
 			footer = new HorizontalLayout();
@@ -86,8 +85,7 @@ public class AddLotDialog extends Window {
 		return footer;
 	}
 
-
-
+	@SuppressWarnings("serial")
 	private void buttonCreateClick() {
 		createButton.addListener(new ClickListener() {
 		
@@ -102,6 +100,7 @@ public class AddLotDialog extends Window {
 	});
 }
 
+	@SuppressWarnings("serial")
 	private void buttonCancelClick() {
 		cancelButton.addListener(new ClickListener() {
 		@Override
@@ -121,12 +120,14 @@ public class AddLotDialog extends Window {
 	public Button getCancelButton() {
 		if (cancelButton == null) {
 			cancelButton = new Button("Cancel");
+			cancelButton.setWidth(80, UNITS_PIXELS);
 		}
 		return cancelButton;
 	}	
 	public Button getCreateButton() {
 		if (createButton == null) {
 			createButton = new Button("Create");
+			createButton.setWidth(80, UNITS_PIXELS);
 
 		}
 		return createButton;
@@ -139,7 +140,6 @@ public class AddLotDialog extends Window {
 			nameField.setRequired(true);
 			nameField.setRequiredError("Empty field name lot");
 			nameField.setWidth(100, UNITS_PERCENTAGE);			
-			//nameField.addValidator(new DoubleValidator("234234234"));
 		}
 		return nameField;
 	}
@@ -160,7 +160,7 @@ public class AddLotDialog extends Window {
 			startPriceField.setCaption("Start price");
 			startPriceField.setRequired(true);
 			startPriceField.setRequiredError("Empty field start prise");
-			startPriceField.addValidator(new DoubleValidator("Incorrectly set the starting price"));			
+			startPriceField.addValidator(new DoubleValidator("Incorrectly format starting price"));			
 			startPriceField.setWidth(100, UNITS_PERCENTAGE);
 		}
 		return startPriceField;
@@ -177,12 +177,6 @@ public class AddLotDialog extends Window {
 			finishDate.setWidth(100, UNITS_PERCENTAGE);
 		}
 		return finishDate;
-	}
-
-
-
-	public void setFinishDate(PopupDateField finishDate) {
-		this.finishDate = finishDate;
 	}
 
 	public Form getFrom() {

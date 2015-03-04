@@ -25,39 +25,39 @@ public class UserAuthenticationDialog extends Window {
 	private Button registerlButton;	
 	
 	private HorizontalLayout footer;
+	private VerticalLayout body;
 	
 	public void attach() {
-		
 		this.setCaption("Authentication");
 		this.center();
 		this.setResizable(false);
 
-		
 		VerticalLayout mainVerticalLayout = new VerticalLayout();
 		setContent(mainVerticalLayout);		
 		mainVerticalLayout.setSizeFull();
 
-		
-		VerticalLayout verticalLayout = new VerticalLayout();
-		verticalLayout.setMargin(false, true, false, true);
-		getFrom().addField("login", getLoginField());
-		getFrom().addField("password", getPasswordField());
-
-		verticalLayout.addComponent(getFrom());
-		verticalLayout.setWidth(250, UNITS_PIXELS);
-		//verticalLayout.setSizeFull();
-		
-		
-		mainVerticalLayout.addComponent(verticalLayout);
+		mainVerticalLayout.addComponent(getVerticalLayoutWithFields());
 		mainVerticalLayout.addComponent(getHozizontalLayoutWithButtons());
 		mainVerticalLayout.setComponentAlignment(getHozizontalLayoutWithButtons(),Alignment.MIDDLE_RIGHT);
-		mainVerticalLayout.setExpandRatio(verticalLayout,1);		
+		mainVerticalLayout.setExpandRatio(getVerticalLayoutWithFields(),1);		
 		mainVerticalLayout.setExpandRatio(getHozizontalLayoutWithButtons(), 0);
 
 		mainVerticalLayout.setSizeUndefined();
 
 		buttonLoginClick();
 		buttonRegisterClick();
+	}
+	
+	private VerticalLayout getVerticalLayoutWithFields(){
+		if( null == body){
+			body = new VerticalLayout();
+			body.setMargin(false, true, false, true);
+			getFrom().addField("login", getLoginField());
+			getFrom().addField("password", getPasswordField());
+			body.addComponent(getFrom());
+			body.setWidth(250, UNITS_PIXELS);
+		}
+		return body;
 	}
 	
 	private HorizontalLayout getHozizontalLayoutWithButtons(){
@@ -70,9 +70,6 @@ public class UserAuthenticationDialog extends Window {
 			footer.setSizeUndefined();			
 			footer.setComponentAlignment(getLoginButton(),Alignment.MIDDLE_RIGHT);
 			footer.setComponentAlignment(getRegisterButton(),Alignment.BOTTOM_RIGHT);
-//			footer.setWidth(50, UNITS_PIXELS);
-//			footer.setSizeFull();
-
 		}
 		return footer;
 	}
@@ -114,6 +111,7 @@ public class UserAuthenticationDialog extends Window {
 	public Button getLoginButton() {
 		if (loginButton == null) {
 			loginButton = new Button("Login");
+			loginButton.setWidth(80, UNITS_PIXELS);
 
 		}
 		return loginButton;
@@ -136,8 +134,6 @@ public class UserAuthenticationDialog extends Window {
 			loginField.setRequiredError("Empty field login");
 			loginField.setWidth(100, UNITS_PERCENTAGE);	
 			loginField.addValidator(new StringLengthValidator("The login must be 6-15 letters",6, 15, true));
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!validator
-			//nameField.addValidator(new DoubleValidator("234234234"));
 		}
 		return loginField;
 	}
@@ -150,12 +146,9 @@ public class UserAuthenticationDialog extends Window {
 			passwordField.setRequiredError("Empty field password");			
 			passwordField.setWidth(100, UNITS_PERCENTAGE);
 			passwordField.addValidator(new StringLengthValidator("The password must be 6-15 letters",6, 15, true));
-			//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!validator
-			//nameField.addValidator(new DoubleValidator("234234234"))
 		}
 		return passwordField;
 	}
-
 
 	public Form getFrom() {
 		if (from == null) {
@@ -163,8 +156,5 @@ public class UserAuthenticationDialog extends Window {
 		}
 		return from;
 	}
-	
-	
-	
-	
+
 }
