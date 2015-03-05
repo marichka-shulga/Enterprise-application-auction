@@ -26,21 +26,6 @@ public interface FacadeService {
 
     /**
      * 
-     * @param arg0
-     * @return
-     *     returns client.artefacts.BaseResponse
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "addLot", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.AddLot")
-    @ResponseWrapper(localName = "addLotResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.AddLotResponse")
-    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotResponse")
-    public BaseResponse addLot(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Lot arg0);
-
-    /**
-     * 
      * @param arg1
      * @param arg0
      * @return
@@ -116,7 +101,6 @@ public interface FacadeService {
 
     /**
      * 
-     * @param arg1
      * @param arg0
      * @return
      *     returns client.artefacts.BaseResponse
@@ -128,8 +112,21 @@ public interface FacadeService {
     @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addBidRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addBidResponse")
     public BaseResponse addBid(
         @WebParam(name = "arg0", targetNamespace = "")
-        Lot arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        Bid arg1);
+        Bid arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns client.artefacts.BaseResponse
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "addLot", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.AddLot")
+    @ResponseWrapper(localName = "addLotResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.AddLotResponse")
+    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotResponse")
+    public BaseResponse addLot(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Lot arg0);
 
 }

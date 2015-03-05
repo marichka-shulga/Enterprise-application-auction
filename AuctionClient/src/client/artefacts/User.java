@@ -1,11 +1,8 @@
 
 package client.artefacts;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -19,11 +16,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="bids" type="{http://auction.facadeservice/jaxws/auctionservice}bid" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="idUser" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="firstName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="lastName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="lots" type="{http://auction.facadeservice/jaxws/auctionservice}lot" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="userLogin" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
@@ -36,53 +31,42 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "user", propOrder = {
-    "bids",
-    "firstName",
     "idUser",
+    "firstName",
     "lastName",
-    "lots",
     "password",
     "userLogin"
 })
 public class User {
 
-    @XmlElement(nillable = true)
-    protected List<Bid> bids;
-    protected String firstName;
     protected Integer idUser;
+    protected String firstName;
     protected String lastName;
-    @XmlElement(nillable = true)
-    protected List<Lot> lots;
     protected String password;
     protected String userLogin;
 
     /**
-     * Gets the value of the bids property.
+     * Gets the value of the idUser property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the bids property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getBids().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Bid }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
      */
-    public List<Bid> getBids() {
-        if (bids == null) {
-            bids = new ArrayList<Bid>();
-        }
-        return this.bids;
+    public Integer getIdUser() {
+        return idUser;
+    }
+
+    /**
+     * Sets the value of the idUser property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdUser(Integer value) {
+        this.idUser = value;
     }
 
     /**
@@ -110,30 +94,6 @@ public class User {
     }
 
     /**
-     * Gets the value of the idUser property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getIdUser() {
-        return idUser;
-    }
-
-    /**
-     * Sets the value of the idUser property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setIdUser(Integer value) {
-        this.idUser = value;
-    }
-
-    /**
      * Gets the value of the lastName property.
      * 
      * @return
@@ -155,35 +115,6 @@ public class User {
      */
     public void setLastName(String value) {
         this.lastName = value;
-    }
-
-    /**
-     * Gets the value of the lots property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the lots property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getLots().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Lot }
-     * 
-     * 
-     */
-    public List<Lot> getLots() {
-        if (lots == null) {
-            lots = new ArrayList<Lot>();
-        }
-        return this.lots;
     }
 
     /**

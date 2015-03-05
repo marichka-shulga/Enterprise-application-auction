@@ -23,7 +23,6 @@ public class FinishTradesJob implements Job {
 		try {
 			someId = context.getScheduler().getContext().get(context.getTrigger().getKey().toString());
 			lotLogic.finishTrades(Integer.parseInt(someId.toString()));
-			
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied job execute={}, idLot={}, reason={}", e, e.getMessage(), (String)someId);	
 		}

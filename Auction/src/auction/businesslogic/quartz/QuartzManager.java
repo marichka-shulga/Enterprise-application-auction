@@ -1,6 +1,7 @@
 package auction.businesslogic.quartz;
 
-import java.sql.Timestamp;
+
+import java.util.Date;
 
 import org.apache.logging.log4j.Logger;
 import org.quartz.Job;
@@ -21,19 +22,20 @@ public class QuartzManager {
 
 	private static final String JOB_GROUP = "JOB_GROUP";
 
-	private static SchedulerFactory schedFactory;
+	private SchedulerFactory schedFactory;
 	
 	private static final Logger LOGGRER = LogFactory.getLogger(QuartzManager.class);
-
-	public static void intitQuartzManager(){
+	
+	public QuartzManager(){
 		try {
 			schedFactory = new org.quartz.impl.StdSchedulerFactory();
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied intitQuartzManager={}, reason={}", e, e.getMessage());
-		}
+		}		
+		
 	}
 
-	public static void shutdown() {
+	public void shutdown() {
 		try {
 			if( null != schedFactory )
 				schedFactory.getScheduler().shutdown(true);
@@ -43,9 +45,9 @@ public class QuartzManager {
 	}
 	
 
-	public void addJob(final String triggerId, final Timestamp date, final Class<? extends Job> jobClass) throws SchedulerException {
+	public void addJob(final String triggerId, final Date date, final Class<? extends Job> jobClass) throws SchedulerException {
 		Scheduler sched = schedFactory.getScheduler();
-		if (!sched.isStarted()) {
+		if ( !sched.isStarted() ) {
 			sched.start();
 		}
 
@@ -56,7 +58,7 @@ public class QuartzManager {
 				.build();
 		sched.getContext().put(trigger.getKey().toString(), triggerId);
 
-		if (sched.checkExists(job.getKey())) {
+		if ( sched.checkExists(job.getKey()) ) {
 			sched.scheduleJob(trigger);
 		} else {
 			sched.scheduleJob(job, trigger);

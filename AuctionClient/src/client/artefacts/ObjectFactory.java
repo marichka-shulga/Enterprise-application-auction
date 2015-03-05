@@ -25,9 +25,12 @@ import javax.xml.namespace.QName;
 public class ObjectFactory {
 
     private final static QName _CancelLot_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "cancelLot");
+    private final static QName _Lot_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "lot");
     private final static QName _GetLot_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getLot");
     private final static QName _GetAllLotsResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getAllLotsResponse");
+    private final static QName _User_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "user");
     private final static QName _AddLotResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "addLotResponse");
+    private final static QName _Bid_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "bid");
     private final static QName _GetLotResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getLotResponse");
     private final static QName _UserRegistrationResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "userRegistrationResponse");
     private final static QName _AddBidResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "addBidResponse");
@@ -135,6 +138,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Lot }
+     * 
+     */
+    public Lot createLot() {
+        return new Lot();
+    }
+
+    /**
      * Create an instance of {@link GetLot }
      * 
      */
@@ -159,30 +170,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BaseResponse }
-     * 
-     */
-    public BaseResponse createBaseResponse() {
-        return new BaseResponse();
-    }
-
-    /**
-     * Create an instance of {@link Lot }
-     * 
-     */
-    public Lot createLot() {
-        return new Lot();
-    }
-
-    /**
-     * Create an instance of {@link GetLotByIdResponse }
-     * 
-     */
-    public GetLotByIdResponse createGetLotByIdResponse() {
-        return new GetLotByIdResponse();
-    }
-
-    /**
      * Create an instance of {@link Bid }
      * 
      */
@@ -196,6 +183,22 @@ public class ObjectFactory {
      */
     public User createUser() {
         return new User();
+    }
+
+    /**
+     * Create an instance of {@link BaseResponse }
+     * 
+     */
+    public BaseResponse createBaseResponse() {
+        return new BaseResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetLotByIdResponse }
+     * 
+     */
+    public GetLotByIdResponse createGetLotByIdResponse() {
+        return new GetLotByIdResponse();
     }
 
     /**
@@ -215,20 +218,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Timestamp }
-     * 
-     */
-    public Timestamp createTimestamp() {
-        return new Timestamp();
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CancelLot }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "cancelLot")
     public JAXBElement<CancelLot> createCancelLot(CancelLot value) {
         return new JAXBElement<CancelLot>(_CancelLot_QNAME, CancelLot.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Lot }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "lot")
+    public JAXBElement<Lot> createLot(Lot value) {
+        return new JAXBElement<Lot>(_Lot_QNAME, Lot.class, null, value);
     }
 
     /**
@@ -250,12 +254,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link User }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "user")
+    public JAXBElement<User> createUser(User value) {
+        return new JAXBElement<User>(_User_QNAME, User.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link AddLotResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "addLotResponse")
     public JAXBElement<AddLotResponse> createAddLotResponse(AddLotResponse value) {
         return new JAXBElement<AddLotResponse>(_AddLotResponse_QNAME, AddLotResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Bid }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "bid")
+    public JAXBElement<Bid> createBid(Bid value) {
+        return new JAXBElement<Bid>(_Bid_QNAME, Bid.class, null, value);
     }
 
     /**

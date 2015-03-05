@@ -5,9 +5,9 @@ DROP SEQUENCE user_id_seq;
 DROP SEQUENCE lot_id_seq;
 DROP SEQUENCE bid_id_seq;
 
-CREATE SEQUENCE user_id_seq START WITH 100 INCREMENT BY 1;
-CREATE SEQUENCE lot_id_seq START WITH 100 INCREMENT BY 1;
-CREATE SEQUENCE bid_id_seq START WITH 100 INCREMENT BY 1;
+CREATE SEQUENCE user_id_seq START WITH 500 INCREMENT BY 1;
+CREATE SEQUENCE lot_id_seq START WITH 500 INCREMENT BY 1;
+CREATE SEQUENCE bid_id_seq START WITH 500 INCREMENT BY 1;
 
 CREATE TABLE public.users (
        id_user INTEGER NOT NULL DEFAULT NEXTVAL('user_id_seq')
@@ -22,7 +22,7 @@ CREATE TABLE public.lot (
        id_lot INTEGER NOT NULL DEFAULT NEXTVAL('lot_id_seq')
      , code INTEGER NOT NULL
      , name VARCHAR(30) NOT NULL
-     , finash_date TIMESTAMP NOT NULL
+     , finish_date TIMESTAMP NOT NULL
      , start_price DECIMAL(10,2) NOT NULL
      , descriptions TEXT
      , state VARCHAR(10) NOT NULL

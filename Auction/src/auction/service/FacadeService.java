@@ -64,16 +64,17 @@ public class FacadeService {
 	public BaseResponse addLot(Lot lot){
 		return lotLogic.addLot(lot);
 	}		
-	
+
+	//return lot with list bid include winning bid
 	@WebMethod
 	public BaseResponse cancelLot(Lot lot){
 		return lotLogic.cancelOfTrades(lot);
 	}	
 	
-	//do not forgot add user in bid (bid.setUser(user))	
+	//do not forgot add user in bid (bid.setUser(user))	lot
 	@WebMethod
-	public BaseResponse addBid(Lot lot, Bid bid){
-		return bidLogic.addBid(lot, bid);
+	public BaseResponse addBid(Bid bid){
+		return bidLogic.addBid(bid);
 	}		
 	
 }

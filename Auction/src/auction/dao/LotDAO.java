@@ -2,6 +2,7 @@ package auction.dao;
 
 import java.util.HashSet;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -53,6 +54,4 @@ public class LotDAO extends GenericDAO<Lot>{
 		return res;
 	}	
 	
-
-
 }

@@ -4,7 +4,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import auction.businesslogic.modelBL.LotLogic;
-import auction.businesslogic.quartz.QuartzManager;
+import auction.businesslogic.quartz.QuartzManagerSingleton;
 import auction.dao.Resource;
 
 
@@ -14,14 +14,14 @@ public class AuctionServletContextListener implements ServletContextListener {
 	
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-		QuartzManager.shutdown();
+		QuartzManagerSingleton.getQuartzManager().shutdown();
 		Resource.closeEntityManagerFactory();
 	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		lotLogic = new LotLogic();
-		QuartzManager.intitQuartzManager();
+		//QuartzManagerSingleton.getQuartzManager();
 		lotLogic.firstAssignJobToLot();		
 	}
 

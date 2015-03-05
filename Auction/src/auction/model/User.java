@@ -3,9 +3,13 @@ package auction.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+import java.util.HashSet;
 import java.util.Set;
-
+import javax.xml.bind.annotation.XmlAccessType;
 
 /**
  * The persistent class for the users database table.
@@ -20,13 +24,14 @@ import java.util.Set;
     @NamedQuery(name="User.getUser",
                 query="SELECT u FROM User u WHERE u.userLogin = :userLogin AND u.password = :password")
 }) 
-
+@XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "user_id_gen")
-	@SequenceGenerator(name="user_id_gen", sequenceName="user_id_seq", allocationSize=100, initialValue=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_gen")
+	@SequenceGenerator(name="user_id_gen", sequenceName="user_id_seq", initialValue=1)
 	@Column(name="id_user")
 	private Integer idUser;
 
@@ -43,14 +48,18 @@ public class User implements Serializable {
 	private String userLogin;
 
 	//bi-directional many-to-one association to Bid
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	@XmlTransient
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Bid> bids;
 
 	//bi-directional many-to-one association to Lot
-	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	@XmlTransient
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Lot> lots;
 
 	public User() {
+		bids = new HashSet<Bid>();
+		lots = new HashSet<Lot>();
 	}
 
 	public Integer getIdUser() {

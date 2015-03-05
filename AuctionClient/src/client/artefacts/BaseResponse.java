@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="errorMessage" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="idEntity" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="stateResult" type="{http://auction.facadeservice/jaxws/auctionservice}stateResult" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -31,6 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "baseResponse", propOrder = {
     "errorMessage",
+    "idEntity",
     "stateResult"
 })
 @XmlSeeAlso({
@@ -41,6 +43,7 @@ import javax.xml.bind.annotation.XmlType;
 public class BaseResponse {
 
     protected String errorMessage;
+    protected Integer idEntity;
     @XmlSchemaType(name = "string")
     protected StateResult stateResult;
 
@@ -66,6 +69,30 @@ public class BaseResponse {
      */
     public void setErrorMessage(String value) {
         this.errorMessage = value;
+    }
+
+    /**
+     * Gets the value of the idEntity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getIdEntity() {
+        return idEntity;
+    }
+
+    /**
+     * Sets the value of the idEntity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdEntity(Integer value) {
+        this.idEntity = value;
     }
 
     /**

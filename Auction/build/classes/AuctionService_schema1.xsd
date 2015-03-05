@@ -9,6 +9,8 @@
 
   <xs:element name="addLotResponse" type="tns:addLotResponse"/>
 
+  <xs:element name="bid" type="tns:bid"/>
+
   <xs:element name="cancelLot" type="tns:cancelLot"/>
 
   <xs:element name="cancelLotResponse" type="tns:cancelLotResponse"/>
@@ -20,6 +22,10 @@
   <xs:element name="getLot" type="tns:getLot"/>
 
   <xs:element name="getLotResponse" type="tns:getLotResponse"/>
+
+  <xs:element name="lot" type="tns:lot"/>
+
+  <xs:element name="user" type="tns:user"/>
 
   <xs:element name="userAuthentication" type="tns:userAuthentication"/>
 
@@ -55,19 +61,24 @@
   <xs:complexType name="baseResponse">
     <xs:sequence>
       <xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
+      <xs:element name="idEntity" type="xs:int" minOccurs="0"/>
       <xs:element name="stateResult" type="tns:stateResult" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="user">
     <xs:sequence>
-      <xs:element name="bids" type="tns:bid" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
       <xs:element name="idUser" type="xs:int" minOccurs="0"/>
+      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
       <xs:element name="lastName" type="xs:string" minOccurs="0"/>
-      <xs:element name="lots" type="tns:lot" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="password" type="xs:string" minOccurs="0"/>
       <xs:element name="userLogin" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addBid">
+    <xs:sequence>
+      <xs:element name="arg0" type="tns:bid" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -75,36 +86,22 @@
     <xs:sequence>
       <xs:element name="idBid" type="xs:int" minOccurs="0"/>
       <xs:element name="isWinningBid" type="xs:boolean" minOccurs="0"/>
-      <xs:element name="lot" type="tns:lot" minOccurs="0"/>
       <xs:element name="rate" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="lot" type="tns:lot" minOccurs="0"/>
       <xs:element name="user" type="tns:user" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="lot">
     <xs:sequence>
-      <xs:element name="bids" type="tns:bid" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="idLot" type="xs:int" minOccurs="0"/>
       <xs:element name="code" type="xs:int" minOccurs="0"/>
       <xs:element name="descriptions" type="xs:string" minOccurs="0"/>
-      <xs:element name="finashDate" type="tns:timestamp" minOccurs="0"/>
-      <xs:element name="idLot" type="xs:int" minOccurs="0"/>
+      <xs:element name="finishDate" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="name" type="xs:string" minOccurs="0"/>
       <xs:element name="startPrice" type="xs:decimal" minOccurs="0"/>
       <xs:element name="state" type="tns:lotState" minOccurs="0"/>
       <xs:element name="user" type="tns:user" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="timestamp">
-    <xs:sequence>
-      <xs:element name="nanos" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="addBid">
-    <xs:sequence>
-      <xs:element name="arg0" type="tns:lot" minOccurs="0"/>
-      <xs:element name="arg1" type="tns:bid" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -192,20 +189,20 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:simpleType name="stateResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ERROR"/>
+      <xs:enumeration value="SUCCESS"/>
+      <xs:enumeration value="NOT_SUCCESS"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="lotState">
     <xs:restriction base="xs:string">
       <xs:enumeration value="ACTIVE"/>
       <xs:enumeration value="SOLD"/>
       <xs:enumeration value="NOT_SOLD"/>
       <xs:enumeration value="CANCELLED"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="stateResult">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ERROR"/>
-      <xs:enumeration value="SUCCESS"/>
-      <xs:enumeration value="NOT_SUCCESS"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

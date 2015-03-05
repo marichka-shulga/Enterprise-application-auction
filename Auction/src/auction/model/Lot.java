@@ -3,9 +3,14 @@ package auction.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -20,21 +25,26 @@ import java.util.Set;
     @NamedQuery(name="Lot.getAllLots",
                 query="SELECT l FROM Lot l")                
 }) 
+@XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Lot implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "lot_id_gen")
-	@SequenceGenerator(name="lot_id_gen", sequenceName="lot_id_seq", allocationSize=100, initialValue=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lot_id_gen")
+	@SequenceGenerator(name="lot_id_gen", sequenceName="lot_id_seq", initialValue=1)
 	@Column(name="id_lot")
 	private Integer idLot;
-
+	
+	@Column(name="code")
 	private Integer code;
 
+	@Column(name="descriptions")	
 	private String descriptions;
-
-	@Column(name="finash_date")
-	private Timestamp finashDate;
+	
+	@Column(name="finish_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date finishDate;
 	
 	@Column(name="name")
 	private String name;
@@ -47,7 +57,8 @@ public class Lot implements Serializable {
 	private LotState state;
 
 	//bi-directional many-to-one association to Bid
-	@OneToMany(mappedBy="lot", fetch=FetchType.EAGER)
+	@XmlTransient
+	@OneToMany(mappedBy="lot", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Bid> bids;
 
 	//bi-directional many-to-one association to User
@@ -56,6 +67,7 @@ public class Lot implements Serializable {
 	private User user;
 
 	public Lot() {
+		bids = new HashSet<Bid>();
 	}
 
 	public Integer getIdLot() {
@@ -82,12 +94,12 @@ public class Lot implements Serializable {
 		this.descriptions = descriptions;
 	}
 
-	public Timestamp getFinashDate() {
-		return this.finashDate;
+	public Date getFinishDate() {
+		return this.finishDate;
 	}
 
-	public void setFinashDate(Timestamp finashDate) {
-		this.finashDate = finashDate;
+	public void setFinishDate(Date finishDate) {
+		this.finishDate = finishDate;
 	}
 
 	public String getName() {

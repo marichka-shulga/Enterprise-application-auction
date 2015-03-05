@@ -68,10 +68,10 @@ public class ClientAuction {
 		return response;
 	}	
 	
-	public BaseResponse addBid(Lot lot, Bid bid){
+	public BaseResponse addBid(Bid bid){
 		BaseResponse response = null;
 		try {
-			 response = port.addBid(lot,bid);
+			 response = port.addBid(bid);
 
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied addBid={} reason={}", e, e.getMessage());	

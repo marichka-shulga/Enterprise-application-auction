@@ -19,8 +19,8 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="idBid" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="isWinningBid" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
- *         &lt;element name="lot" type="{http://auction.facadeservice/jaxws/auctionservice}lot" minOccurs="0"/>
  *         &lt;element name="rate" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="lot" type="{http://auction.facadeservice/jaxws/auctionservice}lot" minOccurs="0"/>
  *         &lt;element name="user" type="{http://auction.facadeservice/jaxws/auctionservice}user" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -34,16 +34,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "bid", propOrder = {
     "idBid",
     "isWinningBid",
-    "lot",
     "rate",
+    "lot",
     "user"
 })
 public class Bid {
 
     protected Integer idBid;
     protected Boolean isWinningBid;
-    protected Lot lot;
     protected BigDecimal rate;
+    protected Lot lot;
     protected User user;
 
     /**
@@ -95,30 +95,6 @@ public class Bid {
     }
 
     /**
-     * Gets the value of the lot property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Lot }
-     *     
-     */
-    public Lot getLot() {
-        return lot;
-    }
-
-    /**
-     * Sets the value of the lot property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Lot }
-     *     
-     */
-    public void setLot(Lot value) {
-        this.lot = value;
-    }
-
-    /**
      * Gets the value of the rate property.
      * 
      * @return
@@ -140,6 +116,30 @@ public class Bid {
      */
     public void setRate(BigDecimal value) {
         this.rate = value;
+    }
+
+    /**
+     * Gets the value of the lot property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Lot }
+     *     
+     */
+    public Lot getLot() {
+        return lot;
+    }
+
+    /**
+     * Sets the value of the lot property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Lot }
+     *     
+     */
+    public void setLot(Lot value) {
+        this.lot = value;
     }
 
     /**

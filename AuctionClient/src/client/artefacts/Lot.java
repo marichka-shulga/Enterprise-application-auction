@@ -2,13 +2,16 @@
 package client.artefacts;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -21,11 +24,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="bids" type="{http://auction.facadeservice/jaxws/auctionservice}bid" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="idLot" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="code" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="descriptions" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="finashDate" type="{http://auction.facadeservice/jaxws/auctionservice}timestamp" minOccurs="0"/>
- *         &lt;element name="idLot" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="finishDate" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="startPrice" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
  *         &lt;element name="state" type="{http://auction.facadeservice/jaxws/auctionservice}lotState" minOccurs="0"/>
@@ -40,11 +42,10 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "lot", propOrder = {
-    "bids",
+    "idLot",
     "code",
     "descriptions",
-    "finashDate",
-    "idLot",
+    "finishDate",
     "name",
     "startPrice",
     "state",
@@ -52,12 +53,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class Lot {
 
-    @XmlElement(nillable = true)
-    protected List<Bid> bids;
+    protected Integer idLot;
     protected Integer code;
     protected String descriptions;
-    protected Timestamp finashDate;
-    protected Integer idLot;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar finishDate;
     protected String name;
     protected BigDecimal startPrice;
     @XmlSchemaType(name = "string")
@@ -65,32 +65,27 @@ public class Lot {
     protected User user;
 
     /**
-     * Gets the value of the bids property.
+     * Gets the value of the idLot property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the bids property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getBids().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Bid }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
      */
-    public List<Bid> getBids() {
-        if (bids == null) {
-            bids = new ArrayList<Bid>();
-        }
-        return this.bids;
+    public Integer getIdLot() {
+        return idLot;
+    }
+
+    /**
+     * Sets the value of the idLot property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setIdLot(Integer value) {
+        this.idLot = value;
     }
 
     /**
@@ -142,51 +137,33 @@ public class Lot {
     }
 
     /**
-     * Gets the value of the finashDate property.
+     * Gets the value of the finishDate property.
      * 
      * @return
      *     possible object is
-     *     {@link Timestamp }
+     *     {@link XMLGregorianCalendar }
      *     
      */
-    public Timestamp getFinashDate() {
-        return finashDate;
+    public Date getFinishDate() {
+        return finishDate.toGregorianCalendar().getTime();
     }
 
     /**
-     * Sets the value of the finashDate property.
+     * Sets the value of the finishDate property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Timestamp }
+     *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setFinashDate(Timestamp value) {
-        this.finashDate = value;
-    }
+    public void setFinishDate(Date value) {
+    	GregorianCalendar c = new GregorianCalendar();
+		c.setTime(value);
+		try {
+			this.finishDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		} catch (DatatypeConfigurationException e) {
 
-    /**
-     * Gets the value of the idLot property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getIdLot() {
-        return idLot;
-    }
-
-    /**
-     * Sets the value of the idLot property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setIdLot(Integer value) {
-        this.idLot = value;
+		}
     }
 
     /**

@@ -1,5 +1,7 @@
 package auction.ui;
 
+import auction.ui.lotdetails.LotDetailsForm;
+
 import com.vaadin.Application;
 
 import static com.vaadin.terminal.Sizeable.UNITS_PIXELS;
@@ -19,20 +21,24 @@ public class VaadinProjectApplication extends Application {
 	private static final String AUCTION = "<H1>Auction</H1>";
 	private HorizontalLayout header;
 	private Label userName;
-	private HorizontalSplitPanel mainSplitPanel;
+	private HorizontalSplitPanel horizontalSplitPanel;
+	private VerticalSplitPanel verticalSplitPanel;
 	private Button logout;
 	private LotsForm lotsForm;
+	private LotDetailsForm lotDatailsForm;
+	private BidsForm bidsForm;
 	
 	@Override
 	public void init() {
 		Window mainWindow = new Window("Application");
 		VerticalLayout mainLayout = new VerticalLayout();
+		//mainLayout.setMargin(true);
 		
 		mainLayout.addComponent(getHeader());
-		mainLayout.addComponent(getMainSplitPanel());
+		mainLayout.addComponent(getHorisontalSplitPanel());
 		
 		mainLayout.setExpandRatio(getHeader(), 0);
-		mainLayout.setExpandRatio(getMainSplitPanel(), 1);
+		mainLayout.setExpandRatio(getHorisontalSplitPanel(), 1);
 		
 		mainLayout.setSizeFull();
 		mainWindow.setContent(mainLayout);		
@@ -81,6 +87,20 @@ public class VaadinProjectApplication extends Application {
 		}
 		return lotsForm;
 	}
+	
+	public LotDetailsForm getLotDetailsForm() {
+		if (lotDatailsForm == null) {
+			lotDatailsForm = new LotDetailsForm();
+		}
+		return lotDatailsForm;
+	}
+	
+	public BidsForm getBidsForm() {
+		if (bidsForm == null) {
+			bidsForm = new BidsForm();
+		}
+		return bidsForm;
+	}	
 
 	public Button getLogout() {
 		if (logout == null) {
@@ -96,16 +116,27 @@ public class VaadinProjectApplication extends Application {
 		return logout;
 	}
 
-	public HorizontalSplitPanel getMainSplitPanel() {
-		if (mainSplitPanel == null) {
-			mainSplitPanel = new HorizontalSplitPanel();
-			mainSplitPanel.setSplitPosition(33, UNITS_PERCENTAGE);
-			mainSplitPanel.setSizeFull();
-			mainSplitPanel.setFirstComponent(getLotsForm());
+	public HorizontalSplitPanel getHorisontalSplitPanel() {
+		if (horizontalSplitPanel == null) {
+			horizontalSplitPanel = new HorizontalSplitPanel();
+			horizontalSplitPanel.setSplitPosition(33, UNITS_PERCENTAGE);
+			horizontalSplitPanel.setSizeFull();
+			horizontalSplitPanel.setFirstComponent(getLotsForm());
+			horizontalSplitPanel.setSecondComponent(getVerticalSplitPanel());
 		}
-		return mainSplitPanel;
+		return horizontalSplitPanel;
 	}
 	
+	public VerticalSplitPanel getVerticalSplitPanel() {
+		if (verticalSplitPanel == null) {
+			verticalSplitPanel = new VerticalSplitPanel();
+			verticalSplitPanel.setSplitPosition(45, UNITS_PERCENTAGE);
+			verticalSplitPanel.setSizeFull();
+			verticalSplitPanel.setFirstComponent(getLotDetailsForm());
+			verticalSplitPanel.setSecondComponent(getBidsForm());
+		}
+		return verticalSplitPanel;
+	}	
 	
 
 }

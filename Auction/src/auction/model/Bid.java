@@ -3,6 +3,9 @@ package auction.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import java.math.BigDecimal;
 
@@ -20,13 +23,14 @@ import java.math.BigDecimal;
     @NamedQuery(name="Bid.getAllBidsForLot",
                 query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot")
 }) 
-
+@XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class Bid implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "bid_id_gen")
-	@SequenceGenerator(name="bid_id_gen", sequenceName="bid_id_seq", allocationSize=100, initialValue=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bid_id_gen")
+	@SequenceGenerator(name="bid_id_gen", sequenceName="bid_id_seq", initialValue=1)
 	@Column(name="id_bid")
 	private Integer idBid;
 

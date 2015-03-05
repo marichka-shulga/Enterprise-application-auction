@@ -48,6 +48,7 @@ public class UserLogic {
 			if( !(userDAO.isUserLogginExist(user.getUserLogin())) ){
 				userDAO.save(user);
 				res.setStateResult(StateResult.SUCCESS);
+				res.setIdEntity(user.getIdUser());
 			}
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied registration={} reason={}", e, e.getMessage());	
