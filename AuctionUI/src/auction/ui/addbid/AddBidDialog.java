@@ -2,6 +2,12 @@ package auction.ui.addbid;
 
 import java.util.Arrays;
 
+import auction.ui.ClientAuctionSinglton;
+import client.artefacts.BaseResponse;
+import client.artefacts.Bid;
+import client.artefacts.StateResult;
+import client.realization.ClientAuction;
+
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -12,6 +18,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Window.Notification;
+
+
+
 public class AddBidDialog extends Window {
 	
 
@@ -29,10 +39,12 @@ public class AddBidDialog extends Window {
 	
 	private static BidFieldFactory bidFieldFactory = BidFieldFactorySinglton.getBidFieldFactory();
 	
+	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();	
+	
 	Bid bid;
 	 
-	public AddBidDialog(){
-		bid = new Bid();
+	public AddBidDialog(Bid bid){
+		this.bid = bid;
 	}
 	
 	public void attach() {
@@ -70,6 +82,20 @@ public class AddBidDialog extends Window {
 		public void buttonClick(ClickEvent event) {
 			try {
 				getFrom().commit();
+				
+				BaseResponse response = client.addBid(bid);
+				if( response.getStateResult().equals(StateResult.SUCCESS) ){
+					bid.setIdBid(response.getIdEntity());
+				} else if( response.getStateResult().equals(StateResult.NOT_SUCCESS) ){
+					getApplication().getMainWindow().showNotification("Less than the previous rate",
+											Notification.TYPE_WARNING_MESSAGE);
+				} else{
+					getApplication().getMainWindow().showNotification(response.getErrorMessage(),
+							Notification.TYPE_ERROR_MESSAGE);
+				}				
+				
+				//getParent().removeWindow(getWindow());				
+		
 			} catch (InvalidValueException e) {
 				
 			}

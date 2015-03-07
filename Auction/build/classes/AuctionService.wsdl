@@ -6,17 +6,17 @@
       <xsd:import namespace="http://auction.facadeservice/jaxws/auctionservice" schemaLocation="AuctionService_schema1.xsd"/>
     </xsd:schema>
   </types>
-  <message name="userAuthentication">
-    <part name="parameters" element="tns:userAuthentication"/>
-  </message>
-  <message name="userAuthenticationResponse">
-    <part name="parameters" element="tns:userAuthenticationResponse"/>
-  </message>
   <message name="userRegistration">
     <part name="parameters" element="tns:userRegistration"/>
   </message>
   <message name="userRegistrationResponse">
     <part name="parameters" element="tns:userRegistrationResponse"/>
+  </message>
+  <message name="userAuthentication">
+    <part name="parameters" element="tns:userAuthentication"/>
+  </message>
+  <message name="userAuthenticationResponse">
+    <part name="parameters" element="tns:userAuthenticationResponse"/>
   </message>
   <message name="getAllLots">
     <part name="parameters" element="tns:getAllLots"/>
@@ -49,13 +49,13 @@
     <part name="parameters" element="tns:addBidResponse"/>
   </message>
   <portType name="FacadeService">
-    <operation name="userAuthentication">
-      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationRequest" message="tns:userAuthentication"/>
-      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationResponse" message="tns:userAuthenticationResponse"/>
-    </operation>
     <operation name="userRegistration">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userRegistrationRequest" message="tns:userRegistration"/>
       <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userRegistrationResponse" message="tns:userRegistrationResponse"/>
+    </operation>
+    <operation name="userAuthentication">
+      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationRequest" message="tns:userAuthentication"/>
+      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationResponse" message="tns:userAuthenticationResponse"/>
     </operation>
     <operation name="getAllLots">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getAllLotsRequest" message="tns:getAllLots"/>
@@ -80,7 +80,7 @@
   </portType>
   <binding name="AuctionServicePortBinding" type="tns:FacadeService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-    <operation name="userAuthentication">
+    <operation name="userRegistration">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -89,7 +89,7 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="userRegistration">
+    <operation name="userAuthentication">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

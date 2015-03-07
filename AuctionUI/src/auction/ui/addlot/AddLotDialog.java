@@ -1,7 +1,14 @@
 package auction.ui.addlot;
 
 import java.util.Arrays;
+import java.util.Date;
 
+import auction.ui.ClientAuctionSinglton;
+import client.artefacts.BaseResponse;
+import client.artefacts.Lot;
+import client.artefacts.LotState;
+import client.artefacts.StateResult;
+import client.realization.ClientAuction;
 
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.util.BeanItem;
@@ -31,9 +38,13 @@ public class AddLotDialog extends Window {
 	private static final int COMMON_BUTTON_WIDTH = 80;
 	private static final int WINDOW_WIDTH = 350;
 	private Lot lot;
-
-	public AddLotDialog(){
-		lot = new Lot();
+	
+	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
+	
+	private AddLotListener listener;
+	
+	public AddLotDialog(Lot lot){
+		this.lot = lot;
 	}
 	
 	public void attach() {
@@ -66,14 +77,17 @@ public class AddLotDialog extends Window {
 			body = new VerticalLayout();
 			body.setMargin(false, true, false, true);
 			
-		    BeanItem<Lot> lotItem = new BeanItem<Lot>(lot); 
+			LotDelegate newLot = new LotDelegate(lot);
+			
+			BeanItem<LotDelegate> lotItem = new BeanItem<LotDelegate>(newLot); 
+			//lotItem.addItemProperty(id, property)
 		                                                                    
 		    getFrom().setFormFieldFactory(lotFieldFactory);
 		    getFrom().setItemDataSource(lotItem); // bind to POJO via BeanItem
 
 		        // Determines which properties are shown, and in which order:
 			getFrom().setVisibleItemProperties(Arrays.asList(new String[] {
-		                "name", "finashDate", "startPrice", "descriptions"}));
+		                "name", "finishDate", "startPrice", "descriptions"}));
 
 			body.addComponent(getFrom());
 			body.setWidth(WINDOW_WIDTH, UNITS_PIXELS);		
@@ -104,16 +118,26 @@ public class AddLotDialog extends Window {
 		public void buttonClick(ClickEvent event) {
 			try {
 				getFrom().commit();
+				Date curDate = new Date();
+				if( curDate.after(lot.getFinishDate().toGregorianCalendar().getTime()) ){
+					lot.setState(LotState.NOT_SOLD);
+				}
+				BaseResponse response = client.addLot(lot);
+				if( response.getStateResult().equals(StateResult.SUCCESS) ){
+					lot.setIdLot(response.getIdEntity());
+					if( null != listener ){
+						listener.thisLotAdded(lot);
+					}
+				} else{
+					getApplication().getMainWindow().showNotification(response.getErrorMessage(),
+							Notification.TYPE_ERROR_MESSAGE);
+				}				
+				
+				getParent().removeWindow(getThisWindow());
+	
 			} catch (InvalidValueException e) {
 				
 			}
-//////////// Set fields
-			//code, state, user, id?????			
-
-//addLot()
-// get result if SECSSESFUL -> close window 
-//get idLot and setIdLot(), add lot in the table and view in the lot details and bid list
-//else ERROR  close window  show message "some problems, lot do not add"
 		}
 	});
 }
@@ -124,9 +148,7 @@ public class AddLotDialog extends Window {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			try {
-				
 				getParent().removeWindow(getThisWindow());
-				
 			} catch (InvalidValueException e) {
 				
 			}
@@ -157,7 +179,9 @@ public class AddLotDialog extends Window {
 		return from;
 	}
 	
-	
+	public void setAddLotListener(AddLotListener listener){
+		this.listener = listener;
+	}
 	
 	
 }

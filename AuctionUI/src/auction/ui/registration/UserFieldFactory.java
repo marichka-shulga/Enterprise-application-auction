@@ -32,19 +32,20 @@ public class UserFieldFactory extends DefaultFieldFactory {
          if ("userLogin".equals(propertyId)) {
             TextField loginField = (TextField) field;
             loginField.setCaption("Login");
+           // loginField.setInputPrompt("UserLogin");
 			loginField.setRequired(true);
 			loginField.setRequiredError("Please enter a Login");
 			loginField.addValidator(new StringLengthValidator("The login must be 6-15 characters",6, 15, false));
 			loginField.setNullRepresentation("");
          } else if ("password".equals(propertyId)) {
         	PasswordField passwordField = (PasswordField) field;
- 			passwordField.setRequired(true);
+			passwordField.setRequired(true);
  			passwordField.setRequiredError("Please enter a Password");			
  			passwordField.addValidator(new StringLengthValidator("The password must be 6-15 characters",6, 15, true));
  			passwordField.setNullRepresentation("");
          } else if ("firstName".equals(propertyId)) {
         	TextField firstNameField = (TextField) field;
-			firstNameField.setRequired(true);
+        	firstNameField.setRequired(true);
 			firstNameField.setRequiredError("Please enter a First name");	
 			firstNameField.setNullRepresentation("");
          } else if ("lastName".equals(propertyId)) {

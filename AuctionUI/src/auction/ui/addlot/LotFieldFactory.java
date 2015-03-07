@@ -20,7 +20,7 @@ public class LotFieldFactory extends DefaultFieldFactory {
 	 @Override
      public Field createField(Item item, Object propertyId, Component uiContext) {
          Field field;
-         if ( "finashDate".equals(propertyId) ) {
+         if ( "finishDate".equals(propertyId) ) {
         	 field = getFinishDateField(propertyId);
          } else {
         	 field = super.createField(item, propertyId, uiContext);
@@ -35,8 +35,10 @@ public class LotFieldFactory extends DefaultFieldFactory {
  			nameField.setNullRepresentation("");
 //             tf.addValidator(new StringLengthValidator(
 //                     "First Name must be 3-25 characters", 3, 25, false));
-         } else if ("finashDate".equals(propertyId)) {
+         } else if ("finishDate".equals(propertyId)) {
+        	 
         	PopupDateField finishDateField = (PopupDateField) field;
+        	//finishDateField.setValue("");
         	finishDateField.setDateFormat("dd.MM.yyyy hh:mm:ss");
         	finishDateField.setRequired(true);
         	finishDateField.setRequiredError("Please enter a Finish date");

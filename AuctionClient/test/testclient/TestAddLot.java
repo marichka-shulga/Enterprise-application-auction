@@ -25,15 +25,15 @@ public class TestAddLot {
 	ClientAuction client = new ClientAuction();
 	User user1 = null;
 	User user2 = null;
-	@Test
-	@Before
-	public void authenticationUser1() {
-		UserAuthenticResponse resp = client.userAuthentication("marichka", "marichka");
-		Assert.assertTrue(resp.getStateResult().equals(StateResult.SUCCESS));
-		Assert.assertTrue(resp.getUser().getUserLogin().equals("marichka"));
-		Assert.assertTrue(resp.getUser().getPassword().equals("marichka"));
-		user1 = resp.getUser();
-	}
+//	@Test
+//	@Before
+//	public void authenticationUser1() {
+//		UserAuthenticResponse resp = client.userAuthentication("marichka", "marichka");
+//		Assert.assertTrue(resp.getStateResult().equals(StateResult.SUCCESS));
+//		Assert.assertTrue(resp.getUser().getUserLogin().equals("marichka"));
+//		Assert.assertTrue(resp.getUser().getPassword().equals("marichka"));
+//		user1 = resp.getUser();
+//	}
 	
 	@Test
 	@Before
@@ -49,24 +49,24 @@ public class TestAddLot {
 	public void addLot1() {
 		
 		Lot lot = new Lot();
-		lot.setCode(2233);
+		lot.setCode(8978);
 		lot.setDescriptions("Lot description");
 		Date finishDate = new Date();
 		finishDate.setTime(finishDate.getTime() + 38000);		
 
-//		GregorianCalendar c = new GregorianCalendar();
-//		c.setTime(finishDate);
-//		XMLGregorianCalendar date = null;
-//		try {
-//			date = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-//		} catch (DatatypeConfigurationException e) {
-//			e.printStackTrace();
-//		}
-		lot.setFinishDate(finishDate);
-		lot.setName("lot2");
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(finishDate);
+		XMLGregorianCalendar date = null;
+		try {
+			date = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		} catch (DatatypeConfigurationException e) {
+			e.printStackTrace();
+		}
+		lot.setFinishDate(date);
+		lot.setName("lot4");
 		lot.setStartPrice(new BigDecimal(9));
 		lot.setState(LotState.ACTIVE);
-		lot.setUser(user1);
+		lot.setUser(user2);
 		BaseResponse resp = client.addLot(lot);
 //		System.out.println(resp.getStateResult());
 //		System.out.println(resp.getErrorMessage());
@@ -78,24 +78,24 @@ public class TestAddLot {
 	public void addLot2() {
 		
 		Lot lot = new Lot();
-		lot.setCode(4355);
+		lot.setCode(776);
 		lot.setDescriptions("Lot description");
 		Date finishDate = new Date();
 		finishDate.setTime(finishDate.getTime() + 38000);		
 
-//		GregorianCalendar c = new GregorianCalendar();
-//		c.setTime(finishDate);
-//		XMLGregorianCalendar date = null;
-//		try {
-//			date = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-//		} catch (DatatypeConfigurationException e) {
-//			e.printStackTrace();
-//		}
-		lot.setFinishDate(finishDate);
-		lot.setName("lot1");
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(finishDate);
+		XMLGregorianCalendar date = null;
+		try {
+			date = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		} catch (DatatypeConfigurationException e) {
+			e.printStackTrace();
+		}
+		lot.setFinishDate(date);
+		lot.setName("lot3");
 		lot.setStartPrice(new BigDecimal(9));
 		lot.setState(LotState.ACTIVE);
-		lot.setUser(user1);
+		lot.setUser(user2);
 		BaseResponse resp = client.addLot(lot);
 //		System.out.println(resp.getStateResult());
 //		System.out.println(resp.getErrorMessage());

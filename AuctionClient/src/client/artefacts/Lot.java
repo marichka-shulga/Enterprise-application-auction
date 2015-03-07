@@ -2,15 +2,10 @@
 package client.artefacts;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 
@@ -144,8 +139,8 @@ public class Lot {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public Date getFinishDate() {
-        return finishDate.toGregorianCalendar().getTime();
+    public XMLGregorianCalendar getFinishDate() {
+        return finishDate;
     }
 
     /**
@@ -156,14 +151,8 @@ public class Lot {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setFinishDate(Date value) {
-    	GregorianCalendar c = new GregorianCalendar();
-		c.setTime(value);
-		try {
-			this.finishDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-		} catch (DatatypeConfigurationException e) {
-
-		}
+    public void setFinishDate(XMLGregorianCalendar value) {
+        this.finishDate = value;
     }
 
     /**

@@ -2,6 +2,12 @@ package auction.ui.registration;
 
 import java.util.Arrays;
 
+import auction.ui.ClientAuctionSinglton;
+import auction.ui.authentication.UserIdentifiedListener;
+import client.artefacts.BaseResponse;
+import client.artefacts.StateResult;
+import client.artefacts.User;
+import client.realization.ClientAuction;
 
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.util.BeanItem;
@@ -27,13 +33,17 @@ public class UserRegistrationDialog extends Window {
 	
 	private static final int COMMON_BUTTON_WIDTH = 80;
 	private static final int WINDOW_WIDTH = 350;
+
+	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
 	
 	private static UserFieldFactory userFieldFactory = UserFieldFactorySinglton.getUserFieldFactory();
+	
+	private UserIdentifiedListener listener;
 	
 	User user;
 
 	public UserRegistrationDialog(){
-		user = new User();
+		this.user = new User();
 	}	
 	
 	public void attach() {
@@ -103,8 +113,28 @@ public class UserRegistrationDialog extends Window {
 		public void buttonClick(ClickEvent event) {
 			try {
 				getFrom().commit();
-			} catch (InvalidValueException e) {
+				////как сделать что бы зашифрованый пароль не отображался в поле ввода?
+				user.setPassword(MD5.encryptPassword(user.getPassword()));
+				BaseResponse response = client.userRegistration(user);
+				if( response.getStateResult().equals(StateResult.SUCCESS) ){
+					user.setIdUser(response.getIdEntity());
+					if( null != listener ){
+						listener.heIdentified(user);
+					}		
+					getParent().removeWindow(getThisWindow());
+				} else if( response.getStateResult().equals(StateResult.NOT_SUCCESS) ){
+					getApplication().getMainWindow().showNotification("This login is already used",
+											Notification.TYPE_WARNING_MESSAGE);
+					clearUserField();
+				} else{
+					getApplication().getMainWindow().showNotification(response.getErrorMessage(),
+							Notification.TYPE_ERROR_MESSAGE);
+					clearUserField();
+				}
 				
+
+			} catch (InvalidValueException e) {
+
 			}
 		}
 	});
@@ -116,9 +146,10 @@ public class UserRegistrationDialog extends Window {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			try {
-				
+				clearUserField();
 				getParent().removeWindow(getThisWindow());
 				
+
 			} catch (InvalidValueException e) {
 				
 			}
@@ -147,6 +178,17 @@ public class UserRegistrationDialog extends Window {
 			from = new Form();
 		}
 		return from;
+	}
+	
+	private void clearUserField(){
+		user.setUserLogin("");
+		user.setPassword("");
+		user.setFirstName("");
+		user.setLastName("");
+	}
+	
+	public void setUserIdentifiedListener(UserIdentifiedListener listener){
+		this.listener = listener;
 	}
 	
 }

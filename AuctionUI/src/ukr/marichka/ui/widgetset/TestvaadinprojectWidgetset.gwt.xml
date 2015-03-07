@@ -33,4 +33,6 @@
     -->
     <!-- <set-configuration-property name="devModeRedirectEnabled" value="true" /> -->
 
+
+    <inherits name="org.vaadin.kim.countdownclock.CountdownClockWidgetset" />
 </module>

@@ -22,28 +22,38 @@ public class BidLogic {
 	public BaseResponse addBid(Bid bid){
 		BaseResponse res = new BaseResponse();
 		Lot lot = bid.getLot();
+		String message = null;
 		try {
-			if( lot.getState() == LotState.ACTIVE ){
+			if(lot.getState() == LotState.ACTIVE){
 				int rateIsMore = bid.getRate().compareTo(lot.getStartPrice());
-				if( (1 == rateIsMore) || (0 == rateIsMore) ){
+				System.out.println("ACTIVE");
+				if( (1 == rateIsMore) || (0 == rateIsMore) ) {
+					System.out.println(" >= St p");
 					rateIsMore = bid.getRate().compareTo(bidDAO.getMaxRate(lot.getIdLot()));
+					System.out.println("max rate"+bidDAO.getMaxRate(lot.getIdLot()));
 					if( 1 == rateIsMore ){
+						System.out.println("> Bid prase");
 						bidDAO.save(bid);
 						res.setStateResult(StateResult.SUCCESS);
 						res.setIdEntity(bid.getIdBid());
+						message = "The addition bid successfully idLot={}, userLogin={}";
 					}
 				}
+			} else {
+				res.setStateResult(StateResult.NOT_SUCCESS);
+				message = "The addition bid not successfully idLot={}, userLogin={}";
 			}
+
+		} catch (Exception e) {
+			LOGGRER.error(
+					"Is not satisfied addBid{}, reason={}, idLot={}, userLogin={}",
+					e, e.getMessage(), lot.getIdLot(), bid
+							.getUser().getUserLogin());
+			res.setStateResult(StateResult.ERROR);
+			res.setErrorMessage(e.getMessage());
+		}
 		
-			} catch( Exception e ){
-				LOGGRER.error("Is not satisfied addBid{}, reason={}, idBid={}, idLot={}, userLogin={}", 
-						e, e.getMessage(), bid.getIdBid(), lot.getIdLot(), bid.getUser().getUserLogin());	
-				res.setStateResult(StateResult.ERROR);
-				res.setErrorMessage(e.getMessage());	
-			}
-		
-		LOGGRER.info("The addition bid successfully idBid={}, idLot={}, userLogin={}",
-					bid.getIdBid(), lot.getIdLot(), bid.getUser().getUserLogin());
+		//LOGGRER.info(message, lot.getIdLot(), bid.getUser().getUserLogin());
 		
 		return res;
 	}
