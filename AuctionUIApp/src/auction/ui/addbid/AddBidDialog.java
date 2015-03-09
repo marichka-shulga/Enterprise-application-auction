@@ -3,7 +3,6 @@ package auction.ui.addbid;
 import java.util.Arrays;
 
 import auction.ui.ClientAuctionSinglton;
-import auction.ui.bidsform.BidDelegate;
 import client.artefacts.BaseResponse;
 import client.artefacts.Bid;
 import client.artefacts.StateResult;
@@ -45,7 +44,12 @@ public class AddBidDialog extends Window {
 	 
 	public AddBidDialog(Bid bid){
 		this.bid = bid;
+		
 	}
+	
+	private AddBidDialog getThisWindow(){
+		return this;
+	}	
 	
 	public void attach() {
 		
@@ -76,7 +80,7 @@ public class AddBidDialog extends Window {
 
 	@SuppressWarnings("serial")
 	private void buttonAddBidClick() {
-		addBidButton.addListener(new ClickListener() {
+		getAddBidButton().addListener(new ClickListener() {
 		
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -89,14 +93,17 @@ public class AddBidDialog extends Window {
 					if( null != listener ){
 						listener.thisLotAdded(bid);
 					}
+					getParent().removeWindow(getThisWindow());
 				} else if( response.getStateResult().equals(StateResult.NOT_SUCCESS) ){
 					getApplication().getMainWindow().showNotification("Less than the previous rate",
 											Notification.TYPE_WARNING_MESSAGE);
+					clearBidField();
 				} else{
 					getApplication().getMainWindow().showNotification(response.getErrorMessage(),
 							Notification.TYPE_ERROR_MESSAGE);
-				}				
-		
+					getParent().removeWindow(getThisWindow());
+				}			
+	
 			} catch (InvalidValueException e) {
 				
 			}
@@ -132,5 +139,7 @@ public class AddBidDialog extends Window {
 		this.listener = listener;
 	}
 	
-
+	private void clearBidField(){
+		bid.setRate(null);
+	}
 }

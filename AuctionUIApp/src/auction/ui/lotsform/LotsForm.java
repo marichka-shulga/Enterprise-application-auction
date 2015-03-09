@@ -58,12 +58,13 @@ public class LotsForm extends Form {
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();	
 	
 	private HorizontalLayout footer;
-
 	
 	public LotsForm(User user){
 		this.user = user;
 		getAllLots();
 		getLotsTable();
+		
+		buttonNewLotClick();
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class LotsForm extends Form {
 		layout.setExpandRatio(getHozizontalLayoutWithButton(), 0);
 		layout.setComponentAlignment(getHozizontalLayoutWithButton(), Alignment.MIDDLE_RIGHT);
 		setSizeFull();
-		buttonNewLotClick();
+
 		
 	}
 	
@@ -190,7 +191,7 @@ public class LotsForm extends Form {
 	
 	@SuppressWarnings("serial")	
 	public void buttonNewLotClick(){
-		newLotButton.addListener(new ClickListener() {				
+		getNewLotButton().addListener(new ClickListener() {				
 		@Override
 		public void buttonClick(ClickEvent event) {
 
@@ -200,7 +201,6 @@ public class LotsForm extends Form {
 			lot.setCode(RandomInt.randInt());
 			AddLotDialog addLotDialog = new AddLotDialog(lot);
 			getApplication().getMainWindow().addWindow(addLotDialog);
-			
 			addLotDialog.setAddLotListener(new AddLotListener(){
 				@Override
 				public void thisLotAdded(Lot Lot) {
@@ -235,7 +235,19 @@ public class LotsForm extends Form {
 	
 	public void setUser(User user){
 		this.user = user;
-	}
+		
+		if( !beans.getItemIds().isEmpty() ){
+			getLotsTable().setValue(beans.getIdByIndex(0));
+		}	
+		
+		if( null != lotClickedListenerForLotDetailsF ){
+			lotClickedListenerForLotDetailsF.thisLotCliked(getCurrentLot());
+		}
 
+		if( null != lotClickedListenerForBidsF ){
+			lotClickedListenerForBidsF.bidsForClickedLot(lots.get(getCurrentLot()));
+		}	
+	}
+	
 }
  

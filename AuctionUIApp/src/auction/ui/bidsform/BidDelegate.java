@@ -1,7 +1,10 @@
 package auction.ui.bidsform;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.xml.datatype.XMLGregorianCalendar;
+
 import client.artefacts.Bid;
 
 public class BidDelegate {
@@ -20,14 +23,16 @@ public class BidDelegate {
 		return this.bid;
 	}	
 	
-	public Date getDateAdding() {
+	public String getDateAdding() {
+		String result = "";
 		XMLGregorianCalendar calendar = bid.getDateAdding();
 		Date date = null;
         if( null != calendar ) {
             date = calendar.toGregorianCalendar().getTime();
-//            DateFormat format;
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+           	result = format.format(date);
         }
-        return date;
+        return result;
 	}
 
 	public String getRate() {

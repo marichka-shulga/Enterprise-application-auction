@@ -47,6 +47,7 @@ public class AddLotDialog extends Window {
 		this.lot = lot;
 	}
 	
+	
 	public void attach() {
 		this.setCaption("New lot");
 		this.center();
@@ -181,6 +182,11 @@ public class AddLotDialog extends Window {
 	
 	public void setAddLotListener(AddLotListener listener){
 		this.listener = listener;
+	}
+	
+	public void setLot(Lot lot){
+		this.lot = lot;
+		System.out.println("Set lot"+lot.getName());
 	}
 	
 	

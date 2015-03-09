@@ -113,7 +113,6 @@ public class UserRegistrationDialog extends Window {
 		public void buttonClick(ClickEvent event) {
 			try {
 				getFrom().commit();
-				////как сделать что бы зашифрованый пароль не отображался в поле ввода?
 				user.setPassword(MD5.encryptPassword(user.getPassword()));
 				BaseResponse response = client.userRegistration(user);
 				if( response.getStateResult().equals(StateResult.SUCCESS) ){
@@ -130,8 +129,7 @@ public class UserRegistrationDialog extends Window {
 							Notification.TYPE_ERROR_MESSAGE);
 					clearUserField();
 				}
-				getApplication().getMainWindow().removeWindow(getThisWindow());
-				//getParent().removeWindow(getThisWindow());
+				getParent().removeWindow(getThisWindow());
 			} catch (InvalidValueException e) {
 
 			}

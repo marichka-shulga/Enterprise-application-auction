@@ -1,6 +1,7 @@
 package auction.ui.addlot;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -15,6 +16,16 @@ import client.artefacts.User;
 public class LotDelegate {
 	private Lot lot;
 	private String remainingTime;
+	
+	
+	public String getFinishDateInFormat() {
+		Date date = getFinishDate();
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+        finishDateInFormat = format.format(date);
+		return finishDateInFormat;
+	}
+	
+	private String finishDateInFormat; 
 	
 	public LotDelegate(Lot lot){
 		this.lot = lot;
@@ -55,8 +66,6 @@ public class LotDelegate {
         }
         return date;
 	}
-	
-	
 
 	public void setFinishDate(Date date) {
 		GregorianCalendar gCalendar = new GregorianCalendar();
@@ -71,6 +80,9 @@ public class LotDelegate {
 
 		lot.setFinishDate(xmlCalendar);
 	}
+	
+	
+
 
 	public String getName() {
 		return lot.getName();

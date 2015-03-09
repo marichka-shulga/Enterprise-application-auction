@@ -69,6 +69,7 @@ public class BidsForm extends Form {
 				checkEnableAddBidButton();
 				
 			}});
+		buttonNewBidClick();
 	}
 	
 	
@@ -89,8 +90,6 @@ public class BidsForm extends Form {
 		layout.setExpandRatio(getHozizontalLayoutWithButton(), 0);
 		layout.setComponentAlignment(getHozizontalLayoutWithButton(), Alignment.MIDDLE_RIGHT);
 		setSizeFull();
-		buttonNewBidClick();
-		
 	}	
 	
 	private void checkEnableAddBidButton(){
@@ -166,8 +165,6 @@ public class BidsForm extends Form {
 			bid.setDateAdding(xmlCalendar);
 			bid.setLot(lotsForm.getCurrentLot());
 			bid.setUser(lotsForm.getUser());
-//			System.out.println(lotsForm.getUser().getUserLogin());
-//			System.out.println(lotsForm.getCurrentLot().getName());		
 			
 			AddBidDialog addBidDialog = new AddBidDialog(bid);
 			getApplication().getMainWindow().addWindow(addBidDialog);

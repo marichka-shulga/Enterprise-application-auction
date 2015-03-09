@@ -1,7 +1,5 @@
 package auction.ui.authentication;
 
-import java.util.Arrays;
-
 import auction.ui.ClientAuctionSinglton;
 import auction.ui.registration.MD5;
 import auction.ui.registration.UserFieldFactory;
@@ -36,8 +34,6 @@ public class UserAuthenticationDialog extends Panel {
 	private HorizontalLayout footer;
 	private VerticalLayout body;
 	
-	private UserRegistrationDialog userRegistrationDialog;
-	
 	private static final UserFieldFactory userFieldFactory = UserFieldFactorySinglton.getUserFieldFactory();
 	
 	private static final int COMMON_BUTTON_WIDTH = 80;
@@ -58,6 +54,7 @@ public class UserAuthenticationDialog extends Panel {
 	public void initDialog(){
 		this.user = new User();	
 		initFormFields();
+
 	}
 	public void attach() {
 		this.setCaption("Authentication");
@@ -74,9 +71,10 @@ public class UserAuthenticationDialog extends Panel {
 		mainVerticalLayout.setExpandRatio(getHozizontalLayoutWithButtons(), 0);
 
 		mainVerticalLayout.setSizeUndefined();
-
+		
 		buttonLoginClick();
 		buttonRegisterClick();
+
 	}
 	
 	private VerticalLayout getVerticalLayoutWithFields(){
@@ -114,7 +112,7 @@ public class UserAuthenticationDialog extends Panel {
 
 	@SuppressWarnings("serial")
 	private void buttonLoginClick() {
-		loginButton.addListener(new ClickListener() {
+		getLoginButton().addListener(new ClickListener() {
 		
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -128,8 +126,6 @@ public class UserAuthenticationDialog extends Panel {
 						listener.heIdentified(user);
 					}
 				} else if( responce.getStateResult().equals(StateResult.NOT_SUCCESS) ){
-					
-					/////////////////////////////////////////////ERRRORRR
 					getApplication().getMainWindow().showNotification("The login or password you entered is incorrect",
 											Notification.TYPE_WARNING_MESSAGE);
 					clearUserField();
@@ -149,15 +145,14 @@ public class UserAuthenticationDialog extends Panel {
 
 	@SuppressWarnings("serial")
 	private void buttonRegisterClick() {
-		registerlButton.addListener(new ClickListener() {
+		getRegisterButton().addListener(new ClickListener() {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			try {
 				clearUserField();
-				//getApplication().getMainWindow().removew
-				if( null == getApplication().getMainWindow().getWindow() )
-					getApplication().getMainWindow().addWindow(getUserRegistrationDialog());
-				getUserRegistrationDialog().setUserIdentifiedListener(listener);
+				UserRegistrationDialog userRegistrationDialog = new UserRegistrationDialog();
+				getApplication().getMainWindow().addWindow(userRegistrationDialog);
+				userRegistrationDialog.setUserIdentifiedListener(listener);
 			} catch (InvalidValueException e) {
 				
 			}
@@ -197,16 +192,4 @@ public class UserAuthenticationDialog extends Panel {
 	public void setUserIdentifiedListener(UserIdentifiedListener listener){
 		this.listener = listener;
 	}
-
-	private UserRegistrationDialog getUserRegistrationDialog(){
-		if( null == userRegistrationDialog ){
-			userRegistrationDialog = new UserRegistrationDialog();
-		}
-		return userRegistrationDialog;
-	}
-	
-	
-	
-	
-
 }

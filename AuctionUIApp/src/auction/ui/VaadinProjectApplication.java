@@ -37,8 +37,6 @@ public class VaadinProjectApplication extends Application {
 	private VerticalLayout mainLayout;
 	private VerticalLayout userDialogLayout;	
 	
-	private UserAuthenticationDialog userdialog;
-	
 	private User user;
 	private Window mainWindow; 
 	
@@ -48,15 +46,14 @@ public class VaadinProjectApplication extends Application {
 	}
 	
 	private void openUserAuhtenticationPanel(){
-		getUserAuthenticationDialog().initDialog();
-		//VerticalLayout userDialogLayout = new VerticalLayout();
+		getUserDialogLayout().removeAllComponents();
 		getMainWindow().setContent(getUserDialogLayout());
-		//userdialog = new UserAuthenticationDialog();
-		getUserDialogLayout().addComponent(getUserAuthenticationDialog());
-		getUserDialogLayout().setComponentAlignment(getUserAuthenticationDialog(),Alignment.MIDDLE_CENTER);
+		UserAuthenticationDialog userdialog = new UserAuthenticationDialog();
+		getUserDialogLayout().addComponent(userdialog);
+		getUserDialogLayout().setComponentAlignment(userdialog,Alignment.MIDDLE_CENTER);
 		getUserDialogLayout().setSizeFull();
 		
-		getUserAuthenticationDialog().setUserIdentifiedListener(new UserIdentifiedListener(){
+		userdialog.setUserIdentifiedListener(new UserIdentifiedListener(){
 			@Override
 			public void heIdentified(User user) {
 				setUser(user);
@@ -112,13 +109,6 @@ public class VaadinProjectApplication extends Application {
 		return userDialogLayout;
 	}	
 	
-	public UserAuthenticationDialog getUserAuthenticationDialog(){
-		if( null == userdialog){
-			userdialog = new UserAuthenticationDialog();
-		}
-		return userdialog;
-	}	
-
 	public Window getMainWindow(){
 		if( null == mainWindow){
 			mainWindow = new Window("Application");
@@ -127,8 +117,6 @@ public class VaadinProjectApplication extends Application {
 		}
 		return mainWindow;
 	}	
-	
-	
 	
 	public Label getUserName() {
 		if (userName == null) {
