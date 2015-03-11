@@ -6,11 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.quartz.SchedulerException;
+
 import auction.ui.ClientAuctionSinglton;
 import auction.ui.addlot.AddLotDialog;
 import auction.ui.addlot.AddLotListener;
+import auction.ui.addlot.LotDelegate;
 import auction.ui.addlot.RandomInt;
 import auction.ui.bidsform.BidDelegate;
+import auction.ui.quartz.FinishTradesJob;
+import auction.ui.quartz.QuartzManager;
+import auction.ui.quartz.QuartzManagerSingleton;
 import client.artefacts.GetBidsByIdLotResponse;
 import client.artefacts.GetLotsResponse;
 import client.artefacts.Lot;
@@ -43,12 +49,13 @@ public class LotsForm extends Form {
 	
 	private static final String[] HEADER_LOTS_TABLE = new String[] { "Code", "Name", "Finish date", "State"}; 
 	
-	private static final Object[] COLUMS_NAME = new Object[]{"code", "name","finishDate", "state"};	
+	private static final Object[] COLUMS_NAME = new Object[]{"code", "name","finishDateInFormat", "state"};	
+	
+	private static final QuartzManager manager = QuartzManagerSingleton.getQuartzManager();
 	
 	
-	
-	private BeanItemContainer<Lot> beans = new BeanItemContainer<Lot>(Lot.class);
-	private Map<Lot,List<BidDelegate>> lots;
+	private BeanItemContainer<LotDelegate> beans = new BeanItemContainer<LotDelegate>(LotDelegate.class);
+	private Map<LotDelegate,List<BidDelegate>> lots;
 	
 	
 	private User user;
@@ -56,6 +63,7 @@ public class LotsForm extends Form {
 	private ClickedLotListenerForLotDetailsForm lotClickedListenerForLotDetailsF;
 	private ClickedLotListenerForBidsForm lotClickedListenerForBidsF;
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();	
+
 	
 	private HorizontalLayout footer;
 	
@@ -88,6 +96,10 @@ public class LotsForm extends Form {
 		
 	}
 	
+//	public static LotsForm getLotsForm(){
+//		return this;
+//	}
+	
 	
 	private HorizontalLayout getHozizontalLayoutWithButton(){
 		if( null == footer ){
@@ -103,15 +115,34 @@ public class LotsForm extends Form {
 	public void getAllLots() {
 		GetLotsResponse response = client.getAllLots();
 		if( response.getStateResult().equals(StateResult.SUCCESS) ){
-			beans.addAll(response.getListLots());
 			
-			lots = new HashMap<Lot,List<BidDelegate>>();
-			Iterator<Lot> it = beans.getItemIds().iterator();
+			Iterator<Lot> itLots = response.getListLots().iterator();
+			
+			while( itLots.hasNext() ){
+				Lot lot = itLots.next();
+				LotDelegate lotDelegate = new LotDelegate(lot);
+				beans.addBean(lotDelegate);
+				if( lotDelegate.getState().equals(LotState.ACTIVE)){
+					try {
+						manager.addJob(String.valueOf(lotDelegate.getIdLot()),lotDelegate.getFinishDate(),FinishTradesJob.class);
+					} catch (SchedulerException e) {
+
+						///////////////////////
+						/////////////////////
+					
+					
+					}	
+				}
+			}
+			
+				
+			lots = new HashMap<LotDelegate,List<BidDelegate>>();
+			Iterator<LotDelegate> it = beans.getItemIds().iterator();
 			GetBidsByIdLotResponse responseGetBids;
-			Lot lot;
+			LotDelegate lotDelegate;
 			while(it.hasNext()){
-				lot = it.next();
-				responseGetBids = client.getBids(lot.getIdLot());
+				lotDelegate = it.next();
+				responseGetBids = client.getBids(lotDelegate.getIdLot());
 				if( responseGetBids.getStateResult().equals(StateResult.SUCCESS) ){
 
 					List<Bid> bids = responseGetBids.getBids();
@@ -121,7 +152,7 @@ public class LotsForm extends Form {
 					while(itBids.hasNext()){
 						bidsDelegate.add(new BidDelegate(itBids.next()));
 					}
-					lots.put(lot, bidsDelegate);
+					lots.put(lotDelegate, bidsDelegate);
 				} else {
 					getApplication().getMainWindow().showNotification(responseGetBids.getErrorMessage(),
 							Notification.TYPE_ERROR_MESSAGE);
@@ -154,9 +185,13 @@ public class LotsForm extends Form {
 			    public void itemClick(ItemClickEvent itemClickEvent) {
 					if( (null != lotClickedListenerForLotDetailsF) && (null != lotsTable.getValue()) ){
 						lotsTable.setValue(itemClickEvent.getItemId());
-						lotClickedListenerForLotDetailsF.thisLotCliked((Lot)itemClickEvent.getItemId());
+//						System.out.println("lot "+((LotDelegate)lotsTable.getValue()).getName()+"  user "+((LotDelegate)lotsTable.getValue()).getLot().getUser().getUserLogin()+
+//								"  idUser "+((LotDelegate)lotsTable.getValue()).getLot().getUser().getIdUser());
+
+
+						lotClickedListenerForLotDetailsF.thisLotCliked((LotDelegate)itemClickEvent.getItemId());
 					
-						lotClickedListenerForBidsF.bidsForClickedLot(lots.get((Lot)itemClickEvent.getItemId()));
+						lotClickedListenerForBidsF.bidsForClickedLot(lots.get((LotDelegate)itemClickEvent.getItemId()));
 					}
 			    }
 			});
@@ -166,16 +201,33 @@ public class LotsForm extends Form {
 		return lotsTable;
 	}
 	
-	public Lot getCurrentLot(){
-		return (Lot)getLotsTable().getValue();
+	public LotDelegate getCurrentLotDelegate(){
+		return (LotDelegate)getLotsTable().getValue();
+	}
+	
+	
+	public List<BidDelegate> getBidsForCurrentLot(){
+		return lots.get(getCurrentLotDelegate());
 	}
 
-	public List<BidDelegate> getBidsForCurrentLot(){
-		return lots.get(getCurrentLot());
-	}	
+	
+	public LotDelegate getLotDelegateByIdLot(Integer idLot){
+		Iterator<LotDelegate> it = beans.getItemIds().iterator();
+		LotDelegate lotDelegate;
+		while(it.hasNext()){
+			lotDelegate = it.next();
+			if( lotDelegate.getIdLot().equals(idLot) ){
+				return lotDelegate;
+			}
+
+		}		
+
+		return null;
+	}
 	
 	
-	public void refreshTableValue(Lot lot){
+	public void refreshTableValue(){
+		getLotsTable().setValue(getCurrentLotDelegate());
 		getLotsTable().refreshRowCache();
 	}
 
@@ -203,19 +255,29 @@ public class LotsForm extends Form {
 			getApplication().getMainWindow().addWindow(addLotDialog);
 			addLotDialog.setAddLotListener(new AddLotListener(){
 				@Override
-				public void thisLotAdded(Lot Lot) {
-					beans.addBean(lot);
-					getLotsTable().setValue(lot);
+				public void thisLotAdded(LotDelegate lotDelegate) {
+					beans.addBean(lotDelegate);
+					getLotsTable().setValue(lotDelegate);
+					try {
+						manager.addJob(String.valueOf(lotDelegate.getIdLot()),lotDelegate.getFinishDate(),FinishTradesJob.class);
+					} catch (SchedulerException e) {
+
+						///////////////////////
+						/////////////////////
+						
+						
+					}
 					if( null != lotClickedListenerForLotDetailsF ){
-						lotClickedListenerForLotDetailsF.thisLotCliked((Lot)getLotsTable().getValue());
+						lotClickedListenerForLotDetailsF.thisLotCliked((LotDelegate)getLotsTable().getValue());
 					}
 
-					lots.put((Lot)getLotsTable().getValue(), new ArrayList<BidDelegate>());
+					lots.put((LotDelegate)getLotsTable().getValue(), new ArrayList<BidDelegate>());
 					if( null != lotClickedListenerForBidsF ){
-						lotClickedListenerForBidsF.bidsForClickedLot(lots.get((Lot)getLotsTable().getValue()));
+						lotClickedListenerForBidsF.bidsForClickedLot(lots.get((LotDelegate)getLotsTable().getValue()));
 					}					
 					
 				}
+
 			});
 		}
 		});		 
@@ -241,13 +303,31 @@ public class LotsForm extends Form {
 		}	
 		
 		if( null != lotClickedListenerForLotDetailsF ){
-			lotClickedListenerForLotDetailsF.thisLotCliked(getCurrentLot());
+			lotClickedListenerForLotDetailsF.thisLotCliked(getCurrentLotDelegate());
 		}
 
 		if( null != lotClickedListenerForBidsF ){
-			lotClickedListenerForBidsF.bidsForClickedLot(lots.get(getCurrentLot()));
+			lotClickedListenerForBidsF.bidsForClickedLot(lots.get(getCurrentLotDelegate()));
 		}	
 	}
+	
+	public void setWinningBid(Bid bid, LotDelegate lotDelegate){
+//		List<BidDelegate> bidsDelegate = lots.get(lotDelegate);
+		Iterator<BidDelegate> it = lots.get(lotDelegate).iterator();
+		BidDelegate bidDelegate;
+		while( it.hasNext() ){
+			bidDelegate = it.next();
+			if( bidDelegate.getBid().getIdBid().equals(bid.getIdBid()) ){
+				bidDelegate.getBid().setIsWinningBid(bid.isIsWinningBid());
+				break;
+			}
+
+		}
+		
+		
+		
+	}
+	
 	
 }
  

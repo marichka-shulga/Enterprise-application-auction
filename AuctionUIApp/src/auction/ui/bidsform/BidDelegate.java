@@ -43,5 +43,12 @@ public class BidDelegate {
 	public String getUser() {
 		return bid.getUser().getUserLogin();
 	}
+	
+	public Boolean isIsWinningBid() {
+		return bid.isIsWinningBid();
+	}
 
+	public void setIsWinningBid(Boolean value) {
+		bid.setIsWinningBid(value);
+	}
 }

@@ -3,6 +3,7 @@ package auction.ui.bidsform;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -11,14 +12,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import auction.ui.addbid.AddBidDialog;
 import auction.ui.addbid.AddBidListener;
+import auction.ui.addlot.LotDelegate;
 import auction.ui.lotsform.ClickedLotListenerForBidsForm;
 import auction.ui.lotsform.LotsForm;
 import client.artefacts.Bid;
 import client.artefacts.LotState;
-
-
-
-
 
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
@@ -38,7 +36,6 @@ public class BidsForm extends Form {
 	
 	private HorizontalLayout footer;	
 	
-	//private static ClientAuction client = ClientAuctionSinglton.getClientAuction();		
 	private LotsForm lotsForm;
 	
 	private static final String[] HEADER_LOTS_TABLE = new String[] { "Bid", "Date", "Bidder"}; 
@@ -49,23 +46,27 @@ public class BidsForm extends Form {
 	
 	public BidsForm(LotsForm lotsForm){
 		this.lotsForm = lotsForm;
-		
 		if( null == lotsForm.getBidsForCurrentLot() ){
 			beans.addAll(new ArrayList<BidDelegate>());
 		} else{
 			beans.addAll(lotsForm.getBidsForCurrentLot());
-		}	
+		}
+		
+		initTable();
 		checkEnableAddBidButton();
 		this.lotsForm.setClickedLotListener(new ClickedLotListenerForBidsForm(){
 			@Override
 			public void bidsForClickedLot(List<BidDelegate> bids) {
 				beans.removeAllItems();
-				beans.addAll(bids);
-				if( !beans.getItemIds().isEmpty()){
-					getBidsTable().setValue(beans.getIdByIndex(0));
+				if( null == bids ){
+					beans.addAll(new ArrayList<BidDelegate>());
+				} else{
+					beans.addAll(bids);
 				}
+		
 				getBidsTable().refreshRowCache();
 				
+				initTable();	
 				checkEnableAddBidButton();
 				
 			}});
@@ -93,9 +94,16 @@ public class BidsForm extends Form {
 	}	
 	
 	private void checkEnableAddBidButton(){
-		if( null != lotsForm.getCurrentLot() ){
-			if( (lotsForm.getCurrentLot().getUser().getIdUser() != lotsForm.getUser().getIdUser()) && 
-					lotsForm.getCurrentLot().getState().equals(LotState.ACTIVE) ){
+//		System.out.println("lot "+lotsForm.getCurrentLotDelegate().getName()+"  user "+lotsForm.getCurrentLotDelegate().getLot().getUser().getUserLogin()+
+//				"  idUser "+lotsForm.getCurrentLotDelegate().getLot().getUser().getIdUser());
+//		System.out.println(lotsForm.getCurrentLotDelegate().getLot().getUser().getIdUser()+"    "+lotsForm.getUser().getIdUser());
+//		if ( !lotsForm.getCurrentLotDelegate().getLot().getUser().getIdUser().equals(lotsForm.getUser().getIdUser()) ){
+//			System.out.println("fail");
+//		}
+//	
+		if(null != lotsForm.getCurrentLotDelegate() ){
+			if( (!lotsForm.getCurrentLotDelegate().getLot().getUser().getIdUser().equals(lotsForm.getUser().getIdUser())) && 
+					lotsForm.getCurrentLotDelegate().getState().equals(LotState.ACTIVE) ){
 				if( !getNewBidButton().isEnabled() )
 					getNewBidButton().setEnabled(true);			
 			}
@@ -107,6 +115,31 @@ public class BidsForm extends Form {
 		} else{	
 			getNewBidButton().setEnabled(false);
 		}		
+	}
+	
+	private void initTable(){
+		if( null != lotsForm.getCurrentLotDelegate() && lotsForm.getCurrentLotDelegate().getState().equals(LotState.SOLD) ){
+				
+			getBidsTable().setSelectable(false);
+			//getBidsTable().setImmediate(true);
+
+			Iterator<BidDelegate> it = beans.getItemIds().iterator();
+			BidDelegate bidDelegate;
+			while(it.hasNext()){
+				bidDelegate = it.next();
+				if( bidDelegate.isIsWinningBid() ){
+					getBidsTable().setValue(bidDelegate);
+					break;
+				}
+			}
+		} else {
+			getBidsTable().setSelectable(true);
+			getBidsTable().setImmediate(true);
+			if( !beans.getItemIds().isEmpty() ){
+				getBidsTable().setValue(beans.getIdByIndex(0));
+			}	
+		}
+	
 	}
 	
 	private HorizontalLayout getHozizontalLayoutWithButton(){
@@ -126,11 +159,7 @@ public class BidsForm extends Form {
 			bidsTable.setVisibleColumns(COLUMS_NAME);
 			bidsTable.setColumnHeaders(HEADER_LOTS_TABLE);
 			
-			bidsTable.setSelectable(true);
-			bidsTable.setImmediate(true);
-			if( !beans.getItemIds().isEmpty() ){
-				bidsTable.setValue(beans.getIdByIndex(0));
-			}	
+
 		
 		}
 		return bidsTable;
@@ -163,7 +192,7 @@ public class BidsForm extends Form {
 
 			}
 			bid.setDateAdding(xmlCalendar);
-			bid.setLot(lotsForm.getCurrentLot());
+			bid.setLot(lotsForm.getCurrentLotDelegate().getLot());
 			bid.setUser(lotsForm.getUser());
 			
 			AddBidDialog addBidDialog = new AddBidDialog(bid);
@@ -175,6 +204,7 @@ public class BidsForm extends Form {
 					BidDelegate bidDelegate = new BidDelegate(bid);
 					beans.addBean(bidDelegate);
 					getBidsTable().setValue(bidDelegate);
+					lotsForm.getBidsForCurrentLot().add(bidDelegate);
 					
 				}
 			});

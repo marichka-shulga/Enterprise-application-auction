@@ -1,6 +1,5 @@
 package auction.service;
 
-
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -8,13 +7,17 @@ import javax.jws.soap.SOAPBinding;
 import auction.businesslogic.modelBL.BidLogic;
 import auction.businesslogic.modelBL.LotLogic;
 import auction.businesslogic.modelBL.UserLogic;
+import auction.dao.BidDAO;
 import auction.dao.LotDAO;
 import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.User;
 import auction.service.response.BaseResponse;
+import auction.service.response.GetBidsByIdLotResponse;
 import auction.service.response.GetLotByIdResponse;
+import auction.service.response.GetLotStateByIdLotResponse;
 import auction.service.response.GetLotsResponse;
+import auction.service.response.GetWinningBidByIdResponseResponse;
 import auction.service.response.UserAuthenticResponse;
 
 @WebService(serviceName = "AuctionService",
@@ -29,12 +32,14 @@ public class FacadeService {
 	private LotLogic lotLogic;
 	private BidLogic bidLogic;
 	private LotDAO lotDAO;
+	private BidDAO bidDAO;
 	
 	public FacadeService(){
 		userLogic = new UserLogic();
 		lotLogic = new LotLogic();
 		bidLogic = new BidLogic(); 
 		lotDAO = new LotDAO();
+		bidDAO = new BidDAO();
 	}
 
 
@@ -59,22 +64,33 @@ public class FacadeService {
 	}	
 	
 
-	//do not forgot add user in lot (lot.setUser(user))
 	@WebMethod
 	public BaseResponse addLot(Lot lot){
 		return lotLogic.addLot(lot);
 	}		
 
-	//return lot with list bid include winning bid
 	@WebMethod
 	public BaseResponse cancelLot(Lot lot){
 		return lotLogic.cancelOfTrades(lot);
 	}	
 	
-	//do not forgot add user in bid (bid.setUser(user))	lot
 	@WebMethod
 	public BaseResponse addBid(Bid bid){
 		return bidLogic.addBid(bid);
 	}		
 	
+	@WebMethod
+	public GetBidsByIdLotResponse getBids(Integer idLot){
+		return bidDAO.getBids(idLot);
+	}	
+	
+	@WebMethod
+	public GetLotStateByIdLotResponse getLotState(Integer idLot){
+		return lotDAO.getLotStateByLotId(idLot);
+	}
+	
+	@WebMethod	
+	public GetWinningBidByIdResponseResponse getWinningBid(Integer idLot){
+		return  bidDAO.getWinningBidForLot(idLot);
+	}
 }

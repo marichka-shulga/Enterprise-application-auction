@@ -36,9 +36,12 @@ import javax.xml.bind.annotation.XmlType;
     "stateResult"
 })
 @XmlSeeAlso({
+    GetLotStateByIdLotResponse.class,
+    GetBidsByIdLotResponse.class,
+    GetWinningBidByIdResponseResponse.class,
+    UserAuthenticResponse.class,
     GetLotByIdResponse.class,
-    GetLotsResponse.class,
-    UserAuthenticResponse.class
+    GetLotsResponse.class
 })
 public class BaseResponse {
 

@@ -52,7 +52,7 @@ public class QuartzManager {
 		}
 
 		JobDetail job = JobBuilder.newJob().withIdentity(JOB_NAME, JOB_GROUP).ofType(jobClass).build();
-
+		date.setTime(date.getTime() + 1000);
 		Trigger trigger = TriggerBuilder.newTrigger()
 				.withIdentity(triggerId, JOB_GROUP).forJob(job).startAt(date)
 				.build();

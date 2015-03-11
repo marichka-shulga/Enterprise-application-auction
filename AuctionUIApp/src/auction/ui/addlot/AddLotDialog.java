@@ -1,6 +1,5 @@
 package auction.ui.addlot;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import auction.ui.ClientAuctionSinglton;
@@ -37,6 +36,9 @@ public class AddLotDialog extends Window {
 	
 	private static final int COMMON_BUTTON_WIDTH = 80;
 	private static final int WINDOW_WIDTH = 350;
+	
+	private static final String[] FIELDS_NAME = new String[] {"name", "finishDate", "startPrice", "descriptions"}; 
+	
 	private Lot lot;
 	
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
@@ -87,8 +89,7 @@ public class AddLotDialog extends Window {
 		    getFrom().setItemDataSource(lotItem); // bind to POJO via BeanItem
 
 		        // Determines which properties are shown, and in which order:
-			getFrom().setVisibleItemProperties(Arrays.asList(new String[] {
-		                "name", "finishDate", "startPrice", "descriptions"}));
+			getFrom().setVisibleItemProperties(FIELDS_NAME);
 
 			body.addComponent(getFrom());
 			body.setWidth(WINDOW_WIDTH, UNITS_PIXELS);		
@@ -127,7 +128,7 @@ public class AddLotDialog extends Window {
 				if( response.getStateResult().equals(StateResult.SUCCESS) ){
 					lot.setIdLot(response.getIdEntity());
 					if( null != listener ){
-						listener.thisLotAdded(lot);
+						listener.thisLotAdded(new LotDelegate(lot));
 					}
 				} else{
 					getApplication().getMainWindow().showNotification(response.getErrorMessage(),

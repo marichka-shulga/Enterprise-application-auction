@@ -19,9 +19,21 @@
 
   <xs:element name="getAllLotsResponse" type="tns:getAllLotsResponse"/>
 
+  <xs:element name="getBids" type="tns:getBids"/>
+
+  <xs:element name="getBidsResponse" type="tns:getBidsResponse"/>
+
   <xs:element name="getLot" type="tns:getLot"/>
 
   <xs:element name="getLotResponse" type="tns:getLotResponse"/>
+
+  <xs:element name="getLotState" type="tns:getLotState"/>
+
+  <xs:element name="getLotStateResponse" type="tns:getLotStateResponse"/>
+
+  <xs:element name="getWinningBid" type="tns:getWinningBid"/>
+
+  <xs:element name="getWinningBidResponse" type="tns:getWinningBidResponse"/>
 
   <xs:element name="lot" type="tns:lot"/>
 
@@ -34,6 +46,70 @@
   <xs:element name="userRegistration" type="tns:userRegistration"/>
 
   <xs:element name="userRegistrationResponse" type="tns:userRegistrationResponse"/>
+
+  <xs:complexType name="getWinningBid">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getWinningBidResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getWinningBidByIdResponseResponse" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getWinningBidByIdResponseResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:baseResponse">
+        <xs:sequence>
+          <xs:element name="winnindBid" type="tns:bid" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="baseResponse">
+    <xs:sequence>
+      <xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
+      <xs:element name="idEntity" type="xs:int" minOccurs="0"/>
+      <xs:element name="stateResult" type="tns:stateResult" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bid">
+    <xs:sequence>
+      <xs:element name="idBid" type="xs:int" minOccurs="0"/>
+      <xs:element name="rate" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="isWinningBid" type="xs:boolean" minOccurs="0"/>
+      <xs:element name="dateAdding" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="lot" type="tns:lot" minOccurs="0"/>
+      <xs:element name="user" type="tns:user" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="lot">
+    <xs:sequence>
+      <xs:element name="idLot" type="xs:int" minOccurs="0"/>
+      <xs:element name="code" type="xs:int" minOccurs="0"/>
+      <xs:element name="descriptions" type="xs:string" minOccurs="0"/>
+      <xs:element name="finishDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="startPrice" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="state" type="tns:lotState" minOccurs="0"/>
+      <xs:element name="user" type="tns:user" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="user">
+    <xs:sequence>
+      <xs:element name="idUser" type="xs:int" minOccurs="0"/>
+      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+      <xs:element name="password" type="xs:string" minOccurs="0"/>
+      <xs:element name="userLogin" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="userAuthentication">
     <xs:sequence>
@@ -58,50 +134,9 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="baseResponse">
-    <xs:sequence>
-      <xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
-      <xs:element name="idEntity" type="xs:int" minOccurs="0"/>
-      <xs:element name="stateResult" type="tns:stateResult" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="user">
-    <xs:sequence>
-      <xs:element name="idUser" type="xs:int" minOccurs="0"/>
-      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
-      <xs:element name="lastName" type="xs:string" minOccurs="0"/>
-      <xs:element name="password" type="xs:string" minOccurs="0"/>
-      <xs:element name="userLogin" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="addBid">
     <xs:sequence>
       <xs:element name="arg0" type="tns:bid" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="bid">
-    <xs:sequence>
-      <xs:element name="idBid" type="xs:int" minOccurs="0"/>
-      <xs:element name="isWinningBid" type="xs:boolean" minOccurs="0"/>
-      <xs:element name="rate" type="xs:decimal" minOccurs="0"/>
-      <xs:element name="lot" type="tns:lot" minOccurs="0"/>
-      <xs:element name="user" type="tns:user" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="lot">
-    <xs:sequence>
-      <xs:element name="idLot" type="xs:int" minOccurs="0"/>
-      <xs:element name="code" type="xs:int" minOccurs="0"/>
-      <xs:element name="descriptions" type="xs:string" minOccurs="0"/>
-      <xs:element name="finishDate" type="xs:dateTime" minOccurs="0"/>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="startPrice" type="xs:decimal" minOccurs="0"/>
-      <xs:element name="state" type="tns:lotState" minOccurs="0"/>
-      <xs:element name="user" type="tns:user" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -189,13 +224,49 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:simpleType name="stateResult">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ERROR"/>
-      <xs:enumeration value="SUCCESS"/>
-      <xs:enumeration value="NOT_SUCCESS"/>
-    </xs:restriction>
-  </xs:simpleType>
+  <xs:complexType name="getLotState">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLotStateResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getLotStateByIdLotResponse" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLotStateByIdLotResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:baseResponse">
+        <xs:sequence>
+          <xs:element name="lotState" type="tns:lotState" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="getBids">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBidsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getBidsByIdLotResponse" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBidsByIdLotResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:baseResponse">
+        <xs:sequence>
+          <xs:element name="bids" type="tns:bid" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 
   <xs:simpleType name="lotState">
     <xs:restriction base="xs:string">
@@ -203,6 +274,14 @@
       <xs:enumeration value="SOLD"/>
       <xs:enumeration value="NOT_SOLD"/>
       <xs:enumeration value="CANCELLED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="stateResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ERROR"/>
+      <xs:enumeration value="SUCCESS"/>
+      <xs:enumeration value="NOT_SUCCESS"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

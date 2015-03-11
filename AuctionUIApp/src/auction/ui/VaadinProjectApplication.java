@@ -1,5 +1,7 @@
 package auction.ui;
 
+import org.vaadin.artur.icepush.ICEPush;
+
 import auction.ui.authentication.UserAuthenticationDialog;
 import auction.ui.authentication.UserIdentifiedListener;
 import auction.ui.bidsform.BidsForm;
@@ -16,6 +18,8 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.BaseTheme;
+
+import auction.ui.loaderForm.LoaderForms;
 
 /**
  * Main application class.
@@ -40,14 +44,20 @@ public class VaadinProjectApplication extends Application {
 	private User user;
 	private Window mainWindow; 
 	
+	private ICEPush pusher = new ICEPush();
+
 	@Override
 	public void init() {
+		getMainWindow().addComponent(pusher);
+		LoaderForms.setMainPusher(pusher);
 		openUserAuhtenticationPanel();
 	}
 	
 	private void openUserAuhtenticationPanel(){
 		getUserDialogLayout().removeAllComponents();
 		getMainWindow().setContent(getUserDialogLayout());
+
+		
 		UserAuthenticationDialog userdialog = new UserAuthenticationDialog();
 		getUserDialogLayout().addComponent(userdialog);
 		getUserDialogLayout().setComponentAlignment(userdialog,Alignment.MIDDLE_CENTER);
@@ -129,6 +139,7 @@ public class VaadinProjectApplication extends Application {
 	public LotsForm getLotsForm() {
 		if (lotsForm == null) {
 			lotsForm = new LotsForm(getUser());
+			LoaderForms.setLotsForm(lotsForm);
 		}
 		return lotsForm;
 	}

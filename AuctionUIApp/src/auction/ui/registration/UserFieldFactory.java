@@ -35,8 +35,8 @@ public class UserFieldFactory extends DefaultFieldFactory {
            // loginField.setInputPrompt("UserLogin");
 			loginField.setRequired(true);
 			loginField.setRequiredError("Please enter a Login");
-			loginField.addValidator(new StringLengthValidator("The login must be 6-15 characters",6, 15, false));
 			loginField.setNullRepresentation("");
+			loginField.addValidator(new StringLengthValidator("The login must be 6-15 characters",6, 15, false));
          } else if ("password".equals(propertyId)) {
         	PasswordField passwordField = (PasswordField) field;
 			passwordField.setRequired(true);

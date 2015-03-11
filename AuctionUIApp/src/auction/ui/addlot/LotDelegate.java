@@ -17,6 +17,7 @@ public class LotDelegate {
 	private Lot lot;
 	private String remainingTime;
 	
+	private String finishDateInFormat; 
 	
 	public String getFinishDateInFormat() {
 		Date date = getFinishDate();
@@ -25,15 +26,17 @@ public class LotDelegate {
 		return finishDateInFormat;
 	}
 	
-	private String finishDateInFormat; 
-	
 	public LotDelegate(Lot lot){
 		this.lot = lot;
 	}
 	public void setLot(Lot lot){
 		this.lot = lot;
 	}
-
+	
+	public Lot getLot(){
+		return this.lot;
+	}
+	
 	public Integer getIdLot() {
 		return lot.getIdLot();
 	}

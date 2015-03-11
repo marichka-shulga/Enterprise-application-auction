@@ -12,6 +12,7 @@ import auction.businesslogic.modelBL.UserLogic;
 import auction.log.LogFactory;
 import auction.model.Lot;
 import auction.model.LotState;
+import auction.service.response.GetLotStateByIdLotResponse;
 import auction.service.response.GetLotsResponse;
 import auction.service.response.StateResult;
 
@@ -53,5 +54,26 @@ public class LotDAO extends GenericDAO<Lot>{
 		}
 		return res;
 	}	
+	
+	public GetLotStateByIdLotResponse getLotStateByLotId(Integer idLot){
+		GetLotStateByIdLotResponse getLotStateResponse = new GetLotStateByIdLotResponse();
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		LotState lotState = null;
+		try {
+			Query query = entityManager.createNamedQuery("Lot.getStateLot");
+			query.setParameter("idLot", idLot);
+			lotState = (LotState) query.getSingleResult();
+			getLotStateResponse.setStateResult(StateResult.SUCCESS);
+			getLotStateResponse.setLotState(lotState);
+		} catch (Exception e){
+			LOGGRER.info("Is not satisfied: getLotStateByIdLot{} reason={}", e, e.getMessage());
+			getLotStateResponse.setStateResult(StateResult.ERROR);
+			getLotStateResponse.setErrorMessage(e.getMessage());	
+		} finally {
+			entityManager.close();
+		}
+		
+		return getLotStateResponse;	
+	}
 	
 }

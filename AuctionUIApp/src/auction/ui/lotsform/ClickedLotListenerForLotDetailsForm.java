@@ -1,8 +1,8 @@
 package auction.ui.lotsform;
 
-import client.artefacts.Lot;
+import auction.ui.addlot.LotDelegate;
 
 public interface ClickedLotListenerForLotDetailsForm {
-	public void thisLotCliked(Lot lot);
+	public void thisLotCliked(LotDelegate lotDelegate);
 
 }

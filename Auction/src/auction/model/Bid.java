@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import java.math.BigDecimal;
-
+import java.util.Date;
 
 /**
  * The persistent class for the bid database table.
@@ -20,8 +20,12 @@ import java.math.BigDecimal;
                 query="SELECT MAX(b.rate) FROM Bid b WHERE b.lot.idLot = :idLot"),
     @NamedQuery(name="Bid.getWinningBid",
                 query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot AND b.rate = :rate"),
-    @NamedQuery(name="Bid.getAllBidsForLot",
-                query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot")
+    @NamedQuery(name="Bid.getBidsForLot",
+                query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot"),
+    @NamedQuery(name="Bid.getWinningBidByIdLot",
+                query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot AND b.isWinningBid = :isWinningBid"),
+    @NamedQuery(name="Bid.getCountBidsForLot",
+                query="SELECT COUNT(b) FROM Bid b WHERE b.lot.idLot = :idLot")     
 }) 
 @XmlRootElement
 @XmlAccessorType(value = XmlAccessType.FIELD)
@@ -30,15 +34,19 @@ public class Bid implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bid_id_gen")
-	@SequenceGenerator(name="bid_id_gen", sequenceName="bid_id_seq", initialValue=1)
+	@SequenceGenerator(name="bid_id_gen", sequenceName="bid_id_seq", allocationSize = 500)
 	@Column(name="id_bid")
 	private Integer idBid;
 
+	@Column(name="rate")
+	private BigDecimal rate;
+	
 	@Column(name="is_winning_bid")
 	private Boolean isWinningBid;
 	
-	@Column(name="rate")
-	private BigDecimal rate;
+	@Column(name="date_adding")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateAdding;
 
 	//bi-directional many-to-one association to Lot
 	@ManyToOne

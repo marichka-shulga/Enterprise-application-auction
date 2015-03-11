@@ -5,8 +5,11 @@ import org.apache.logging.log4j.Logger;
 import client.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.FacadeService;
+import client.artefacts.GetBidsByIdLotResponse;
 import client.artefacts.GetLotByIdResponse;
+import client.artefacts.GetLotStateByIdLotResponse;
 import client.artefacts.GetLotsResponse;
+import client.artefacts.GetWinningBidByIdResponseResponse;
 import client.artefacts.User;
 import client.artefacts.Lot;
 import client.artefacts.Bid;
@@ -25,6 +28,7 @@ public class ClientAuction {
 			 response = port.userRegistration(user);
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied userRegistration={} reason={}", e, e.getMessage());	
+			response = new BaseResponse();
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());
 		}
@@ -36,7 +40,8 @@ public class ClientAuction {
 		try {
 			 response = port.userAuthentication(login, password);
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied userAuthentication={} reason={}", e, e.getMessage());	
+			LOGGRER.error("Is not satisfied userAuthentication={} reason={}", e, e.getMessage());
+			response = new UserAuthenticResponse();
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());
 		}
@@ -48,6 +53,7 @@ public class ClientAuction {
 		try {
 			 response = port.getAllLots();
 		} catch (Exception e) {
+			response = new GetLotsResponse();
 			LOGGRER.error("Is not satisfied getAllLots={} reason={}", e, e.getMessage());	
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());
@@ -62,6 +68,7 @@ public class ClientAuction {
 
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied addLot={} reason={}", e, e.getMessage());	
+			response = new BaseResponse();
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());
 		}
@@ -75,6 +82,7 @@ public class ClientAuction {
 
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied addBid={} reason={}", e, e.getMessage());	
+			response = new BaseResponse();
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());
 		}
@@ -88,6 +96,7 @@ public class ClientAuction {
 
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied cancelLot={} reason={}", e, e.getMessage());	
+			response = new BaseResponse();
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());
 		}
@@ -101,9 +110,51 @@ public class ClientAuction {
 
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied getLot={} reason={}", e, e.getMessage());	
+			response = new GetLotByIdResponse();
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());
 		}
 		return response;
 	}
+	
+	
+	public GetBidsByIdLotResponse getBids(Integer idLot){
+		GetBidsByIdLotResponse response = null;
+		try {
+			 response = port.getBids(idLot);
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied getBids={} reason={}", e, e.getMessage());	
+			response = new GetBidsByIdLotResponse();
+			response.setStateResult(StateResult.ERROR);
+			response.setErrorMessage(e.getMessage());
+		}
+		return response;
+	}	
+	
+	public GetLotStateByIdLotResponse getLotState(Integer idLot){
+		GetLotStateByIdLotResponse response = null;
+		try {
+			 response = port.getLotState(idLot);
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied getBids={} reason={}", e, e.getMessage());	
+			response = new GetLotStateByIdLotResponse();
+			response.setStateResult(StateResult.ERROR);
+			response.setErrorMessage(e.getMessage());
+		}
+		return response;
+	}	
+	
+	public GetWinningBidByIdResponseResponse getWinningBid(Integer idLot){
+		GetWinningBidByIdResponseResponse response = null;
+		try {
+			 response = port.getWinningBid(idLot);
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied getBids={} reason={}", e, e.getMessage());	
+			response = new GetWinningBidByIdResponseResponse();
+			response.setStateResult(StateResult.ERROR);
+			response.setErrorMessage(e.getMessage());
+		}
+		return response;
+	}	
+	
 }

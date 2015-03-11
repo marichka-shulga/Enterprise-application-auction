@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.SchedulerException;
 
@@ -28,7 +27,7 @@ public class LotLogic {
 	
 	private static final Logger LOGGRER = LogFactory.getLogger(LotLogic.class);
 	
-	public LotLogic(){
+	public LotLogic(){		
 		lotDAO = new LotDAO();
 		bidDAO = new BidDAO();
 	}
@@ -55,22 +54,26 @@ public class LotLogic {
 	
 	
 	public BaseResponse cancelOfTrades(Lot lot){
+		
 		BaseResponse res = new BaseResponse();
-		lot.setState(LotState.CANCELLED);		
-		try {
-			lotDAO.update(lot);
-			manager.removeTrigger(String.valueOf(lot.getIdLot()));
-			res.setStateResult(StateResult.SUCCESS);
-		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied cancelOfTrades={}, reason={}, idLot={}", 
-					e, e.getMessage(), lot.getIdLot());
-			res.setStateResult(StateResult.ERROR);
-			res.setErrorMessage(e.getMessage());	
+		if( lot.getState().equals(LotState.ACTIVE) ){
+			lot.setState(LotState.CANCELLED);		
+			try {
+				lotDAO.update(lot);
+				manager.removeTrigger(String.valueOf(lot.getIdLot()));
+				res.setStateResult(StateResult.SUCCESS);
+			} catch (Exception e) {
+				LOGGRER.error("Is not satisfied cancelOfTrades={}, reason={}, idLot={}", 
+						e, e.getMessage(), lot.getIdLot());
+				res.setStateResult(StateResult.ERROR);
+				res.setErrorMessage(e.getMessage());	
+			}
+			LOGGRER.info("Trades canceled idLot={}", lot.getIdLot());
+		} else{
+			res.setStateResult(StateResult.NOT_SUCCESS);
+			LOGGRER.info("Trades not cancel idLot={}", lot.getIdLot());
 		}
-		
-		LOGGRER.info("Trades canceled idLot={}", lot.getIdLot());
-		
-		
+	
 		return res;
 	}	
 	
@@ -92,8 +95,7 @@ public class LotLogic {
 
 	private LotState getStateLotAtFinishedTrades(Lot lot){
 		LotState res = LotState.NOT_SOLD;
-		
-		if( !(lot.getBids().isEmpty()) ){
+		if( 0 < bidDAO.getCountBidsForLot(lot.getIdLot()) ){
 			res = LotState.SOLD;
 		}
 	

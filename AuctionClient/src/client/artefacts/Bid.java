@@ -4,7 +4,9 @@ package client.artefacts;
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -18,8 +20,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="idBid" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
- *         &lt;element name="isWinningBid" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
  *         &lt;element name="rate" type="{http://www.w3.org/2001/XMLSchema}decimal" minOccurs="0"/>
+ *         &lt;element name="isWinningBid" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/>
+ *         &lt;element name="dateAdding" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="lot" type="{http://auction.facadeservice/jaxws/auctionservice}lot" minOccurs="0"/>
  *         &lt;element name="user" type="{http://auction.facadeservice/jaxws/auctionservice}user" minOccurs="0"/>
  *       &lt;/sequence>
@@ -33,16 +36,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bid", propOrder = {
     "idBid",
-    "isWinningBid",
     "rate",
+    "isWinningBid",
+    "dateAdding",
     "lot",
     "user"
 })
 public class Bid {
 
     protected Integer idBid;
-    protected Boolean isWinningBid;
     protected BigDecimal rate;
+    protected Boolean isWinningBid;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar dateAdding;
     protected Lot lot;
     protected User user;
 
@@ -71,6 +77,30 @@ public class Bid {
     }
 
     /**
+     * Gets the value of the rate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public BigDecimal getRate() {
+        return rate;
+    }
+
+    /**
+     * Sets the value of the rate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigDecimal }
+     *     
+     */
+    public void setRate(BigDecimal value) {
+        this.rate = value;
+    }
+
+    /**
      * Gets the value of the isWinningBid property.
      * 
      * @return
@@ -95,27 +125,27 @@ public class Bid {
     }
 
     /**
-     * Gets the value of the rate property.
+     * Gets the value of the dateAdding property.
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link XMLGregorianCalendar }
      *     
      */
-    public BigDecimal getRate() {
-        return rate;
+    public XMLGregorianCalendar getDateAdding() {
+        return dateAdding;
     }
 
     /**
-     * Sets the value of the rate property.
+     * Sets the value of the dateAdding property.
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setRate(BigDecimal value) {
-        this.rate = value;
+    public void setDateAdding(XMLGregorianCalendar value) {
+        this.dateAdding = value;
     }
 
     /**
