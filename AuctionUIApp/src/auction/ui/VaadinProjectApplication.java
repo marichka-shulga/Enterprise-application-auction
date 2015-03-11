@@ -19,7 +19,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.BaseTheme;
 
-import auction.ui.loaderForm.LoaderForms;
+import auction.ui.loader.LoaderForms;
 
 /**
  * Main application class.
@@ -147,6 +147,7 @@ public class VaadinProjectApplication extends Application {
 	public LotDetailsForm getLotDetailsForm() {
 		if (lotDatailsForm == null) {
 			lotDatailsForm = new LotDetailsForm(getLotsForm());
+			LoaderForms.setLotDetailsForm(lotDatailsForm);
 		}
 		return lotDatailsForm;
 	}
@@ -154,6 +155,7 @@ public class VaadinProjectApplication extends Application {
 	public BidsForm getBidsForm() {
 		if (bidsForm == null) {
 			bidsForm = new BidsForm(getLotsForm());
+			LoaderForms.setBidsForm(bidsForm);
 		}
 		return bidsForm;
 	}	

@@ -1,13 +1,16 @@
 package auction.ui.lotdetails;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.logging.log4j.Logger;
 import org.quartz.SchedulerException;
 import org.vaadin.kim.countdownclock.CountdownClock;
 
 import auction.ui.ClientAuctionSinglton;
 import auction.ui.addlot.LotDelegate;
+import auction.ui.log.LogFactory;
 import auction.ui.lotsform.ClickedLotListenerForLotDetailsForm;
 import auction.ui.lotsform.LotsForm;
 import auction.ui.quartz.QuartzManager;
@@ -48,15 +51,15 @@ public class LotDetailsForm extends Form {
 	
 	private static final QuartzManager manager = QuartzManagerSingleton.getQuartzManager();
 	
+	private static final Logger LOGGRER = LogFactory.getLogger(LotDetailsForm.class);
+	
 	
 	public LotDetailsForm(LotsForm lotsForm){
 		this.lotsForm = lotsForm;		
-		//infLot = new LotDelegate(new Lot());
 		this.lotsForm.setClickedLotListener(new ClickedLotListenerForLotDetailsForm(){
 			@Override
 			public void thisLotCliked(LotDelegate lotDelegate) {
-				infLot = lotDelegate;
-				setItemDataSourceForm();
+				refreshLotDetailsForm(lotDelegate);
 			}
 		});
 		
@@ -89,9 +92,9 @@ public class LotDetailsForm extends Form {
 			fieldLayout.setMargin(false, true, false, true);
 		    getFrom().setFormFieldFactory(new LotDetailsFactory());
 		    
-			infLot = lotsForm.getCurrentLotDelegate();
-			setItemDataSourceForm();
-		    ((FormLayout)getFrom().getLayout()).addComponent(getRemainingTimeField(infLot.getFinishDate()), 6);
+			refreshLotDetailsForm(lotsForm.getCurrentLotDelegate());
+			
+		    //((FormLayout)getFrom().getLayout()).addComponent(getRemainingTimeField(infLot.getFinishDate()), 6);
 		    fieldLayout.addComponent(getFrom());
 		    
 			fieldLayout.setWidth(VERTICAL_LAYOUT_WIDTH, UNITS_PERCENTAGE);
@@ -120,7 +123,19 @@ public class LotDetailsForm extends Form {
 		getFrom().setVisibleItemProperties(Arrays.asList(new String[] {
 	                "code", "name", "state", "finishDate", "user",
 	                "remainingTime","descriptions","startPrice"}));		
-	    ((FormLayout)getFrom().getLayout()).addComponent(getRemainingTimeField(infLot.getFinishDate()), 6);
+		Date remainingTime = null;
+		if( null == infLot.getFinishDate() ){
+	        Calendar c = Calendar.getInstance();
+	        c.set(0, 0, 0, 0, 0, 0);
+	        remainingTime = c.getTime();
+		} else {
+			remainingTime = infLot.getFinishDate();
+		}
+
+		getRemainingTimeField().setDate(remainingTime);
+		getRemainingTimeField().setFormat("%d days, %h hours, %m minutes and %s seconds");
+			
+		((FormLayout)getFrom().getLayout()).addComponent(getRemainingTimeField(), 6);
 	}
 	
 	private HorizontalLayout getHozizontalLayoutWithButton(){
@@ -145,11 +160,7 @@ public class LotDetailsForm extends Form {
 						try {
 							manager.removeTrigger(String.valueOf(lotsForm.getCurrentLotDelegate().getIdLot())); 
 						} catch (SchedulerException e) {
-
-							///////////////////////
-							/////////////////////
-							
-							
+							LOGGRER.error("Is not satisfied buttonCancelTradesClick={}, reason={}", e, e.getMessage());
 						}
 						(lotsForm.getCurrentLotDelegate()).setState(LotState.CANCELLED);
 						infLot = lotsForm.getCurrentLotDelegate();
@@ -188,14 +199,16 @@ public class LotDetailsForm extends Form {
 	}
 	
 	
- 	private CountdownClock getRemainingTimeField(Date date) {
+ 	private CountdownClock getRemainingTimeField() {
  		if( null == remainingTimeField ){
  			remainingTimeField = new CountdownClock();
  		}
-		remainingTimeField.setDate(date);
- 		remainingTimeField.setFormat("%d days, %h hours, %m minutes and %s seconds");
-
         return remainingTimeField;
+	}
+ 	
+	public void refreshLotDetailsForm(LotDelegate lotDelegate){
+		infLot = lotDelegate;
+		setItemDataSourceForm();
 	}
  	
 }

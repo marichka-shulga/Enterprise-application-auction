@@ -2,8 +2,11 @@ package auction.ui.registration;
 
 import java.util.Arrays;
 
+import org.apache.logging.log4j.Logger;
+
 import auction.ui.ClientAuctionSinglton;
 import auction.ui.authentication.UserIdentifiedListener;
+import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.StateResult;
 import client.artefacts.User;
@@ -35,6 +38,8 @@ public class UserRegistrationDialog extends Window {
 	private static final int WINDOW_WIDTH = 350;
 
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
+	
+	private static final Logger LOGGRER = LogFactory.getLogger(UserRegistrationDialog.class);
 	
 	private static UserFieldFactory userFieldFactory = UserFieldFactorySinglton.getUserFieldFactory();
 	
@@ -131,7 +136,7 @@ public class UserRegistrationDialog extends Window {
 				}
 				getParent().removeWindow(getThisWindow());
 			} catch (InvalidValueException e) {
-
+				 LOGGRER.info("An incorrect input data buttonRegisterClick={}, reason={}", e, e.getMessage());
 			}
 		}
 	});
@@ -143,13 +148,11 @@ public class UserRegistrationDialog extends Window {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			try {
-				clearUserField();
+				//clearUserField();
 				if( null != getParent() )
 					getParent().removeWindow(getThisWindow());
-				
-
 			} catch (InvalidValueException e) {
-				
+				LOGGRER.error("Is not satisfied buttonRegisterClick={}, reason={}", e, e.getMessage());
 			}
 		}
 	});

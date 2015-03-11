@@ -2,7 +2,10 @@ package auction.ui.addlot;
 
 import java.util.Date;
 
+import org.apache.logging.log4j.Logger;
+
 import auction.ui.ClientAuctionSinglton;
+import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.Lot;
 import client.artefacts.LotState;
@@ -42,6 +45,8 @@ public class AddLotDialog extends Window {
 	private Lot lot;
 	
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
+	
+	private static final Logger LOGGRER = LogFactory.getLogger(AddLotDialog.class);
 	
 	private AddLotListener listener;
 	
@@ -138,7 +143,7 @@ public class AddLotDialog extends Window {
 				getParent().removeWindow(getThisWindow());
 	
 			} catch (InvalidValueException e) {
-				
+				 LOGGRER.info("An incorrect input data buttonCreateClick={}, reason={}", e, e.getMessage());
 			}
 		}
 	});
@@ -152,7 +157,7 @@ public class AddLotDialog extends Window {
 			try {
 				getParent().removeWindow(getThisWindow());
 			} catch (InvalidValueException e) {
-				
+				 LOGGRER.error("Is not satisfied buttonCancelClick={}, reason={}", e, e.getMessage());
 			}
 		}
 	});

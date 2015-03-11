@@ -2,7 +2,10 @@ package auction.ui.addbid;
 
 import java.util.Arrays;
 
+import org.apache.logging.log4j.Logger;
+
 import auction.ui.ClientAuctionSinglton;
+import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.Bid;
 import client.artefacts.StateResult;
@@ -41,6 +44,8 @@ public class AddBidDialog extends Window {
 	private AddBidListener listener;
 	
 	private Bid bid;
+	
+	private static final Logger LOGGRER = LogFactory.getLogger(AddBidDialog.class);
 	 
 	public AddBidDialog(Bid bid){
 		this.bid = bid;
@@ -105,6 +110,7 @@ public class AddBidDialog extends Window {
 				}			
 	
 			} catch (InvalidValueException e) {
+				 LOGGRER.info("An incorrect input data buttonAddBidClick={}, reason={}", e, e.getMessage());
 				
 			}
 		}

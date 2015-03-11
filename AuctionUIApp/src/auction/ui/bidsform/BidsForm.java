@@ -10,9 +10,11 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.logging.log4j.Logger;
+
 import auction.ui.addbid.AddBidDialog;
 import auction.ui.addbid.AddBidListener;
-import auction.ui.addlot.LotDelegate;
+import auction.ui.log.LogFactory;
 import auction.ui.lotsform.ClickedLotListenerForBidsForm;
 import auction.ui.lotsform.LotsForm;
 import client.artefacts.Bid;
@@ -44,30 +46,17 @@ public class BidsForm extends Form {
 	
 	private BeanItemContainer<BidDelegate> beans = new BeanItemContainer<BidDelegate>(BidDelegate.class);
 	
+	private static final Logger LOGGRER = LogFactory.getLogger(BidsForm.class);
+	
 	public BidsForm(LotsForm lotsForm){
 		this.lotsForm = lotsForm;
-		if( null == lotsForm.getBidsForCurrentLot() ){
-			beans.addAll(new ArrayList<BidDelegate>());
-		} else{
-			beans.addAll(lotsForm.getBidsForCurrentLot());
-		}
 		
-		initTable();
-		checkEnableAddBidButton();
+		refreshBidsForm(lotsForm.getBidsForCurrentLot());
+		
 		this.lotsForm.setClickedLotListener(new ClickedLotListenerForBidsForm(){
 			@Override
 			public void bidsForClickedLot(List<BidDelegate> bids) {
-				beans.removeAllItems();
-				if( null == bids ){
-					beans.addAll(new ArrayList<BidDelegate>());
-				} else{
-					beans.addAll(bids);
-				}
-		
-				getBidsTable().refreshRowCache();
-				
-				initTable();	
-				checkEnableAddBidButton();
+				refreshBidsForm(bids);
 				
 			}});
 		buttonNewBidClick();
@@ -94,13 +83,6 @@ public class BidsForm extends Form {
 	}	
 	
 	private void checkEnableAddBidButton(){
-//		System.out.println("lot "+lotsForm.getCurrentLotDelegate().getName()+"  user "+lotsForm.getCurrentLotDelegate().getLot().getUser().getUserLogin()+
-//				"  idUser "+lotsForm.getCurrentLotDelegate().getLot().getUser().getIdUser());
-//		System.out.println(lotsForm.getCurrentLotDelegate().getLot().getUser().getIdUser()+"    "+lotsForm.getUser().getIdUser());
-//		if ( !lotsForm.getCurrentLotDelegate().getLot().getUser().getIdUser().equals(lotsForm.getUser().getIdUser()) ){
-//			System.out.println("fail");
-//		}
-//	
 		if(null != lotsForm.getCurrentLotDelegate() ){
 			if( (!lotsForm.getCurrentLotDelegate().getLot().getUser().getIdUser().equals(lotsForm.getUser().getIdUser())) && 
 					lotsForm.getCurrentLotDelegate().getState().equals(LotState.ACTIVE) ){
@@ -117,12 +99,20 @@ public class BidsForm extends Form {
 		}		
 	}
 	
-	private void initTable(){
-		if( null != lotsForm.getCurrentLotDelegate() && lotsForm.getCurrentLotDelegate().getState().equals(LotState.SOLD) ){
-				
-			getBidsTable().setSelectable(false);
-			//getBidsTable().setImmediate(true);
+	private void initTable(List<BidDelegate> bids){
+		if( !beans.getItemIds().isEmpty() ){
+			beans.removeAllItems();
+		}
 
+		if( null == bids ){
+			beans.addAll(new ArrayList<BidDelegate>());
+		} else{
+			beans.addAll(bids);
+		} 
+		
+		getBidsTable().refreshRowCache();
+		
+		if( null != lotsForm.getCurrentLotDelegate() && lotsForm.getCurrentLotDelegate().getState().equals(LotState.SOLD) ){
 			Iterator<BidDelegate> it = beans.getItemIds().iterator();
 			BidDelegate bidDelegate;
 			while(it.hasNext()){
@@ -132,6 +122,7 @@ public class BidsForm extends Form {
 					break;
 				}
 			}
+			getBidsTable().setSelectable(false);
 		} else {
 			getBidsTable().setSelectable(true);
 			getBidsTable().setImmediate(true);
@@ -151,6 +142,7 @@ public class BidsForm extends Form {
 		}
 		return footer;
 	}	
+	
 	private Table getBidsTable() {
 		if (bidsTable == null) {
 			bidsTable = new Table("",beans);
@@ -158,9 +150,6 @@ public class BidsForm extends Form {
 
 			bidsTable.setVisibleColumns(COLUMS_NAME);
 			bidsTable.setColumnHeaders(HEADER_LOTS_TABLE);
-			
-
-		
 		}
 		return bidsTable;
 	}
@@ -188,7 +177,7 @@ public class BidsForm extends Form {
 			try {
 				xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(gCalendar);
 			} catch (DatatypeConfigurationException e) {
-				
+				LOGGRER.error("Is not satisfied buttonNewBidClick={}, reason={}", e, e.getMessage());	
 
 			}
 			bid.setDateAdding(xmlCalendar);
@@ -211,5 +200,10 @@ public class BidsForm extends Form {
 		}
 		});		 
 	 }	
-
+	
+	
+	public void refreshBidsForm(List<BidDelegate> bids){
+		initTable(bids);	
+		checkEnableAddBidButton();
+	}
 }

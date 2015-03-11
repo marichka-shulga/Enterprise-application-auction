@@ -1,6 +1,9 @@
 package auction.ui.authentication;
 
+import org.apache.logging.log4j.Logger;
+
 import auction.ui.ClientAuctionSinglton;
+import auction.ui.log.LogFactory;
 import auction.ui.registration.MD5;
 import auction.ui.registration.UserFieldFactory;
 import auction.ui.registration.UserFieldFactorySinglton;
@@ -36,6 +39,8 @@ public class UserAuthenticationDialog extends Panel {
 	
 	private static final UserFieldFactory userFieldFactory = UserFieldFactorySinglton.getUserFieldFactory();
 	
+	private static final Logger LOGGRER = LogFactory.getLogger(UserAuthenticationDialog.class);
+	
 	private static final int COMMON_BUTTON_WIDTH = 80;
 	private static final int WINDOW_WIDTH = 250;
 	private static final int WINDOW_WIDTH_PLUS_BORDERS = 253;	
@@ -48,11 +53,11 @@ public class UserAuthenticationDialog extends Panel {
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
 	
 	public UserAuthenticationDialog(){
-		this.user = new User();
+		//this.user = new User();
 	}
 	
 	public void initDialog(){
-		this.user = new User();	
+		//this.user = new User();	
 		initFormFields();
 
 	}
@@ -89,6 +94,8 @@ public class UserAuthenticationDialog extends Panel {
 	}
 	
 	private void initFormFields(){
+		if ( null == user)
+			user = new User();
 	    BeanItem<User> userItem = new BeanItem<User>(user); 
 	    getFrom().setFormFieldFactory(userFieldFactory);
 	    getFrom().setItemDataSource(userItem);
@@ -118,7 +125,6 @@ public class UserAuthenticationDialog extends Panel {
 		public void buttonClick(ClickEvent event) {
 			try {
 				getFrom().commit();
-
 				UserAuthenticResponse responce = client.userAuthentication(user.getUserLogin(), MD5.encryptPassword(user.getPassword()));
 				if( responce.getStateResult().equals(StateResult.SUCCESS) ){
 					user = responce.getUser();
@@ -136,7 +142,7 @@ public class UserAuthenticationDialog extends Panel {
 				}
 				
 			} catch (InvalidValueException e) {
-				
+				 LOGGRER.info("An incorrect input data buttonLoginClick={}, reason={}", e, e.getMessage());
 			}
 			
 		}
@@ -154,7 +160,7 @@ public class UserAuthenticationDialog extends Panel {
 				getApplication().getMainWindow().addWindow(userRegistrationDialog);
 				userRegistrationDialog.setUserIdentifiedListener(listener);
 			} catch (InvalidValueException e) {
-				
+				 LOGGRER.error("Is not satisfied buttonRegisterClick={}, reason={}", e, e.getMessage());
 			}
 		}
 		});
@@ -185,8 +191,8 @@ public class UserAuthenticationDialog extends Panel {
 	}
 	
 	private void clearUserField(){
-		user.setUserLogin("");
-		user.setPassword("");
+		user = null;
+		initFormFields();
 	}
 	
 	public void setUserIdentifiedListener(UserIdentifiedListener listener){

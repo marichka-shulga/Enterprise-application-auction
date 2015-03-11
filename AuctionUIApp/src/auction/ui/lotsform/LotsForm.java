@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.Logger;
 import org.quartz.SchedulerException;
 
 import auction.ui.ClientAuctionSinglton;
@@ -14,6 +15,8 @@ import auction.ui.addlot.AddLotListener;
 import auction.ui.addlot.LotDelegate;
 import auction.ui.addlot.RandomInt;
 import auction.ui.bidsform.BidDelegate;
+import auction.ui.loader.LoaderForms;
+import auction.ui.log.LogFactory;
 import auction.ui.quartz.FinishTradesJob;
 import auction.ui.quartz.QuartzManager;
 import auction.ui.quartz.QuartzManagerSingleton;
@@ -53,6 +56,8 @@ public class LotsForm extends Form {
 	
 	private static final QuartzManager manager = QuartzManagerSingleton.getQuartzManager();
 	
+	
+	private static final Logger LOGGRER = LogFactory.getLogger(LotsForm.class);
 	
 	private BeanItemContainer<LotDelegate> beans = new BeanItemContainer<LotDelegate>(LotDelegate.class);
 	private Map<LotDelegate,List<BidDelegate>> lots;
@@ -96,11 +101,6 @@ public class LotsForm extends Form {
 		
 	}
 	
-//	public static LotsForm getLotsForm(){
-//		return this;
-//	}
-	
-	
 	private HorizontalLayout getHozizontalLayoutWithButton(){
 		if( null == footer ){
 			footer = new HorizontalLayout();
@@ -126,11 +126,7 @@ public class LotsForm extends Form {
 					try {
 						manager.addJob(String.valueOf(lotDelegate.getIdLot()),lotDelegate.getFinishDate(),FinishTradesJob.class);
 					} catch (SchedulerException e) {
-
-						///////////////////////
-						/////////////////////
-					
-					
+						LOGGRER.error("Is not satisfied getAllLots={}, reason={}", e, e.getMessage());
 					}	
 				}
 			}
@@ -185,9 +181,6 @@ public class LotsForm extends Form {
 			    public void itemClick(ItemClickEvent itemClickEvent) {
 					if( (null != lotClickedListenerForLotDetailsF) && (null != lotsTable.getValue()) ){
 						lotsTable.setValue(itemClickEvent.getItemId());
-//						System.out.println("lot "+((LotDelegate)lotsTable.getValue()).getName()+"  user "+((LotDelegate)lotsTable.getValue()).getLot().getUser().getUserLogin()+
-//								"  idUser "+((LotDelegate)lotsTable.getValue()).getLot().getUser().getIdUser());
-
 
 						lotClickedListenerForLotDetailsF.thisLotCliked((LotDelegate)itemClickEvent.getItemId());
 					
@@ -261,11 +254,7 @@ public class LotsForm extends Form {
 					try {
 						manager.addJob(String.valueOf(lotDelegate.getIdLot()),lotDelegate.getFinishDate(),FinishTradesJob.class);
 					} catch (SchedulerException e) {
-
-						///////////////////////
-						/////////////////////
-						
-						
+						LOGGRER.error("Is not satisfied buttonNewLotClick={}, reason={}", e, e.getMessage());
 					}
 					if( null != lotClickedListenerForLotDetailsF ){
 						lotClickedListenerForLotDetailsF.thisLotCliked((LotDelegate)getLotsTable().getValue());
@@ -312,7 +301,6 @@ public class LotsForm extends Form {
 	}
 	
 	public void setWinningBid(Bid bid, LotDelegate lotDelegate){
-//		List<BidDelegate> bidsDelegate = lots.get(lotDelegate);
 		Iterator<BidDelegate> it = lots.get(lotDelegate).iterator();
 		BidDelegate bidDelegate;
 		while( it.hasNext() ){
@@ -323,9 +311,6 @@ public class LotsForm extends Form {
 			}
 
 		}
-		
-		
-		
 	}
 	
 	
