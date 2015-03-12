@@ -55,21 +55,6 @@ public interface FacadeService {
      * 
      * @param arg0
      * @return
-     *     returns client.artefacts.GetLotByIdResponse
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getLot", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.GetLot")
-    @ResponseWrapper(localName = "getLotResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.GetLotResponse")
-    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/getLotRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/getLotResponse")
-    public GetLotByIdResponse getLot(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Integer arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
      *     returns client.artefacts.BaseResponse
      */
     @WebMethod
@@ -123,36 +108,6 @@ public interface FacadeService {
     @ResponseWrapper(localName = "getBidsResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.GetBidsResponse")
     @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/getBidsRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/getBidsResponse")
     public GetBidsByIdLotResponse getBids(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Integer arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns client.artefacts.GetLotStateByIdLotResponse
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getLotState", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.GetLotState")
-    @ResponseWrapper(localName = "getLotStateResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.GetLotStateResponse")
-    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/getLotStateRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/getLotStateResponse")
-    public GetLotStateByIdLotResponse getLotState(
-        @WebParam(name = "arg0", targetNamespace = "")
-        Integer arg0);
-
-    /**
-     * 
-     * @param arg0
-     * @return
-     *     returns client.artefacts.GetWinningBidByIdResponseResponse
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getWinningBid", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.GetWinningBid")
-    @ResponseWrapper(localName = "getWinningBidResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.GetWinningBidResponse")
-    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/getWinningBidRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/getWinningBidResponse")
-    public GetWinningBidByIdResponseResponse getWinningBid(
         @WebParam(name = "arg0", targetNamespace = "")
         Integer arg0);
 

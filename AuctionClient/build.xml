@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<project name = "AuctionClient" default = "run" basedir = ".">
+	
+		<target name = "run" depends = "compile">
+			<echo>run</echo>
+		
+		</target>
+		
+		<target name = "compile">
+			<echo>compile</echo>
+		
+		</target>	
+	
+	
+	</project>

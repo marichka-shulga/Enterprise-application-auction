@@ -22,8 +22,6 @@ import java.util.Date;
                 query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot AND b.rate = :rate"),
     @NamedQuery(name="Bid.getBidsForLot",
                 query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot"),
-    @NamedQuery(name="Bid.getWinningBidByIdLot",
-                query="SELECT b FROM Bid b WHERE b.lot.idLot = :idLot AND b.isWinningBid = :isWinningBid"),
     @NamedQuery(name="Bid.getCountBidsForLot",
                 query="SELECT COUNT(b) FROM Bid b WHERE b.lot.idLot = :idLot")     
 }) 
@@ -33,8 +31,7 @@ public class Bid implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bid_id_gen")
-	@SequenceGenerator(name="bid_id_gen", sequenceName="bid_id_seq", allocationSize = 500)
+	@GeneratedValue
 	@Column(name="id_bid")
 	private Integer idBid;
 

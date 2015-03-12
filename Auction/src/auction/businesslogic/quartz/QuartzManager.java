@@ -1,6 +1,5 @@
 package auction.businesslogic.quartz;
 
-
 import java.util.Date;
 
 import org.apache.logging.log4j.Logger;
@@ -22,13 +21,13 @@ public class QuartzManager {
 
 	private static final String JOB_GROUP = "JOB_GROUP";
 
-	private SchedulerFactory schedFactory;
+	private SchedulerFactory schedulerFactory;
 	
 	private static final Logger LOGGRER = LogFactory.getLogger(QuartzManager.class);
 	
 	public QuartzManager(){
 		try {
-			schedFactory = new org.quartz.impl.StdSchedulerFactory();
+			schedulerFactory = new org.quartz.impl.StdSchedulerFactory();
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied intitQuartzManager={}, reason={}", e, e.getMessage());
 		}		
@@ -37,8 +36,8 @@ public class QuartzManager {
 
 	public void shutdown() {
 		try {
-			if( null != schedFactory )
-				schedFactory.getScheduler().shutdown(true);
+			if( null != schedulerFactory )
+				schedulerFactory.getScheduler().shutdown(true);
 		} catch (SchedulerException e) {
 			LOGGRER.error("Is not satisfied QuartzManager shutdown={}, reason={}", e, e.getMessage());	
 		}
@@ -46,9 +45,9 @@ public class QuartzManager {
 	
 
 	public void addJob(final String triggerId, final Date date, final Class<? extends Job> jobClass) throws SchedulerException {
-		Scheduler sched = schedFactory.getScheduler();
-		if ( !sched.isStarted() ) {
-			sched.start();
+		Scheduler scheduler = schedulerFactory.getScheduler();
+		if ( !scheduler.isStarted() ) {
+			scheduler.start();
 		}
 
 		JobDetail job = JobBuilder.newJob().withIdentity(JOB_NAME, JOB_GROUP).ofType(jobClass).build();
@@ -56,21 +55,21 @@ public class QuartzManager {
 		Trigger trigger = TriggerBuilder.newTrigger()
 				.withIdentity(triggerId, JOB_GROUP).forJob(job).startAt(date)
 				.build();
-		sched.getContext().put(trigger.getKey().toString(), triggerId);
+		scheduler.getContext().put(trigger.getKey().toString(), triggerId);
 
-		if ( sched.checkExists(job.getKey()) ) {
-			sched.scheduleJob(trigger);
+		if ( scheduler.checkExists(job.getKey()) ) {
+			scheduler.scheduleJob(trigger);
 		} else {
-			sched.scheduleJob(job, trigger);
+			scheduler.scheduleJob(job, trigger);
 		}
 		LOGGRER.info("Add job QuartzManager idLot={}", triggerId);
 	}
 
 	public void removeTrigger(String triggerId) throws SchedulerException {
 		SchedulerFactory schedulerFactory = new org.quartz.impl.StdSchedulerFactory();
-		Scheduler sched = schedulerFactory.getScheduler();
-		sched.unscheduleJob(new TriggerKey(triggerId, JOB_GROUP));
-		sched.getContext().remove(new TriggerKey(triggerId, JOB_GROUP));
+		Scheduler scheduler = schedulerFactory.getScheduler();
+		scheduler.unscheduleJob(new TriggerKey(triggerId, JOB_GROUP));
+		scheduler.getContext().remove(new TriggerKey(triggerId, JOB_GROUP));
 		LOGGRER.info("Remove job QuartzManager idLot={}", triggerId);	
 	}
 

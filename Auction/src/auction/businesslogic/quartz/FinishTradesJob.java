@@ -19,12 +19,12 @@ public class FinishTradesJob implements Job {
 	public void execute(final JobExecutionContext context) throws JobExecutionException {
 		
 		lotLogic = new LotLogic();
-		Object someId = null;
+		Object idLot = null;
 		try {
-			someId = context.getScheduler().getContext().get(context.getTrigger().getKey().toString());
-			lotLogic.finishTrades(Integer.parseInt(someId.toString()));
+			idLot = context.getScheduler().getContext().get(context.getTrigger().getKey().toString());
+			lotLogic.finishTrades(Integer.parseInt(idLot.toString()));
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied job execute={}, idLot={}, reason={}", e, e.getMessage(), (String)someId);	
+			LOGGRER.error("Is not satisfied job execute={}, idLot={}, reason={}", e, e.getMessage(), (String)idLot);	
 		}
 
 	}

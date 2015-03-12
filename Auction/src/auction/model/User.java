@@ -30,8 +30,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_gen")
-	@SequenceGenerator(name="user_id_gen", sequenceName="user_id_seq", allocationSize = 500)
+	@GeneratedValue
 	@Column(name="id_user")
 	private Integer idUser;
 

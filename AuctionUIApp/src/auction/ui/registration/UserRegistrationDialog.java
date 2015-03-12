@@ -1,7 +1,5 @@
 package auction.ui.registration;
 
-import java.util.Arrays;
-
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
@@ -43,6 +41,8 @@ public class UserRegistrationDialog extends Window {
 	
 	private static UserFieldFactory userFieldFactory = UserFieldFactorySinglton.getUserFieldFactory();
 	
+	private static final String[] FIELDS_NAME = new String[] {"userLogin", "password", "firstName", "lastName"}; 
+	
 	private UserIdentifiedListener listener;
 	
 	User user;
@@ -69,8 +69,8 @@ public class UserRegistrationDialog extends Window {
 
 		mainVerticalLayout.setSizeUndefined();
 
-		buttonRegisterClick();
-		buttonCancelClick();
+		addRegisterButtonListener();
+		addCancelButtonListener();
 	}
 	
 	private UserRegistrationDialog getThisWindow(){
@@ -85,8 +85,7 @@ public class UserRegistrationDialog extends Window {
 		    BeanItem<User> userItem = new BeanItem<User>(user); 
 		    getFrom().setFormFieldFactory(userFieldFactory);
 		    getFrom().setItemDataSource(userItem);
-			getFrom().setVisibleItemProperties(Arrays.asList(new String[] {
-		                "userLogin", "password", "firstName", "lastName"}));			
+			getFrom().setVisibleItemProperties(FIELDS_NAME);			
 
 			body.addComponent(getFrom());
 			body.setWidth(WINDOW_WIDTH, UNITS_PIXELS);
@@ -108,10 +107,8 @@ public class UserRegistrationDialog extends Window {
 		return footer;
 	}
 
-
-
 	@SuppressWarnings("serial")
-	private void buttonRegisterClick() {
+	private void addRegisterButtonListener() {
 		registerButton.addListener(new ClickListener() {
 		
 		@Override
@@ -136,23 +133,22 @@ public class UserRegistrationDialog extends Window {
 				}
 				getParent().removeWindow(getThisWindow());
 			} catch (InvalidValueException e) {
-				 LOGGRER.info("An incorrect input data buttonRegisterClick={}, reason={}", e, e.getMessage());
+				 LOGGRER.info("An incorrect input data addRegisterButtonListener={}, reason={}", e, e.getMessage());
 			}
 		}
 	});
 }
 
 	@SuppressWarnings("serial")
-	private void buttonCancelClick() {
+	private void addCancelButtonListener() {
 		cancelButton.addListener(new ClickListener() {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			try {
-				//clearUserField();
 				if( null != getParent() )
 					getParent().removeWindow(getThisWindow());
 			} catch (InvalidValueException e) {
-				LOGGRER.error("Is not satisfied buttonRegisterClick={}, reason={}", e, e.getMessage());
+				LOGGRER.error("Is not satisfied addCancelButtonListener={}, reason={}", e, e.getMessage());
 			}
 		}
 	});

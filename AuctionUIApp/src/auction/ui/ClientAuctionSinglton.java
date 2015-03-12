@@ -3,6 +3,7 @@ package auction.ui;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.log.LogFactory;
+import client.loadproperties.AuctionServiceProperties;
 import client.realization.ClientAuction;
 
 public class ClientAuctionSinglton {
@@ -15,6 +16,11 @@ public class ClientAuctionSinglton {
 				   ClientAuction client = null;
 				   try{
 					   client = new ClientAuction();
+					   AuctionServiceProperties auctionServiceProperties = new AuctionServiceProperties();
+					   client.setNamespaceService(auctionServiceProperties.getNamespaceService());
+					   client.setServiceName(auctionServiceProperties.getServiceName());
+					   client.setWsdlURL(auctionServiceProperties.getWsdlURL());
+	   
 				   }catch(Exception e){
 					   LOGGRER.error("Is not satisfied getClientAuction={}, reason={}", e, e.getMessage());
 				   }

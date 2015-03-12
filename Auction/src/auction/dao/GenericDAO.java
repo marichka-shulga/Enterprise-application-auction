@@ -17,52 +17,52 @@ public abstract class GenericDAO<T> {
 
 	public abstract Class<T> getPersistentClass();
 
-	public T getObjectById(Object id) {
+	public T getEntityById(Object id) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		T res = null;
+		T result= null;
 		try {
-			res = entityManager.find(getPersistentClass(), id);
+			result = entityManager.find(getPersistentClass(), id);
 		} finally {
 			entityManager.close();
 		}
-		return res;
+		return result;
 	}
 	
-	public void save(T object) throws Exception {
+	public void save(T entity) throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		try {
 			entityTransaction.begin();
-			entityManager.persist(object);
+			entityManager.persist(entity);
 			entityTransaction.commit();
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied save={}, persistentClass={}, reason={}", e, getPersistentClass(), e.getMessage());
-			if ( null != entityTransaction && entityTransaction.isActive() ) {
+			if ( (null != entityTransaction) && (entityTransaction.isActive()) ) {
 				entityTransaction.rollback();
 			}
 			throw e;
 		} finally {
-			if ( null != entityManager && entityManager.isOpen()) {
+			if ( (null != entityManager) && (entityManager.isOpen()) ) {
 				entityManager.close();
 			}
 		}
 	}
 
-	public void update(T object) throws Exception {
+	public void update(T entity) throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		try {
 			entityTransaction.begin();
-			entityManager.merge(object);
+			entityManager.merge(entity);
 			entityTransaction.commit();
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied update={}, persistentClass={}, reason={}", e, getPersistentClass(), e.getMessage());			
-			if ( null != entityTransaction && entityTransaction.isActive() ) {
+			if ( (null != entityTransaction) && (entityTransaction.isActive()) ) {
 				entityTransaction.rollback();
 			}
 			throw e;
 		} finally {
-			if ( null != entityManager && entityManager.isOpen() ) {
+			if ( (null != entityManager) && (entityManager.isOpen()) ) {
 				entityManager.close();
 			}
 		}

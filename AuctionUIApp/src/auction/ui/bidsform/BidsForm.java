@@ -59,7 +59,8 @@ public class BidsForm extends Form {
 				refreshBidsForm(bids);
 				
 			}});
-		buttonNewBidClick();
+		
+		addNewBidButtonListener();
 	}
 	
 	
@@ -164,7 +165,7 @@ public class BidsForm extends Form {
 	
 	
 	@SuppressWarnings("serial")	
-	public void buttonNewBidClick(){
+	public void addNewBidButtonListener(){
 		newBidButton.addListener(new ClickListener() {				
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -177,7 +178,7 @@ public class BidsForm extends Form {
 			try {
 				xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(gCalendar);
 			} catch (DatatypeConfigurationException e) {
-				LOGGRER.error("Is not satisfied buttonNewBidClick={}, reason={}", e, e.getMessage());	
+				LOGGRER.error("Is not satisfied addNewBidButtonListener={}, reason={}", e, e.getMessage());	
 
 			}
 			bid.setDateAdding(xmlCalendar);

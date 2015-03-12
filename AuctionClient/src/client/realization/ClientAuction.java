@@ -1,15 +1,17 @@
 package client.realization;
 
+import java.net.URL;
+
+import javax.xml.namespace.QName;
+
 import org.apache.logging.log4j.Logger;
 
 import client.log.LogFactory;
+import client.artefacts.AuctionService;
 import client.artefacts.BaseResponse;
 import client.artefacts.FacadeService;
 import client.artefacts.GetBidsByIdLotResponse;
-import client.artefacts.GetLotByIdResponse;
-import client.artefacts.GetLotStateByIdLotResponse;
 import client.artefacts.GetLotsResponse;
-import client.artefacts.GetWinningBidByIdResponseResponse;
 import client.artefacts.User;
 import client.artefacts.Lot;
 import client.artefacts.Bid;
@@ -20,12 +22,43 @@ public class ClientAuction {
 	
 	private static final Logger LOGGRER = LogFactory.getLogger(ClientAuction.class);	
 	
-	private static final  FacadeService port = AuctionServiceSinglton.getFacadeService();
+	private String namespaceService;
+	private String serviceName;
+	private String wsdlURL;		
 	
+	private static FacadeService port = null;
+	
+	public void setNamespaceService(String namespaceService) {
+		this.namespaceService = namespaceService;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
+	public void setWsdlURL(String wsdlURL) {
+		this.wsdlURL = wsdlURL;
+	}
+	
+	private FacadeService getFacadeService() throws Exception {
+		if( null == port ){
+			try{
+				QName Q_NAME = new QName(namespaceService,serviceName);
+				URL url = new URL(wsdlURL);
+	        		AuctionService auctionService = new AuctionService(url, Q_NAME);
+	        		port = auctionService.getAuctionServicePort();
+			}
+			catch (Exception e){
+				LOGGRER.error("Is not satisfied getFacadeService={} reason={}", e, e.getMessage());		
+				throw e;
+			}
+		}
+		return port;
+	}
 	public BaseResponse userRegistration(User user){
 		BaseResponse response = null;
 		try {
-			 response = port.userRegistration(user);
+			 response = getFacadeService().userRegistration(user);
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied userRegistration={} reason={}", e, e.getMessage());	
 			response = new BaseResponse();
@@ -38,7 +71,7 @@ public class ClientAuction {
 	public UserAuthenticResponse userAuthentication(String login, String password){
 		UserAuthenticResponse response = null;
 		try {
-			 response = port.userAuthentication(login, password);
+			 response = getFacadeService().userAuthentication(login, password);
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied userAuthentication={} reason={}", e, e.getMessage());
 			response = new UserAuthenticResponse();
@@ -51,7 +84,7 @@ public class ClientAuction {
 	public GetLotsResponse getAllLots(){
 		GetLotsResponse response = null;
 		try {
-			 response = port.getAllLots();
+			 response = getFacadeService().getAllLots();
 		} catch (Exception e) {
 			response = new GetLotsResponse();
 			LOGGRER.error("Is not satisfied getAllLots={} reason={}", e, e.getMessage());	
@@ -64,7 +97,7 @@ public class ClientAuction {
 	public BaseResponse addLot(Lot lot){
 		BaseResponse response = null;
 		try {
-			 response = port.addLot(lot);
+			 response = getFacadeService().addLot(lot);
 
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied addLot={} reason={}", e, e.getMessage());	
@@ -78,7 +111,7 @@ public class ClientAuction {
 	public BaseResponse addBid(Bid bid){
 		BaseResponse response = null;
 		try {
-			 response = port.addBid(bid);
+			 response = getFacadeService().addBid(bid);
 
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied addBid={} reason={}", e, e.getMessage());	
@@ -92,7 +125,7 @@ public class ClientAuction {
 	public BaseResponse cancelLot(Lot lot){
 		BaseResponse response = null;
 		try {
-			 response = port.cancelLot(lot);
+			 response = getFacadeService().cancelLot(lot);
 
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied cancelLot={} reason={}", e, e.getMessage());	
@@ -103,54 +136,13 @@ public class ClientAuction {
 		return response;
 	}	
 	
-	public GetLotByIdResponse getLot(Integer idLot){
-		GetLotByIdResponse response = null;
-		try {
-			 response = port.getLot(idLot);
-
-		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied getLot={} reason={}", e, e.getMessage());	
-			response = new GetLotByIdResponse();
-			response.setStateResult(StateResult.ERROR);
-			response.setErrorMessage(e.getMessage());
-		}
-		return response;
-	}
-	
-	
 	public GetBidsByIdLotResponse getBids(Integer idLot){
 		GetBidsByIdLotResponse response = null;
 		try {
-			 response = port.getBids(idLot);
+			 response = getFacadeService().getBids(idLot);
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied getBids={} reason={}", e, e.getMessage());	
 			response = new GetBidsByIdLotResponse();
-			response.setStateResult(StateResult.ERROR);
-			response.setErrorMessage(e.getMessage());
-		}
-		return response;
-	}	
-	
-	public GetLotStateByIdLotResponse getLotState(Integer idLot){
-		GetLotStateByIdLotResponse response = null;
-		try {
-			 response = port.getLotState(idLot);
-		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied getBids={} reason={}", e, e.getMessage());	
-			response = new GetLotStateByIdLotResponse();
-			response.setStateResult(StateResult.ERROR);
-			response.setErrorMessage(e.getMessage());
-		}
-		return response;
-	}	
-	
-	public GetWinningBidByIdResponseResponse getWinningBid(Integer idLot){
-		GetWinningBidByIdResponseResponse response = null;
-		try {
-			 response = port.getWinningBid(idLot);
-		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied getBids={} reason={}", e, e.getMessage());	
-			response = new GetWinningBidByIdResponseResponse();
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());
 		}

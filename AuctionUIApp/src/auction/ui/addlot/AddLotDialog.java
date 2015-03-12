@@ -72,8 +72,8 @@ public class AddLotDialog extends Window {
 
 		mainVerticalLayout.setSizeUndefined();
 
-		buttonCreateClick();
-		buttonCancelClick();
+		addCreateButtonListener();
+		addCancelButtonListener();
 	}
 	
 	private AddLotDialog getThisWindow(){
@@ -88,12 +88,8 @@ public class AddLotDialog extends Window {
 			LotDelegate newLot = new LotDelegate(lot);
 			
 			BeanItem<LotDelegate> lotItem = new BeanItem<LotDelegate>(newLot); 
-			//lotItem.addItemProperty(id, property)
-		                                                                    
 		    getFrom().setFormFieldFactory(lotFieldFactory);
-		    getFrom().setItemDataSource(lotItem); // bind to POJO via BeanItem
-
-		        // Determines which properties are shown, and in which order:
+		    getFrom().setItemDataSource(lotItem); 
 			getFrom().setVisibleItemProperties(FIELDS_NAME);
 
 			body.addComponent(getFrom());
@@ -118,7 +114,7 @@ public class AddLotDialog extends Window {
 	}
 
 	@SuppressWarnings("serial")
-	private void buttonCreateClick() {
+	private void addCreateButtonListener() {
 		createButton.addListener(new ClickListener() {
 		
 		@Override
@@ -143,21 +139,21 @@ public class AddLotDialog extends Window {
 				getParent().removeWindow(getThisWindow());
 	
 			} catch (InvalidValueException e) {
-				 LOGGRER.info("An incorrect input data buttonCreateClick={}, reason={}", e, e.getMessage());
+				 LOGGRER.info("An incorrect input data addCreateButtonListener={}, reason={}", e, e.getMessage());
 			}
 		}
 	});
 }
 
 	@SuppressWarnings("serial")
-	private void buttonCancelClick() {
+	private void addCancelButtonListener() {
 		cancelButton.addListener(new ClickListener() {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			try {
 				getParent().removeWindow(getThisWindow());
 			} catch (InvalidValueException e) {
-				 LOGGRER.error("Is not satisfied buttonCancelClick={}, reason={}", e, e.getMessage());
+				 LOGGRER.error("Is not satisfied addCancelButtonListener={}, reason={}", e, e.getMessage());
 			}
 		}
 	});

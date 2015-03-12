@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import auction.log.LogFactory;
 import auction.model.Bid;
 import auction.service.response.GetBidsByIdLotResponse;
-import auction.service.response.GetWinningBidByIdResponseResponse;
 import auction.service.response.StateResult;
 
 
@@ -65,29 +64,7 @@ public class BidDAO extends GenericDAO<Bid>  {
 		return bid;	
 	}
 	
-	public GetWinningBidByIdResponseResponse getWinningBidForLot(Integer idLot){
-		GetWinningBidByIdResponseResponse getFinishTradesResponse = new GetWinningBidByIdResponseResponse();
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		Bid bid = null;
-		try {
-			Query query = entityManager.createNamedQuery("Bid.getWinningBidByIdLot");
-			query.setParameter("idLot", idLot);
-			query.setParameter("isWinningBid", true);			
-			bid = (Bid) query.getSingleResult();
-			getFinishTradesResponse.setStateResult(StateResult.SUCCESS);
-			getFinishTradesResponse.setWinnindBid(bid);
-		} catch (Exception e){
-			LOGGRER.info("Is not satisfied: getWinningBidByIdLot{} reason={}", e, e.getMessage());
-			getFinishTradesResponse.setStateResult(StateResult.ERROR);
-			getFinishTradesResponse.setErrorMessage(e.getMessage());	
-		
-		} finally {
-			entityManager.close();
-		}
-		
-		return getFinishTradesResponse;	
-	}
-	
+
 	@SuppressWarnings("unchecked")
 	public GetBidsByIdLotResponse getBids(Integer idLot){
 		GetBidsByIdLotResponse response = new GetBidsByIdLotResponse();

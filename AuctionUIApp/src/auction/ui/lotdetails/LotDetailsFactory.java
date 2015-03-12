@@ -27,7 +27,7 @@ public class LotDetailsFactory extends DefaultFieldFactory {
         
         if ( "finishDate".equals(propertyId) ) {
         	PopupDateField dateField = (PopupDateField) field;
-        	dateField.setDateFormat("dd.MM.yyyy hh:mm:ss");
+        	dateField.setDateFormat("dd.MM.yyyy hh:mm:ss a");
          	dateField.setReadOnly(true);
         }else {
          	TextField lotField = (TextField) field;

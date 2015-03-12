@@ -17,7 +17,6 @@ import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.LotState;
 import auction.service.response.BaseResponse;
-import auction.service.response.GetLotByIdResponse;
 import auction.service.response.StateResult;
 
 public class LotLogic {
@@ -77,20 +76,20 @@ public class LotLogic {
 		return res;
 	}	
 	
-	public GetLotByIdResponse getLotById(Integer idLot){
-		GetLotByIdResponse res = new GetLotByIdResponse();
-		try {
-			res.setStateResult(StateResult.SUCCESS);
-			res.setLot(lotDAO.getObjectById(idLot));
-		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied gelLotById={}, reason={}, idLot={}", 
-					e, e.getMessage(),idLot);
-			res.setStateResult(StateResult.ERROR);
-			res.setErrorMessage(e.getMessage());	
-		}
-
-		return res;
-	}	
+//	public GetLotByIdResponse getLotById(Integer idLot){
+//		GetLotByIdResponse res = new GetLotByIdResponse();
+//		try {
+//			res.setStateResult(StateResult.SUCCESS);
+//			res.setLot(lotDAO.getObjectById(idLot));
+//		} catch (Exception e) {
+//			LOGGRER.error("Is not satisfied gelLotById={}, reason={}, idLot={}", 
+//					e, e.getMessage(),idLot);
+//			res.setStateResult(StateResult.ERROR);
+//			res.setErrorMessage(e.getMessage());	
+//		}
+//
+//		return res;
+//	}	
 
 
 	private LotState getStateLotAtFinishedTrades(Lot lot){
@@ -105,7 +104,7 @@ public class LotLogic {
 	public void finishTrades(Integer idLot){
 		Lot lot = null;
 		try {
-			lot = lotDAO.getObjectById(idLot);
+			lot = lotDAO.getEntityById(idLot);
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied finishTrades getObjectById={}, reason={}, idLot={}", 
 					e, e.getMessage(), idLot);

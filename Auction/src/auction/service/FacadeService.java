@@ -14,10 +14,7 @@ import auction.model.Lot;
 import auction.model.User;
 import auction.service.response.BaseResponse;
 import auction.service.response.GetBidsByIdLotResponse;
-import auction.service.response.GetLotByIdResponse;
-import auction.service.response.GetLotStateByIdLotResponse;
 import auction.service.response.GetLotsResponse;
-import auction.service.response.GetWinningBidByIdResponseResponse;
 import auction.service.response.UserAuthenticResponse;
 
 @WebService(serviceName = "AuctionService",
@@ -59,12 +56,6 @@ public class FacadeService {
 	}	
 	
 	@WebMethod
-	public GetLotByIdResponse getLot(Integer idLot){
-		return lotLogic.getLotById(idLot);
-	}	
-	
-
-	@WebMethod
 	public BaseResponse addLot(Lot lot){
 		return lotLogic.addLot(lot);
 	}		
@@ -84,13 +75,4 @@ public class FacadeService {
 		return bidDAO.getBids(idLot);
 	}	
 	
-	@WebMethod
-	public GetLotStateByIdLotResponse getLotState(Integer idLot){
-		return lotDAO.getLotStateByLotId(idLot);
-	}
-	
-	@WebMethod	
-	public GetWinningBidByIdResponseResponse getWinningBid(Integer idLot){
-		return  bidDAO.getWinningBidForLot(idLot);
-	}
 }

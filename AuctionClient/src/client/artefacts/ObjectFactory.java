@@ -26,26 +26,20 @@ public class ObjectFactory {
 
     private final static QName _GetBids_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getBids");
     private final static QName _CancelLot_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "cancelLot");
-    private final static QName _GetLotState_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getLotState");
     private final static QName _Lot_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "lot");
-    private final static QName _GetLot_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getLot");
     private final static QName _GetAllLotsResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getAllLotsResponse");
     private final static QName _User_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "user");
     private final static QName _AddLotResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "addLotResponse");
     private final static QName _Bid_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "bid");
-    private final static QName _GetLotResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getLotResponse");
     private final static QName _UserRegistrationResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "userRegistrationResponse");
     private final static QName _AddBidResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "addBidResponse");
     private final static QName _AddLot_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "addLot");
     private final static QName _UserRegistration_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "userRegistration");
     private final static QName _GetAllLots_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getAllLots");
     private final static QName _AddBid_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "addBid");
-    private final static QName _GetLotStateResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getLotStateResponse");
-    private final static QName _GetWinningBidResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getWinningBidResponse");
     private final static QName _UserAuthenticationResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "userAuthenticationResponse");
     private final static QName _UserAuthentication_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "userAuthentication");
     private final static QName _GetBidsResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getBidsResponse");
-    private final static QName _GetWinningBid_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "getWinningBid");
     private final static QName _CancelLotResponse_QNAME = new QName("http://auction.facadeservice/jaxws/auctionservice", "cancelLotResponse");
 
     /**
@@ -53,14 +47,6 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link GetLotResponse }
-     * 
-     */
-    public GetLotResponse createGetLotResponse() {
-        return new GetLotResponse();
     }
 
     /**
@@ -120,35 +106,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetLotStateResponse }
-     * 
-     */
-    public GetLotStateResponse createGetLotStateResponse() {
-        return new GetLotStateResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetWinningBidResponse }
-     * 
-     */
-    public GetWinningBidResponse createGetWinningBidResponse() {
-        return new GetWinningBidResponse();
-    }
-
-    /**
      * Create an instance of {@link UserAuthenticationResponse }
      * 
      */
     public UserAuthenticationResponse createUserAuthenticationResponse() {
         return new UserAuthenticationResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetWinningBid }
-     * 
-     */
-    public GetWinningBid createGetWinningBid() {
-        return new GetWinningBid();
     }
 
     /**
@@ -176,14 +138,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetLotState }
-     * 
-     */
-    public GetLotState createGetLotState() {
-        return new GetLotState();
-    }
-
-    /**
      * Create an instance of {@link Lot }
      * 
      */
@@ -197,14 +151,6 @@ public class ObjectFactory {
      */
     public GetBids createGetBids() {
         return new GetBids();
-    }
-
-    /**
-     * Create an instance of {@link GetLot }
-     * 
-     */
-    public GetLot createGetLot() {
-        return new GetLot();
     }
 
     /**
@@ -240,14 +186,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetLotStateByIdLotResponse }
-     * 
-     */
-    public GetLotStateByIdLotResponse createGetLotStateByIdLotResponse() {
-        return new GetLotStateByIdLotResponse();
-    }
-
-    /**
      * Create an instance of {@link BaseResponse }
      * 
      */
@@ -264,11 +202,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetWinningBidByIdResponseResponse }
+     * Create an instance of {@link GetLotsResponse }
      * 
      */
-    public GetWinningBidByIdResponseResponse createGetWinningBidByIdResponseResponse() {
-        return new GetWinningBidByIdResponseResponse();
+    public GetLotsResponse createGetLotsResponse() {
+        return new GetLotsResponse();
     }
 
     /**
@@ -277,22 +215,6 @@ public class ObjectFactory {
      */
     public UserAuthenticResponse createUserAuthenticResponse() {
         return new UserAuthenticResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetLotByIdResponse }
-     * 
-     */
-    public GetLotByIdResponse createGetLotByIdResponse() {
-        return new GetLotByIdResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetLotsResponse }
-     * 
-     */
-    public GetLotsResponse createGetLotsResponse() {
-        return new GetLotsResponse();
     }
 
     /**
@@ -314,30 +236,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLotState }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "getLotState")
-    public JAXBElement<GetLotState> createGetLotState(GetLotState value) {
-        return new JAXBElement<GetLotState>(_GetLotState_QNAME, GetLotState.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Lot }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "lot")
     public JAXBElement<Lot> createLot(Lot value) {
         return new JAXBElement<Lot>(_Lot_QNAME, Lot.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLot }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "getLot")
-    public JAXBElement<GetLot> createGetLot(GetLot value) {
-        return new JAXBElement<GetLot>(_GetLot_QNAME, GetLot.class, null, value);
     }
 
     /**
@@ -374,15 +278,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "bid")
     public JAXBElement<Bid> createBid(Bid value) {
         return new JAXBElement<Bid>(_Bid_QNAME, Bid.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLotResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "getLotResponse")
-    public JAXBElement<GetLotResponse> createGetLotResponse(GetLotResponse value) {
-        return new JAXBElement<GetLotResponse>(_GetLotResponse_QNAME, GetLotResponse.class, null, value);
     }
 
     /**
@@ -440,24 +335,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLotStateResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "getLotStateResponse")
-    public JAXBElement<GetLotStateResponse> createGetLotStateResponse(GetLotStateResponse value) {
-        return new JAXBElement<GetLotStateResponse>(_GetLotStateResponse_QNAME, GetLotStateResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetWinningBidResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "getWinningBidResponse")
-    public JAXBElement<GetWinningBidResponse> createGetWinningBidResponse(GetWinningBidResponse value) {
-        return new JAXBElement<GetWinningBidResponse>(_GetWinningBidResponse_QNAME, GetWinningBidResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link UserAuthenticationResponse }{@code >}}
      * 
      */
@@ -482,15 +359,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "getBidsResponse")
     public JAXBElement<GetBidsResponse> createGetBidsResponse(GetBidsResponse value) {
         return new JAXBElement<GetBidsResponse>(_GetBidsResponse_QNAME, GetBidsResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetWinningBid }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://auction.facadeservice/jaxws/auctionservice", name = "getWinningBid")
-    public JAXBElement<GetWinningBid> createGetWinningBid(GetWinningBid value) {
-        return new JAXBElement<GetWinningBid>(_GetWinningBid_QNAME, GetWinningBid.class, null, value);
     }
 
     /**

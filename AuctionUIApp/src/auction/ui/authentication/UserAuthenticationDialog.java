@@ -53,13 +53,10 @@ public class UserAuthenticationDialog extends Panel {
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
 	
 	public UserAuthenticationDialog(){
-		//this.user = new User();
 	}
 	
 	public void initDialog(){
-		//this.user = new User();	
 		initFormFields();
-
 	}
 	public void attach() {
 		this.setCaption("Authentication");
@@ -77,8 +74,8 @@ public class UserAuthenticationDialog extends Panel {
 
 		mainVerticalLayout.setSizeUndefined();
 		
-		buttonLoginClick();
-		buttonRegisterClick();
+		addLoginButtonListener();
+		addRegisterButtonListener();
 
 	}
 	
@@ -118,7 +115,7 @@ public class UserAuthenticationDialog extends Panel {
 	}
 
 	@SuppressWarnings("serial")
-	private void buttonLoginClick() {
+	private void addLoginButtonListener() {
 		getLoginButton().addListener(new ClickListener() {
 		
 		@Override
@@ -142,15 +139,16 @@ public class UserAuthenticationDialog extends Panel {
 				}
 				
 			} catch (InvalidValueException e) {
-				 LOGGRER.info("An incorrect input data buttonLoginClick={}, reason={}", e, e.getMessage());
+				 LOGGRER.info("An incorrect input data addLoginButtonListener={}, reason={}", e, e.getMessage());
 			}
+			
 			
 		}
 		});
 	}
 
 	@SuppressWarnings("serial")
-	private void buttonRegisterClick() {
+	private void addRegisterButtonListener() {
 		getRegisterButton().addListener(new ClickListener() {
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -160,7 +158,7 @@ public class UserAuthenticationDialog extends Panel {
 				getApplication().getMainWindow().addWindow(userRegistrationDialog);
 				userRegistrationDialog.setUserIdentifiedListener(listener);
 			} catch (InvalidValueException e) {
-				 LOGGRER.error("Is not satisfied buttonRegisterClick={}, reason={}", e, e.getMessage());
+				 LOGGRER.error("Is not satisfied addRegisterButtonListener={}, reason={}", e, e.getMessage());
 			}
 		}
 		});

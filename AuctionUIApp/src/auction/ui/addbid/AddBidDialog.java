@@ -1,7 +1,5 @@
 package auction.ui.addbid;
 
-import java.util.Arrays;
-
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
@@ -37,6 +35,8 @@ public class AddBidDialog extends Window {
 	
 	private static final int BUTTON_WIDTH = 80;
 	
+	private static final String[] FIELDS_NAME = new String[] {"rate"}; 
+	
 	private static BidFieldFactory bidFieldFactory = BidFieldFactorySinglton.getBidFieldFactory();
 	
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();	
@@ -71,7 +71,7 @@ public class AddBidDialog extends Window {
 	    BeanItem<Bid> bidItem = new BeanItem<Bid>(bid); 
 	    getFrom().setFormFieldFactory(bidFieldFactory);
 	    getFrom().setItemDataSource(bidItem);
-		getFrom().setVisibleItemProperties(Arrays.asList(new String[] {"rate"}));	
+		getFrom().setVisibleItemProperties(FIELDS_NAME);	
 		
 		mainHorizontalLayout.addComponent(getFrom());
 		mainHorizontalLayout.addComponent(getBuckLabel());
@@ -79,12 +79,12 @@ public class AddBidDialog extends Window {
 		mainHorizontalLayout.setComponentAlignment(getAddBidButton(),Alignment.MIDDLE_RIGHT);
 		mainHorizontalLayout.setSizeUndefined();
 
-		buttonAddBidClick();
+		addAddBidButtonListener();
 	}
 
 
 	@SuppressWarnings("serial")
-	private void buttonAddBidClick() {
+	private void addAddBidButtonListener() {
 		getAddBidButton().addListener(new ClickListener() {
 		
 		@Override
@@ -110,7 +110,7 @@ public class AddBidDialog extends Window {
 				}			
 	
 			} catch (InvalidValueException e) {
-				 LOGGRER.info("An incorrect input data buttonAddBidClick={}, reason={}", e, e.getMessage());
+				 LOGGRER.info("An incorrect input data addAddBidButtonListener={}, reason={}", e, e.getMessage());
 				
 			}
 		}

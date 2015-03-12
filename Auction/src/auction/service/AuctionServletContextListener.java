@@ -21,7 +21,6 @@ public class AuctionServletContextListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		lotLogic = new LotLogic();
-		//QuartzManagerSingleton.getQuartzManager();
 		lotLogic.firstAssignJobToLot();		
 	}
 

@@ -1,7 +1,5 @@
 package auction.ui;
 
-import org.vaadin.artur.icepush.ICEPush;
-
 import auction.ui.authentication.UserAuthenticationDialog;
 import auction.ui.authentication.UserIdentifiedListener;
 import auction.ui.bidsform.BidsForm;
@@ -18,8 +16,6 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.themes.BaseTheme;
-
-import auction.ui.loader.LoaderForms;
 
 /**
  * Main application class.
@@ -44,12 +40,8 @@ public class VaadinProjectApplication extends Application {
 	private User user;
 	private Window mainWindow; 
 	
-	private ICEPush pusher = new ICEPush();
-
 	@Override
 	public void init() {
-		getMainWindow().addComponent(pusher);
-		LoaderForms.setMainPusher(pusher);
 		openUserAuhtenticationPanel();
 	}
 	
@@ -139,7 +131,6 @@ public class VaadinProjectApplication extends Application {
 	public LotsForm getLotsForm() {
 		if (lotsForm == null) {
 			lotsForm = new LotsForm(getUser());
-			LoaderForms.setLotsForm(lotsForm);
 		}
 		return lotsForm;
 	}
@@ -147,7 +138,6 @@ public class VaadinProjectApplication extends Application {
 	public LotDetailsForm getLotDetailsForm() {
 		if (lotDatailsForm == null) {
 			lotDatailsForm = new LotDetailsForm(getLotsForm());
-			LoaderForms.setLotDetailsForm(lotDatailsForm);
 		}
 		return lotDatailsForm;
 	}
@@ -155,7 +145,6 @@ public class VaadinProjectApplication extends Application {
 	public BidsForm getBidsForm() {
 		if (bidsForm == null) {
 			bidsForm = new BidsForm(getLotsForm());
-			LoaderForms.setBidsForm(bidsForm);
 		}
 		return bidsForm;
 	}	

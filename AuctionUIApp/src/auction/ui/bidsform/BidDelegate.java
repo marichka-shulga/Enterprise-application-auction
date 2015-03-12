@@ -29,7 +29,7 @@ public class BidDelegate {
 		Date date = null;
         if( null != calendar ) {
             date = calendar.toGregorianCalendar().getTime();
-            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss a");
            	result = format.format(date);
         }
         return result;

@@ -3,6 +3,7 @@ package auction.businesslogic.modelBL;
 import org.apache.logging.log4j.Logger;
 
 import auction.dao.BidDAO;
+import auction.dao.LotDAO;
 import auction.log.LogFactory;
 import auction.model.Bid;
 import auction.model.Lot;
@@ -12,19 +13,22 @@ import auction.service.response.StateResult;
 
 public class BidLogic {
 	private BidDAO bidDAO;
+	private LotDAO lotDAO;
 
 	private static final Logger LOGGRER = LogFactory.getLogger(BidLogic.class);
 	
 	public BidLogic() {
 		bidDAO = new BidDAO();
+		lotDAO = new LotDAO();
 	}
 
 	public BaseResponse addBid(Bid bid){
 		BaseResponse res = new BaseResponse();
-		Lot lot = bid.getLot();
 		String message = null;
+		Lot lot = bid.getLot();
 		try {
-			if(lot.getState() == LotState.ACTIVE){
+			lot = lotDAO.getEntityById(bid.getLot().getIdLot());
+			if( lot.getState().equals(LotState.ACTIVE) ){
 				int rateIsMore = bid.getRate().compareTo(lot.getStartPrice());
 				if( (0 == rateIsMore) || (1 == rateIsMore) ) {
 					rateIsMore = bid.getRate().compareTo(bidDAO.getMaxRate(lot.getIdLot()));

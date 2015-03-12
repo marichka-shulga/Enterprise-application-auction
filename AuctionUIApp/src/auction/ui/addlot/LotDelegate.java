@@ -2,6 +2,7 @@ package auction.ui.addlot;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -21,7 +22,7 @@ public class LotDelegate {
 	
 	public String getFinishDateInFormat() {
 		Date date = getFinishDate();
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss a");
         finishDateInFormat = format.format(date);
 		return finishDateInFormat;
 	}
@@ -124,7 +125,44 @@ public class LotDelegate {
 	
 	
 	public String getRemainingTime() {
-		//this.remainingTime = this.getFinishDate();
+		StringBuilder builder = new StringBuilder();
+		if( null == getFinishDate() ){
+			builder.append("");
+		} else {
+			if( getState().equals(LotState.ACTIVE) ){
+				Calendar curCalendar = Calendar.getInstance();
+				curCalendar.setTime(new Date());
+				Calendar finishCalendar = Calendar.getInstance();
+				finishCalendar.setTime(getFinishDate());
+				long remainingTime = finishCalendar.getTimeInMillis() - curCalendar.getTimeInMillis();
+		
+				long seconds = remainingTime / 1000;
+				long minutes = seconds / 60;
+				long hours = minutes / 60;
+				long days = hours / 24;
+			
+				long remainderHours = hours - days*24;
+				if( 0 > remainderHours )
+					remainderHours = 0;
+				long remainderMinutes = minutes - hours*60;
+				if( 0 > remainderMinutes )
+					remainderMinutes = 0;
+				long remainderSeconds = seconds - minutes*60;
+				if( 0 > remainderSeconds )
+					remainderSeconds = 0;
+			
+				builder.append(days).append(" days, ");
+				builder.append(remainderHours).append(" hours, ");
+				builder.append(remainderMinutes).append(" minutes and ");
+				builder.append(remainderSeconds).append(" seconds");
+			} else {
+				builder.append(0).append(" days, ");
+				builder.append(0).append(" hours, ");
+				builder.append(0).append(" minutes and ");
+				builder.append(0).append(" seconds");
+			}
+		}
+		this.remainingTime = builder.toString();
 		return this.remainingTime;
 	}
 

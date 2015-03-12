@@ -24,8 +24,6 @@ import java.util.Set;
                 query="SELECT l FROM Lot l WHERE l.state = :state"),
     @NamedQuery(name="Lot.getAllLots",
                 query="SELECT l FROM Lot l") ,
-    @NamedQuery(name="Lot.getStateLot",
-                query="SELECT l.state FROM Lot l WHERE l.idLot = :idLot")
 }) 
 @XmlRootElement
 @XmlAccessorType(value = XmlAccessType.FIELD)
@@ -33,8 +31,7 @@ public class Lot implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lot_id_gen")
-	@SequenceGenerator(name="lot_id_gen", sequenceName="lot_id_seq", allocationSize = 500)
+	@GeneratedValue
 	@Column(name="id_lot")
 	private Integer idLot;
 	

@@ -15,7 +15,6 @@ import org.junit.Test;
 
 import client.artefacts.BaseResponse;
 import client.artefacts.Bid;
-import client.artefacts.GetLotByIdResponse;
 import client.artefacts.Lot;
 import client.artefacts.LotState;
 import client.artefacts.StateResult;
@@ -37,18 +36,18 @@ public class TestAddBid {
 //		user2 = resp.getUser();
 //	}	
 	
-	@Test
-	@Before
-	public void addLot1() {
+//	@Test
+//	@Before
+//	public void addLot1() {
+//		
+//		UserAuthenticResponse resp = client.userAuthentication("qwer", "qwer");
+//		Assert.assertTrue(resp.getStateResult().equals(StateResult.SUCCESS));
+//		Assert.assertTrue(resp.getUser().getUserLogin().equals("qwer"));
+//		Assert.assertTrue(resp.getUser().getPassword().equals("qwer"));
+//		user2 = resp.getUser();		
 		
-		UserAuthenticResponse resp = client.userAuthentication("qwer", "qwer");
-		Assert.assertTrue(resp.getStateResult().equals(StateResult.SUCCESS));
-		Assert.assertTrue(resp.getUser().getUserLogin().equals("qwer"));
-		Assert.assertTrue(resp.getUser().getPassword().equals("qwer"));
-		user2 = resp.getUser();		
-		
-		GetLotByIdResponse respLot = client.getLot(63);
-		lot = respLot.getLot();
+//		//GetLotByIdResponse respLot = client.getLot(63);
+//		lot = respLot.getLot();
 //		lot = new Lot();
 //		lot.setCode(8978);
 //		lot.setDescriptions("Lot description");
@@ -69,25 +68,21 @@ public class TestAddBid {
 //		lot.setState(LotState.ACTIVE);
 //		lot.setUser(user2);
 //		BaseResponse resp1 = client.addLot(lot);
-////		System.out.println(resp.getStateResult());
-////		System.out.println(resp.getErrorMessage());
 //		Assert.assertEquals(resp1.getStateResult(),StateResult.SUCCESS);
-	}
+//	}
 	
-	@Test
-	public void addBid1() {
-		
-		Bid bid = new Bid();
-		bid.setIsWinningBid(false);
-		bid.setRate(new BigDecimal(4.0));
-		bid.setUser(user2);
-		bid.setLot(lot);
-		
-		BaseResponse resp = client.addBid(bid);
-//		System.out.println(resp.getStateResult());
-//		System.out.println(resp.getErrorMessage());
-		Assert.assertEquals(resp.getStateResult(),StateResult.SUCCESS);
-	}	
+//	@Test
+//	public void addBid1() {
+//		
+//		Bid bid = new Bid();
+//		bid.setIsWinningBid(false);
+//		bid.setRate(new BigDecimal(4.0));
+//		bid.setUser(user2);
+//		bid.setLot(lot);
+//		
+//		BaseResponse resp = client.addBid(bid);
+//		Assert.assertEquals(resp.getStateResult(),StateResult.SUCCESS);
+//	}	
 	
 //	@Test
 //	public void addBid2() {
@@ -99,8 +94,6 @@ public class TestAddBid {
 //		bid.setLot(lot);
 //		
 //		BaseResponse resp = client.addBid(bid);
-////		System.out.println(resp.getStateResult());
-////		System.out.println(resp.getErrorMessage());
 //		Assert.assertEquals(resp.getStateResult(),StateResult.SUCCESS);
 //	}		
 //	
@@ -113,8 +106,6 @@ public class TestAddBid {
 //		bid.setLot(lot);
 //		
 //		BaseResponse resp = client.addBid(bid);
-////		System.out.println(resp.getStateResult());
-////		System.out.println(resp.getErrorMessage());
 //		Assert.assertEquals(resp.getStateResult(),StateResult.SUCCESS);
 //	}		
 //	public void addBid4() {
@@ -126,8 +117,6 @@ public class TestAddBid {
 //		bid.setLot(lot);
 //		
 //		BaseResponse resp = client.addBid(bid);
-////		System.out.println(resp.getStateResult());
-////		System.out.println(resp.getErrorMessage());
 //		Assert.assertEquals(resp.getStateResult(),StateResult.SUCCESS);
 //	}	
 //	public void addBid5() {
@@ -139,8 +128,6 @@ public class TestAddBid {
 //		bid.setLot(lot);
 //		
 //		BaseResponse resp = client.addBid(bid);
-////		System.out.println(resp.getStateResult());
-////		System.out.println(resp.getErrorMessage());
 //		Assert.assertEquals(resp.getStateResult(),StateResult.SUCCESS);
 //	}	
 }

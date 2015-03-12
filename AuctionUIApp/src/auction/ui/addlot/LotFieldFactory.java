@@ -39,7 +39,7 @@ public class LotFieldFactory extends DefaultFieldFactory {
         	 
         	PopupDateField finishDateField = (PopupDateField) field;
         	//finishDateField.setValue("");
-        	finishDateField.setDateFormat("dd.MM.yyyy hh:mm:ss");
+        	finishDateField.setDateFormat("dd.MM.yyyy hh:mm:ss a");
         	finishDateField.setRequired(true);
         	finishDateField.setRequiredError("Please enter a Finish date");
          } else if ("startPrice".equals(propertyId)) {
