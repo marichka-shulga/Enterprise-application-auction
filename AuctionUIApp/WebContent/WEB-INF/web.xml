@@ -10,12 +10,6 @@
 		<param-value>false</param-value>
 	</context-param>
 
-	<listener>
-        <listener-class>
-             auction.ui.servletContextListener.AuctionUIServletContextListener 
-        </listener-class>
-    </listener>
-	
 	<servlet>
 		<servlet-name>AuctionUIApp Application</servlet-name>
 		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>

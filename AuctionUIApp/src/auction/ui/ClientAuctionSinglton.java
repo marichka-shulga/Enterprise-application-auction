@@ -2,8 +2,8 @@ package auction.ui;
 
 import org.apache.logging.log4j.Logger;
 
+import auction.ui.loadproperties.AuctionServiceProperties;
 import auction.ui.log.LogFactory;
-import client.loadproperties.AuctionServiceProperties;
 import client.realization.ClientAuction;
 
 public class ClientAuctionSinglton {

@@ -1,4 +1,4 @@
-package client.loadproperties;
+package auction.ui.loadproperties;
 
 import java.io.IOException;
 import java.io.InputStream;

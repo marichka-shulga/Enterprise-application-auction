@@ -31,7 +31,7 @@ public class LotDetailsForm extends Form {
 	private static LotDetailsFactory lotDetailsFactory = LotDetailsFactorySingleton.getLotDetailsFactory();
 	
 	private static final String[] FIELDS_NAME = new String[] {"code", "name", "state", "finishDate", "user",
-        "remainingTime","descriptions","startPrice"}; 
+        "remainingTime","descriptions","startPraceInString"}; 
 	
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();	
 	

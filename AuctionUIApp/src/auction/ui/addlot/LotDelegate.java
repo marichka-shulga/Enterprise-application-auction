@@ -20,6 +20,8 @@ public class LotDelegate {
 	
 	private String finishDateInFormat; 
 	
+	private String startPraceInString;
+
 	public String getFinishDateInFormat() {
 		Date date = getFinishDate();
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss a");
@@ -84,8 +86,6 @@ public class LotDelegate {
 
 		lot.setFinishDate(xmlCalendar);
 	}
-	
-	
 
 
 	public String getName() {
@@ -95,11 +95,18 @@ public class LotDelegate {
 	public void setName(String value) {
 		lot.setName(value);
 	}
-
+	
+	public String getStartPraceInString() {
+		StringBuilder result = new StringBuilder();
+		result.append(lot.getStartPrice()).append(" $");
+		this.startPraceInString = result.toString();
+		return this.startPraceInString;
+	}
+	
 	public BigDecimal getStartPrice() {
 		return lot.getStartPrice();
 	}
-
+	
 	public void setStartPrice(BigDecimal value) {
 		lot.setStartPrice(value);
 	}
