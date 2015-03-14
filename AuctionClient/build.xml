@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<project name = "AuctionClient" default = "run" basedir = ".">
-	
-		<target name = "run" depends = "compile">
-			<echo>run</echo>
+	<project name = "AuctionClient" default = "dist" basedir = ".">
+
+		<property name="src.dir" value="${basedir}/src"/>
+		<property name="build.dir" value="${basedir}/build"/>
+		<property name="class.dir" value="${basedir}/build/class"/>
+		<property name="lib.dir" value="${basedir}/lib"/>	
 		
+		<property name="dist.namejar"  value="../AuctionUIApp/lib/auction.jar"/>
+
+		<path id="lib.path"> 
+			<fileset dir="${lib.dir}">
+		  		<include name="*.jar"/>
+			</fileset>
+		</path>
+		
+		<target name="init" description="Make build directories">
+		    <mkdir dir="${build.dir}"/>
+			<mkdir dir="${class.dir}"/>
+		</target>		
+
+		<target name="compile" depends="init" description="compile the source" >
+		    <javac srcdir="${src.dir}" destdir="${class.dir}" classpathref="lib.path" includeantruntime="false"/>
 		</target>
 		
-		<target name = "compile">
-			<echo>compile</echo>
+		<target name="dist" depends="compile" description="generate the distribution" >
+		    <jar jarfile="${dist.namejar}" basedir="${class.dir}"/>
+		</target>
 		
-		</target>	
-	
-	
-	</project>
+		<target name="clean" description="clean up" >
+		    <delete dir="${build.dir}"/>
+		</target>
+</project>

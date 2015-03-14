@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CompileWidgetset" default="generate-widgetset" basedir=".">
+
+	<property name="widgetset" value="auction.ui.widgetset.AuctionuiappWidgetset" />
+	<property name="web-content.dir" value="${basedir}/WebContent" />
+	<property name="runtime-lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
+	<property name="build-support-lib.dir" value="${basedir}/lib/build-support" />
+
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="client-side-destination" value="${web-content.dir}/VAADIN/widgetsets" />
+
+	<property name="widgetset-name" value="AuctionuiappWidgetset" />
+	<property name="widgetset-package" value="auction.ui.widgetset" />	
+	<property name="widgetset-path" value="auction/ui/widgetset" />
+	
+
+	<fileset id="build-support-lib.path" dir="${build-support-lib.dir}">
+		<include name="/*.jar" />
+	</fileset>
+
+	<fileset id="runtime-lib.path" dir="${runtime-lib.dir}">
+		<include name="/*.jar" />
+	</fileset>
+
+	<path id="vaadin-tools.path">
+		<pathelement path="${src.dir}" />
+		<fileset refid="build-support-lib.path" />
+		<fileset refid="runtime-lib.path" />
+	</path>
+
+	<target name="generate-widgetset" description="Generates the widgetset">
+
+		<property name="widgetset-xml.file"	value="${src.dir}/${widgetset-path}/${widgetset-name}.gwt.xml" />
+		<property name="widgetset-js.file" value="${client-side-destination}/${widgetset}/${widgetset}.nocache.js" />
+
+		<uptodate property="widgetset-xml.uptodate" targetfile="${widgetset-xml.file}">
+			<srcfiles refid="runtime-lib.path" />
+		</uptodate>
+
+		<mkdir dir="${src.dir}/${widgetset-path}" />
+		<java classname="com.vaadin.terminal.gwt.widgetsetutils.WidgetSetBuilder"
+			failonerror="yes" fork="yes" maxmemory="256m">
+			<arg value="${widgetset}" />
+			<jvmarg value="-Xss1024k" />
+			<jvmarg value="-Djava.awt.headless=true" />
+			<classpath refid="vaadin-tools.path" />
+		</java>
+		<touch file="${widgetset-xml.file}" />
+
+
+		<uptodate property="widgetset-js.uptodate" targetfile="${widgetset-js.file}">
+			<srcfiles refid="runtime-lib.path" />
+		</uptodate>
+
+		<mkdir dir="${web-content.dir}" />
+		<delete dir="${client-side-destination}" />
+		<java classname="com.google.gwt.dev.Compiler" failonerror="yes"	fork="yes" maxmemory="256m">
+			<arg value="-war" />
+			<arg value="${client-side-destination}" />
+			<arg value="${widgetset}" />
+			<jvmarg value="-XX:MaxPermSize=128m" />
+			<jvmarg value="-Xss1024k" />
+			<jvmarg value="-Djava.awt.headless=true" />
+			<classpath refid="vaadin-tools.path" />
+		</java>
+
+	</target>
+
+</project>

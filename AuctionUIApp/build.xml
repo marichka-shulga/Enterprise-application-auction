@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AuctionUI" default="package" basedir=".">
+
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="classes.dir" value="${basedir}/build/classes"/>
+	<property name="lib.dir" value="${basedir}/lib"/>
+	<property name="runtime-lib.dir" value="${basedir}/WebContent/WEB-INF/lib"/>
+	<property name="war-lib.dir" value="${basedir}/build/lib"/>		
+	<property name="web-content.dir" value="${basedir}/WebContent"/>		
+	<property name="web-inf.dir" value="${basedir}/WebContent/WEB-INF/"/>	
+	
+	<property name="project.war" value="${war-lib.dir}/AuctionUI.war"/>
+
+	<fileset id="lib.path" dir="${lib.dir}">
+		<include name="/*.jar" />
+	</fileset>
+
+	<fileset id="runtime-lib.path" dir="${runtime-lib.dir}">
+		<include name="/*.jar" />
+	</fileset>
+
+	<path id="build.classpath">
+		<fileset refid="lib.path" />
+	</path>
+
+	<target name="init" description="Make build directories">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${war-lib.dir}"/>
+	</target>
+
+	<target name="compile" depends="init" description="compile the source" >
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="build.classpath" includeantruntime="false"/>
+	</target>
+	
+	<target name="compileWidgestset" depends="compile" description="compile the widgestset" >
+		<ant antfile="${basedir}/build-widgetset.xml" dir="${basedir}" />
+	</target>	
+
+	<target name="package" depends="compileWidgestset" description="Packaging all files into ${project.war}">
+		<war destfile="${project.war}" webxml="${web-inf.dir}/web.xml">
+			<classes dir="${classes.dir}" />
+			<lib dir="${lib.dir}" />
+			<fileset dir="${web-content.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war>
+	</target>
+
+	<target name="clean" description="clean up">
+		<delete dir="${build.dir}" />
+	</target>
+
+</project>

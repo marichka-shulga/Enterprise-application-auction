@@ -25,53 +25,46 @@ import auction.service.response.UserAuthenticResponse;
 			parameterStyle=SOAPBinding.ParameterStyle.WRAPPED)
 
 public class FacadeService {
-	private UserLogic userLogic;
-	private LotLogic lotLogic;
-	private BidLogic bidLogic;
-	private LotDAO lotDAO;
-	private BidDAO bidDAO;
-	
-	public FacadeService(){
-		userLogic = new UserLogic();
-		lotLogic = new LotLogic();
-		bidLogic = new BidLogic(); 
-		lotDAO = new LotDAO();
-		bidDAO = new BidDAO();
-	}
-
 
 	@WebMethod
 	public UserAuthenticResponse userAuthentication(String login, String password){
+		UserLogic userLogic = new UserLogic();
 		return userLogic.authentication(login, password);
 	}
 	
 	@WebMethod
 	public BaseResponse userRegistration(User user){
+		UserLogic userLogic = new UserLogic();
 		return userLogic.registration(user);
 	}
 	
 	@WebMethod
 	public GetLotsResponse getAllLots(){
+		LotDAO lotDAO = new LotDAO();
 		return lotDAO.getLots(false);
 	}	
 	
 	@WebMethod
 	public BaseResponse addLot(Lot lot){
+		LotLogic lotLogic = new LotLogic();
 		return lotLogic.addLot(lot);
 	}		
 
 	@WebMethod
 	public BaseResponse cancelLot(Lot lot){
+		LotLogic lotLogic = new LotLogic();
 		return lotLogic.cancelOfTrades(lot);
 	}	
 	
 	@WebMethod
 	public BaseResponse addBid(Bid bid){
+		BidLogic bidLogic = new BidLogic();
 		return bidLogic.addBid(bid);
 	}		
 	
 	@WebMethod
 	public GetBidsByIdLotResponse getBids(Integer idLot){
+		BidDAO bidDAO = new BidDAO();
 		return bidDAO.getBids(idLot);
 	}	
 	

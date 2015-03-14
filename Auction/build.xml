@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name = "AuctionService" default = "package" basedir = ".">
+
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="classes.dir" value="${basedir}/build/classes"/>
+	<property name="artefacts.dir" value="${basedir}/build/artefacts"/>
+	<property name="war-lib.dir" value="${basedir}/build/lib"/>	
+	<property name="lib.dir" value="${basedir}/lib"/>
+	<property name="web-content.dir" value="${basedir}/WebContent"/>		
+	<property name="web-inf.dir" value="${basedir}/WebContent/WEB-INF/"/>	
+	<property name="runtime-lib.dir" value="${basedir}/WebContent/WEB-INF/lib"/>
+	<property name="dist-artefacts.dir"  value="../AuctionClient/src"/>
+
+	<property name="service-endpoint-impl" value="auction.service.FacadeService"/>	
+	<property name="wsdl" value="http://localhost:8080/Auction/AuctionService?wsdl"/>
+	<property name="package-client" value="client.artefacts"/>
+	<property name="project.war" value="${war-lib.dir}/AuctionService.war"/>
+	
+	<property name="publisher.dir" value="${basedir}/publisher"/>	
+	<property name="publisher.jar" value="${publisher.dir}/AuctionWebServicePublisher.jar"/>	
+	<property name="main-class" value="auction.webServicePublisher.AuctionWebServicePublisher"/>
+
+	
+	
+	<fileset id="lib.path" dir="${lib.dir}">
+		<include name="*.jar"/>
+	</fileset>
+
+	<fileset id="runtime-lib.path" dir="${runtime-lib.dir}">
+		<include name="*.jar"/>
+	</fileset>
+
+	<path id="build.classpath">
+		<fileset refid="lib.path"/>
+		<fileset refid="runtime-lib.path"/>
+	</path>
+
+	<path id="jaxws.classpath">
+		<fileset refid="runtime-lib.path"/>
+	</path>	
+
+	<target name="init" description="Make build directories">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${artefacts.dir}"/>
+		<mkdir dir="${war-lib.dir}"/>
+		<mkdir dir="${publisher.dir}"/>
+	</target>
+
+	<target name="compile" depends="init" description="compile the source" >
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="build.classpath" includeantruntime="false"/>
+	</target>
+	
+	<target name="wsgen" depends="compile">
+		<taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
+			<classpath refid="jaxws.classpath"/>
+		</taskdef>
+		<wsgen sei="${service-endpoint-impl}"
+				destdir="${artefacts.dir}"	
+				classpath="${classes.dir}"
+				resourcedestdir="${artefacts.dir}"
+				sourcedestdir="${artefacts.dir}"
+				keep="true"
+				verbose="true"
+        		genwsdl="true" >
+		</wsgen>
+	</target>
+	
+	
+	<target name="publishWSDL" depends="wsgen">
+        <jar destfile="${publisher.jar}" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+        <java jar="${publisher.jar}" fork="true"/>
+	</target>
+	
+
+	<target name="wsimport" depends="publishWSDL">
+		<taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+			<classpath refid="jaxws.classpath"/>
+		</taskdef>
+		<wsimport wsdl="${wsdl}"
+				destdir="${dist-artefacts.dir}"	
+				sourcedestdir="${dist-artefacts.dir}"
+				package="${package-client}"
+				keep="true"
+				verbose="true">
+		</wsimport>
+	</target>
+
+	<target name="package" depends="wsimport" description="Packaging all files into ${project.war}">
+		<war destfile="${project.war}" webxml="${web-inf.dir}/web.xml">
+			<classes dir="${classes.dir}" />
+			<lib dir="${lib.dir}" />
+			<fileset dir="${web-content.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war>
+	</target>
+
+	<target name="clean" description="clean up">
+		<delete dir="${build.dir}" />
+	</target>
+
+</project>

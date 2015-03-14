@@ -55,42 +55,27 @@ public class LotLogic {
 	public BaseResponse cancelOfTrades(Lot lot){
 		
 		BaseResponse res = new BaseResponse();
-		if( lot.getState().equals(LotState.ACTIVE) ){
-			lot.setState(LotState.CANCELLED);		
-			try {
+		try {
+			lot = lotDAO.getEntityById(lot.getIdLot());
+			if( lot.getState().equals(LotState.ACTIVE) ){
+				lot.setState(LotState.CANCELLED);		
 				lotDAO.update(lot);
 				manager.removeTrigger(String.valueOf(lot.getIdLot()));
 				res.setStateResult(StateResult.SUCCESS);
-			} catch (Exception e) {
-				LOGGRER.error("Is not satisfied cancelOfTrades={}, reason={}, idLot={}", 
-						e, e.getMessage(), lot.getIdLot());
-				res.setStateResult(StateResult.ERROR);
-				res.setErrorMessage(e.getMessage());	
-			}
-			LOGGRER.info("Trades canceled idLot={}", lot.getIdLot());
-		} else{
-			res.setStateResult(StateResult.NOT_SUCCESS);
-			LOGGRER.info("Trades not cancel idLot={}", lot.getIdLot());
+				LOGGRER.info("Trades canceled idLot={}", lot.getIdLot());
+			} else{
+				res.setStateResult(StateResult.NOT_SUCCESS);
+				LOGGRER.info("Trades not cancel idLot={}", lot.getIdLot());
+			}		
+				
+		} catch (Exception e) {
+			LOGGRER.error("Is not satisfied cancelOfTrades={}, reason={}, idLot={}", 
+					e, e.getMessage(), lot.getIdLot());
+			res.setStateResult(StateResult.ERROR);
+			res.setErrorMessage(e.getMessage());	
 		}
-	
 		return res;
 	}	
-	
-//	public GetLotByIdResponse getLotById(Integer idLot){
-//		GetLotByIdResponse res = new GetLotByIdResponse();
-//		try {
-//			res.setStateResult(StateResult.SUCCESS);
-//			res.setLot(lotDAO.getObjectById(idLot));
-//		} catch (Exception e) {
-//			LOGGRER.error("Is not satisfied gelLotById={}, reason={}, idLot={}", 
-//					e, e.getMessage(),idLot);
-//			res.setStateResult(StateResult.ERROR);
-//			res.setErrorMessage(e.getMessage());	
-//		}
-//
-//		return res;
-//	}	
-
 
 	private LotState getStateLotAtFinishedTrades(Lot lot){
 		LotState res = LotState.NOT_SOLD;

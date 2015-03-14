@@ -1,0 +1,22 @@
+<project name="CommonBuild" default="compileUI" basedir=".">
+
+	<property name="auction-service.dir" value="${basedir}/Auction" />
+	<property name="auction-client.dir" value="${basedir}/AuctionClient" />
+	<property name="auction-UI.dir" value="${basedir}/AuctionUIApp" />	
+	
+	<target name="compileService" description="compile the web service Auction" >
+		<ant antfile="${auction-service.dir}/build.xml" dir="${auction-service.dir}" />
+	</target>	
+	
+	<target name="compileClient" depends="compileService" description="compile the client web service Auction" >
+		<ant antfile="${auction-client.dir}/build.xml" dir="${auction-client.dir}" />
+	</target>		
+
+	<target name="compileUI" depends="compileClient" description="compile the client UI Auction" >
+		<ant antfile="${auction-UI.dir}/build.xml" dir="${auction-UI.dir}" />
+	</target>		
+
+</project>
+
+
+
