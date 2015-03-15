@@ -2,9 +2,9 @@
 The project is presented as web services based on JAX-WS technology and has a multi-layer architecture. Integration layer is implemented in accordance JPA specification (Eclipselink). Business logic layer uses the libraries Quartz. The project used Apache Log4j for logging project errors and events.
 
  Enterprise application auction include three project:
-	- web dynamic project Auction (web service);
-	- java project ClientAuction (client);
-	- vaadin 6 project AuctionUIApp(user interface).
+- web dynamic project Auction (web service);
+- java project ClientAuction (client);
+- vaadin 6 project AuctionUIApp(user interface).
 
 The requirements:
  - Java: jdk1.8.0_20, jre1.8.0_40;
@@ -21,7 +21,7 @@ Create a database "auction” in PostgreSQL and execute SQL code Enterprise-appl
 You can also download the sample data from auction.backup.
 
 3. Build:
-ant -f common-build.xml
+ant -f common-build.xml. 
 As you add additional libraries is not necessary, as they are inside the projects.
 
 4. Deploy:
