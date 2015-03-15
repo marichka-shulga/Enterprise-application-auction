@@ -26,18 +26,21 @@ public interface FacadeService {
 
     /**
      * 
+     * @param arg1
      * @param arg0
      * @return
-     *     returns client.artefacts.BaseResponse
+     *     returns client.artefacts.UserAuthenticResponse
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "cancelLot", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.CancelLot")
-    @ResponseWrapper(localName = "cancelLotResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.CancelLotResponse")
-    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/cancelLotRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/cancelLotResponse")
-    public BaseResponse cancelLot(
+    @RequestWrapper(localName = "userAuthentication", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.UserAuthentication")
+    @ResponseWrapper(localName = "userAuthenticationResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.UserAuthenticationResponse")
+    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationResponse")
+    public UserAuthenticResponse userAuthentication(
         @WebParam(name = "arg0", targetNamespace = "")
-        Lot arg0);
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
 
     /**
      * 
@@ -47,12 +50,12 @@ public interface FacadeService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "addLot", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.AddLot")
-    @ResponseWrapper(localName = "addLotResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.AddLotResponse")
-    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotResponse")
-    public BaseResponse addLot(
+    @RequestWrapper(localName = "userRegistration", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.UserRegistration")
+    @ResponseWrapper(localName = "userRegistrationResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.UserRegistrationResponse")
+    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/userRegistrationRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/userRegistrationResponse")
+    public BaseResponse userRegistration(
         @WebParam(name = "arg0", targetNamespace = "")
-        Lot arg0);
+        User arg0);
 
     /**
      * 
@@ -74,12 +77,27 @@ public interface FacadeService {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "userRegistration", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.UserRegistration")
-    @ResponseWrapper(localName = "userRegistrationResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.UserRegistrationResponse")
-    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/userRegistrationRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/userRegistrationResponse")
-    public BaseResponse userRegistration(
+    @RequestWrapper(localName = "addLot", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.AddLot")
+    @ResponseWrapper(localName = "addLotResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.AddLotResponse")
+    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotResponse")
+    public BaseResponse addLot(
         @WebParam(name = "arg0", targetNamespace = "")
-        User arg0);
+        Lot arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns client.artefacts.BaseResponse
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "cancelLot", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.CancelLot")
+    @ResponseWrapper(localName = "cancelLotResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.CancelLotResponse")
+    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/cancelLotRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/cancelLotResponse")
+    public BaseResponse cancelLot(
+        @WebParam(name = "arg0", targetNamespace = "")
+        Lot arg0);
 
     /**
      * 
@@ -110,23 +128,5 @@ public interface FacadeService {
     public GetBidsByIdLotResponse getBids(
         @WebParam(name = "arg0", targetNamespace = "")
         Integer arg0);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns client.artefacts.UserAuthenticResponse
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "userAuthentication", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.UserAuthentication")
-    @ResponseWrapper(localName = "userAuthenticationResponse", targetNamespace = "http://auction.facadeservice/jaxws/auctionservice", className = "client.artefacts.UserAuthenticationResponse")
-    @Action(input = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationRequest", output = "http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationResponse")
-    public UserAuthenticResponse userAuthentication(
-        @WebParam(name = "arg0", targetNamespace = "")
-        String arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        String arg1);
 
 }

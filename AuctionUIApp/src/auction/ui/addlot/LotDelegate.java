@@ -97,9 +97,12 @@ public class LotDelegate {
 	}
 	
 	public String getStartPraceInString() {
-		StringBuilder result = new StringBuilder();
-		result.append(lot.getStartPrice()).append(" $");
-		this.startPraceInString = result.toString();
+		this.startPraceInString = "";
+		if( null != lot.getStartPrice() ){
+			StringBuilder result = new StringBuilder();
+			result.append(lot.getStartPrice()).append(" $");
+			this.startPraceInString = result.toString();
+		}
 		return this.startPraceInString;
 	}
 	

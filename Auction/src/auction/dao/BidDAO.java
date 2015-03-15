@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import auction.log.LogFactory;
 import auction.model.Bid;
 import auction.service.response.GetBidsByIdLotResponse;
 import auction.service.response.StateResult;
@@ -15,7 +15,7 @@ import auction.service.response.StateResult;
 
 public class BidDAO extends GenericDAO<Bid>  {
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(BidDAO.class);
+	private static final Logger LOGGRER = LogManager.getLogger(BidDAO.class);
 	
 	@Override
 	public Class<Bid> getPersistentClass() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="CompileWidgetset" default="generate-widgetset" basedir=".">
 
-	<property name="widgetset" value="auction.ui.widgetset.AuctionuiappWidgetset" />
+	<property name="widgetset" value="auction.ui.widgetset.AuctionUIAppWidgetset" />
 	<property name="web-content.dir" value="${basedir}/WebContent" />
 	<property name="runtime-lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
 	<property name="build-support-lib.dir" value="${basedir}/lib/build-support" />
@@ -9,7 +9,7 @@
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="client-side-destination" value="${web-content.dir}/VAADIN/widgetsets" />
 
-	<property name="widgetset-name" value="AuctionuiappWidgetset" />
+	<property name="widgetset-name" value="AuctionUIAppWidgetset" />
 	<property name="widgetset-package" value="auction.ui.widgetset" />	
 	<property name="widgetset-path" value="auction/ui/widgetset" />
 	

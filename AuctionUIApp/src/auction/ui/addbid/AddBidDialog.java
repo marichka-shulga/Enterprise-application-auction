@@ -1,9 +1,9 @@
 package auction.ui.addbid;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
-import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.Bid;
 import client.artefacts.StateResult;
@@ -45,7 +45,7 @@ public class AddBidDialog extends Window {
 	
 	private Bid bid;
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(AddBidDialog.class);
+	private static final Logger LOGGRER = LogManager.getLogger(AddBidDialog.class);
 	 
 	public AddBidDialog(Bid bid){
 		this.bid = bid;
@@ -98,7 +98,7 @@ public class AddBidDialog extends Window {
 					if( null != listener ){
 						listener.thisLotAdded(bid);
 					}
-					getParent().removeWindow(getThisWindow());
+					closeThisDialog();
 				} else if( response.getStateResult().equals(StateResult.NOT_SUCCESS) ){
 					getApplication().getMainWindow().showNotification("Less than the previous rate",
 											Notification.TYPE_WARNING_MESSAGE);
@@ -106,7 +106,7 @@ public class AddBidDialog extends Window {
 				} else{
 					getApplication().getMainWindow().showNotification(response.getErrorMessage(),
 							Notification.TYPE_ERROR_MESSAGE);
-					getParent().removeWindow(getThisWindow());
+					closeThisDialog();
 				}			
 	
 			} catch (InvalidValueException e) {
@@ -147,5 +147,9 @@ public class AddBidDialog extends Window {
 	
 	private void clearBidField(){
 		bid.setRate(null);
+	}
+	
+	private void closeThisDialog(){
+		getParent().removeWindow(getThisWindow());
 	}
 }

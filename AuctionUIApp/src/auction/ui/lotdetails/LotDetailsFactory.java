@@ -29,12 +29,20 @@ public class LotDetailsFactory extends DefaultFieldFactory {
         	PopupDateField dateField = (PopupDateField) field;
         	dateField.setDateFormat("dd.MM.yyyy hh:mm:ss a");
          	dateField.setReadOnly(true);
-        }else {
+        }else if( "startPraceInString".equals(propertyId) ){
+         	TextField lotField = (TextField) field;
+         	lotField.setCaption("Start prace");
+         	lotField.setReadOnly(true);
+         	lotField.setNullRepresentation("");
+     	}else {
          	TextField lotField = (TextField) field;
          	lotField.setReadOnly(true);
          	lotField.setNullRepresentation("");
          } 
-         return field;
+        StringBuilder caption = new StringBuilder();
+        caption.append(field.getCaption()).append(":");
+        field.setCaption(caption.toString());
+        return field;
      }
      
  	private PopupDateField getFinishDateField(Object propertyId) {

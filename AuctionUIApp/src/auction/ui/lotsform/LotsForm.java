@@ -204,7 +204,6 @@ public class LotsForm extends Form {
 	
 	
 	public void refreshTableValue(){
-		getLotsTable().setValue(getCurrentLotDelegate());
 		getLotsTable().refreshRowCache();
 	}
 

@@ -3,12 +3,13 @@ package auction.ui.registration;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import auction.ui.log.LogFactory;
+
 
 public class MD5 {
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(MD5.class);
+	private static final Logger LOGGRER = LogManager.getLogger(MD5.class);
 	
 	public static String encryptPassword(String password){
         String generatedPassword = null;

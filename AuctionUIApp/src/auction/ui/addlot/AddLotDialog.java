@@ -1,14 +1,11 @@
 package auction.ui.addlot;
 
-import java.util.Date;
-
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
-import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.Lot;
-import client.artefacts.LotState;
 import client.artefacts.StateResult;
 import client.realization.ClientAuction;
 
@@ -46,7 +43,7 @@ public class AddLotDialog extends Window {
 	
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(AddLotDialog.class);
+	private static final Logger LOGGRER = LogManager.getLogger(AddLotDialog.class);
 	
 	private AddLotListener listener;
 	
@@ -121,23 +118,22 @@ public class AddLotDialog extends Window {
 		public void buttonClick(ClickEvent event) {
 			try {
 				getFrom().commit();
-				Date curDate = new Date();
-				if( curDate.after(lot.getFinishDate().toGregorianCalendar().getTime()) ){
-					lot.setState(LotState.NOT_SOLD);
-				}
 				BaseResponse response = client.addLot(lot);
 				if( response.getStateResult().equals(StateResult.SUCCESS) ){
 					lot.setIdLot(response.getIdEntity());
 					if( null != listener ){
 						listener.thisLotAdded(new LotDelegate(lot));
 					}
+					closeThisDialog();
+				} else if( response.getStateResult().equals(StateResult.NOT_SUCCESS) ){
+					getApplication().getMainWindow().showNotification("Finish date is incorrect",
+											Notification.TYPE_WARNING_MESSAGE);
+					clearBidField();
 				} else{
 					getApplication().getMainWindow().showNotification(response.getErrorMessage(),
 							Notification.TYPE_ERROR_MESSAGE);
+					closeThisDialog();
 				}				
-				
-				getParent().removeWindow(getThisWindow());
-	
 			} catch (InvalidValueException e) {
 				 LOGGRER.info("An incorrect input data addCreateButtonListener={}, reason={}", e, e.getMessage());
 			}
@@ -191,5 +187,11 @@ public class AddLotDialog extends Window {
 		System.out.println("Set lot"+lot.getName());
 	}
 	
+	private void clearBidField(){
+		lot.setFinishDate(null);
+	}
 	
+	private void closeThisDialog(){
+		getParent().removeWindow(getThisWindow());
+	}
 }

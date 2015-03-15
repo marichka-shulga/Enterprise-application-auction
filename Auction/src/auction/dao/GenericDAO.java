@@ -5,13 +5,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import auction.log.LogFactory;
 
 public abstract class GenericDAO<T> {
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(GenericDAO.class);
+	private static final Logger LOGGRER = LogManager.getLogger(GenericDAO.class);
 
 	protected EntityManagerFactory entityManagerFactory = Resource.getEntityManagerFactory();
 

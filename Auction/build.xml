@@ -17,11 +17,11 @@
 	<property name="package-client" value="client.artefacts"/>
 	<property name="project.war" value="${war-lib.dir}/AuctionService.war"/>
 	
-	<property name="publisher.dir" value="${basedir}/publisher"/>	
+	<property name="publisher.dir" value="${build.dir}/publisher"/>	
 	<property name="publisher.jar" value="${publisher.dir}/AuctionWebServicePublisher.jar"/>	
 	<property name="main-class" value="auction.webServicePublisher.AuctionWebServicePublisher"/>
 
-	
+	<property name="lib-log.dir" value="${basedir}/lib/log4j"/>
 	
 	<fileset id="lib.path" dir="${lib.dir}">
 		<include name="*.jar"/>
@@ -74,7 +74,16 @@
                 <attribute name="Main-Class" value="${main-class}"/>
             </manifest>
         </jar>
-        <java jar="${publisher.jar}" fork="true"/>
+		
+		<java classname="${main-class}" fork="true" >
+		  <classpath>
+		      <fileset dir="${lib-log.dir}">
+		        <include name="*.jar"/>
+		      </fileset>
+		    <pathelement location="${publisher.jar}"/>
+		  </classpath>
+		</java>
+
 	</target>
 	
 

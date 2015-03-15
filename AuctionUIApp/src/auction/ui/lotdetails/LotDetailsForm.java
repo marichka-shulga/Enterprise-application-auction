@@ -1,6 +1,10 @@
 package auction.ui.lotdetails;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import auction.ui.ClientAuctionSinglton;
+import auction.ui.addlot.AddLotDialog;
 import auction.ui.addlot.LotDelegate;
 import auction.ui.lotsform.ClickedLotListenerForLotDetailsForm;
 import auction.ui.lotsform.LotsForm;
@@ -34,6 +38,8 @@ public class LotDetailsForm extends Form {
         "remainingTime","descriptions","startPraceInString"}; 
 	
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();	
+	
+	private static final Logger LOGGRER = LogManager.getLogger(AddLotDialog.class);
 	
 	private LotDelegate infLot;
 	private BeanItem<LotDelegate> lotItem;
@@ -120,7 +126,15 @@ public class LotDetailsForm extends Form {
 		getCancelTradesButton().addListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				BaseResponse response = client.cancelLot(lotsForm.getCurrentLotDelegate().getLot());
+				BaseResponse response = null;
+				try{
+					response = client.cancelLot(lotsForm.getCurrentLotDelegate().getLot());
+				} catch(Exception e){
+					LOGGRER.info("ERRRRRRRRROR", e, e.getMessage());
+					
+				}
+				
+				
 				if( response.getStateResult().equals(StateResult.SUCCESS) ){
 					(lotsForm.getCurrentLotDelegate()).setState(LotState.CANCELLED);
 					infLot = lotsForm.getCurrentLotDelegate();

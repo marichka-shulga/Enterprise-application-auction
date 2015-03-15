@@ -1,9 +1,9 @@
 package auction.ui.authentication;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
-import auction.ui.log.LogFactory;
 import auction.ui.registration.MD5;
 import auction.ui.registration.UserFieldFactory;
 import auction.ui.registration.UserFieldFactorySinglton;
@@ -39,7 +39,7 @@ public class UserAuthenticationDialog extends Panel {
 	
 	private static final UserFieldFactory userFieldFactory = UserFieldFactorySinglton.getUserFieldFactory();
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(UserAuthenticationDialog.class);
+	private static final Logger LOGGRER = LogManager.getLogger(UserAuthenticationDialog.class);
 	
 	private static final int COMMON_BUTTON_WIDTH = 80;
 	private static final int WINDOW_WIDTH = 250;
@@ -141,8 +141,6 @@ public class UserAuthenticationDialog extends Panel {
 			} catch (InvalidValueException e) {
 				 LOGGRER.info("An incorrect input data addLoginButtonListener={}, reason={}", e, e.getMessage());
 			}
-			
-			
 		}
 		});
 	}

@@ -2,6 +2,7 @@ package auction.businesslogic.quartz;
 
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
@@ -13,7 +14,6 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 
-import auction.log.LogFactory;
 
 public class QuartzManager {
 
@@ -23,7 +23,7 @@ public class QuartzManager {
 
 	private SchedulerFactory schedulerFactory;
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(QuartzManager.class);
+	private static final Logger LOGGRER = LogManager.getLogger(QuartzManager.class);
 	
 	public QuartzManager(){
 		try {

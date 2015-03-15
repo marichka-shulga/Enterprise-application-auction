@@ -1,10 +1,10 @@
 package auction.businesslogic.modelBL;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.dao.BidDAO;
 import auction.dao.LotDAO;
-import auction.log.LogFactory;
 import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.LotState;
@@ -15,7 +15,7 @@ public class BidLogic {
 	private BidDAO bidDAO;
 	private LotDAO lotDAO;
 
-	private static final Logger LOGGRER = LogFactory.getLogger(BidLogic.class);
+	private static final Logger LOGGRER = LogManager.getLogger(BidLogic.class);
 	
 	public BidLogic() {
 		bidDAO = new BidDAO();

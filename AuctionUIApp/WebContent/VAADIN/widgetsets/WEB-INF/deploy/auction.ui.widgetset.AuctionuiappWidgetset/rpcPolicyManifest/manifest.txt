@@ -1,2 +1,2 @@
-# Module auction.ui.widgetset.AuctionuiappWidgetset
+# Module auction.ui.widgetset.AuctionUIAppWidgetset
 # RPC service class, partial path of RPC policy file

@@ -2,19 +2,26 @@ package auction.webServicePublisher;
 
 import javax.xml.ws.Endpoint;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import auction.service.FacadeService;
 
 public class AuctionWebServicePublisher {
-
+	private static final Logger LOGGRER = LogManager.getLogger(AuctionServiceProperties.class);	
 	public static void main(String[] args) {
 		AuctionServiceProperties auctionServiceProperties = new AuctionServiceProperties();
+		String message = "";
 		try{
 			Endpoint.publish(auctionServiceProperties.getWsdlURL(), new FacadeService());
-			System.out.println("wsdl published");
+			message = "WSDL is published";
+			System.out.println(message);
+			LOGGRER.info(message);
 		} catch (Exception e){
-			System.out.println("wsdl alredy published");
+			message = "WSDL is not published because it already published";
+			System.out.println(message);
+			LOGGRER.info(message);
 		}
-		//System.exit(0);
 	}
 
 }

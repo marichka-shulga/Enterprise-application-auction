@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.SchedulerException;
 
@@ -12,7 +13,6 @@ import auction.businesslogic.quartz.QuartzManager;
 import auction.businesslogic.quartz.QuartzManagerSingleton;
 import auction.dao.BidDAO;
 import auction.dao.LotDAO;
-import auction.log.LogFactory;
 import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.LotState;
@@ -24,7 +24,7 @@ public class LotLogic {
 	private BidDAO bidDAO;
 	private static final QuartzManager manager = QuartzManagerSingleton.getQuartzManager();
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(LotLogic.class);
+	private static final Logger LOGGRER = LogManager.getLogger(LotLogic.class);
 	
 	public LotLogic(){		
 		lotDAO = new LotDAO();
@@ -33,11 +33,19 @@ public class LotLogic {
 	
 	public BaseResponse addLot(Lot lot){
 		BaseResponse res = new BaseResponse();
+		Date curDate = new Date();
+		String message = null;
 		try {
-			lotDAO.save(lot);
-			manager.addJob(String.valueOf(lot.getIdLot()),lot.getFinishDate(),FinishTradesJob.class);
-			res.setStateResult(StateResult.SUCCESS);
-			res.setIdEntity(lot.getIdLot());
+			if( curDate.after(lot.getFinishDate()) ){
+				res.setStateResult(StateResult.NOT_SUCCESS);
+				message = "The addition lot not successfully idLot={}, userLogin={}";
+			} else {
+				lotDAO.save(lot);
+				manager.addJob(String.valueOf(lot.getIdLot()),lot.getFinishDate(),FinishTradesJob.class);
+				res.setStateResult(StateResult.SUCCESS);
+				res.setIdEntity(lot.getIdLot());
+				message = "The addition lot not successfully idLot={}, userLogin={}";
+			}
 		} catch (Exception e) {
 			LOGGRER.error("Is not satisfied addLot={}, reason={}, idLot={}, userLogin={}", 
 					e, e.getMessage(), lot.getIdLot(), lot.getUser().getUserLogin());
@@ -45,9 +53,7 @@ public class LotLogic {
 			res.setErrorMessage(e.getMessage());
 		}
 		
-		LOGGRER.info("The addition lot successfully idLot={}, userLogin={}", 
-					lot.getIdLot(), lot.getUser().getUserLogin());
-
+		LOGGRER.info(message, lot.getIdLot(), lot.getUser().getUserLogin());
 		return res;
 	}
 	

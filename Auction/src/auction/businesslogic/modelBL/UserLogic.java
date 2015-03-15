@@ -2,10 +2,10 @@ package auction.businesslogic.modelBL;
 
 import javax.persistence.NoResultException;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.dao.UserDAO;
-import auction.log.LogFactory;
 import auction.model.User;
 import auction.service.response.BaseResponse;
 import auction.service.response.StateResult;
@@ -13,7 +13,7 @@ import auction.service.response.UserAuthenticResponse;
 
 public class UserLogic {
 	private UserDAO userDAO;
-	private static final Logger LOGGRER = LogFactory.getLogger(UserLogic.class);
+	private static final Logger LOGGRER = LogManager.getLogger(UserLogic.class);
 	
 	public UserLogic(){
 		userDAO = new UserDAO();

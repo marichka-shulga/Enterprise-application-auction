@@ -1,14 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<Configuration status="info" name="AuctionUIApp" packages="">
+    <properties>
+        <property name="pattern">%d %-5p [%t] %C{2} (%F:%L) - %m%n</property>
+    </properties>
 	<Appenders>
-		<File name="file" fileName=".\Logs\log4j-application.log" append="true">
-			<PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n" />
+		<File name="MyFile" fileName="Logs/UIApp.log" append="true" immediateFlush="true" >
+			<PatternLayout>
+				<Pattern>${pattern}</Pattern>
+			</PatternLayout>
 		</File>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${pattern}" />
+		</Console>
 	</Appenders>
 	<Loggers>
-		<Logger name="org.apache.log4j.xml" level="info" />
-		<Root level="info">
-			<AppenderRef ref="file" />
+		<Logger name="org.apache.log4j.xml" level="info"/>
+		<Root level="all">
+			<AppenderRef ref="MyFile" level="info"/>
+			<AppenderRef ref="Console" level="info"/>
 		</Root>
 	</Loggers>
 </Configuration>

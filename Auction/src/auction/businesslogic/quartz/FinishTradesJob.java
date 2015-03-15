@@ -1,17 +1,16 @@
 package auction.businesslogic.quartz;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import auction.businesslogic.modelBL.LotLogic;
-import auction.log.LogFactory;
-
 
 public class FinishTradesJob implements Job {
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(FinishTradesJob.class);
+	private static final Logger LOGGRER = LogManager.getLogger(FinishTradesJob.class);
 	
 	private static LotLogic lotLogic;
 	

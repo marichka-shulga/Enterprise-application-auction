@@ -4,9 +4,9 @@ import java.net.URL;
 
 import javax.xml.namespace.QName;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.log.LogFactory;
 import client.artefacts.AuctionService;
 import client.artefacts.BaseResponse;
 import client.artefacts.FacadeService;
@@ -20,7 +20,7 @@ import client.artefacts.StateResult;
 
 public class ClientAuction {
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(ClientAuction.class);	
+	private static final Logger LOGGRER = LogManager.getLogger(ClientAuction.class);	
 	
 	private String namespaceService;
 	private String serviceName;
