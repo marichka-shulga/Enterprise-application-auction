@@ -29,6 +29,5 @@ After building project Auction archived in
 Enterprise-application-auction/Auction/build/lib/AuctionService.war. 
 After building project AuctionUIApp archived in 
 Enterprise-application-auction/AuctionUIApp/build/lib/AuctionUI.war.
-ClientAuction archived in the jar file and goes to the project AuctionUIApp as a library.
-
+ClientAuction archived in the jar file and goes to the project AuctionUIApp as a library. 
 Archives AuctionUI.war and AuctionService.war need to put in the folder of your server apache-tomcat-8.0.20/webapps/ and run Apache Tomcat, it will automatically run the war archives.
