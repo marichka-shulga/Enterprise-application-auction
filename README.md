@@ -30,7 +30,7 @@ Enterprise-application-auction/Auction/build/lib/Auction.war.
 After building project AuctionUIApp archived in 
 Enterprise-application-auction/AuctionUIApp/build/lib/AuctionUIApp.war.
 ClientAuction archived in the jar file and goes to the project AuctionUIApp as a library. 
-Archives AuctionUI.war and AuctionService.war need to put in the folder of your server apache-tomcat-8.0.20/webapps/ and run Apache Tomcat, it will automatically run the war archives.
+Archives Auction.war and AuctionUIApp.war need to put in the folder of your server apache-tomcat-8.0.20/webapps/ and run Apache Tomcat, it will automatically run the war archives.
 For example:
  - if Auction start in localhost it has the next URL: http://localhost:8080/Auction/AuctionService
  - if AuctionUIApp start in localhost it has the next URL: http://localhost:8080/AuctionUIApp/AuctionUIApp
