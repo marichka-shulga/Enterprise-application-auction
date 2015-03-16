@@ -26,8 +26,11 @@ As you add additional libraries is not necessary, as they are inside the project
 
 4. Deploy:
 After building project Auction archived in 
-Enterprise-application-auction/Auction/build/lib/AuctionService.war. 
+Enterprise-application-auction/Auction/build/lib/Auction.war. 
 After building project AuctionUIApp archived in 
-Enterprise-application-auction/AuctionUIApp/build/lib/AuctionUI.war.
+Enterprise-application-auction/AuctionUIApp/build/lib/AuctionUIApp.war.
 ClientAuction archived in the jar file and goes to the project AuctionUIApp as a library. 
 Archives AuctionUI.war and AuctionService.war need to put in the folder of your server apache-tomcat-8.0.20/webapps/ and run Apache Tomcat, it will automatically run the war archives.
+For example:
+ - if Auction start in localhost it has the next URL: http://localhost:8080/Auction/AuctionService
+ - if AuctionUIApp start in localhost it has the next URL: http://localhost:8080/AuctionUIApp/AuctionUIApp

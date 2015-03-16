@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="AuctionUI" default="package" basedir=".">
-
+	
+	<!-- 1. clean (delete build.dir)  -->	
+	<!-- 2. package (compile classes, widgetset and archive to war file)  -->
+	
 	<property name="src.dir" value="${basedir}/src"/>
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="classes.dir" value="${basedir}/build/classes"/>
@@ -10,44 +13,70 @@
 	<property name="web-content.dir" value="${basedir}/WebContent"/>		
 	<property name="web-inf.dir" value="${basedir}/WebContent/WEB-INF/"/>	
 	
-	<property name="project.war" value="${war-lib.dir}/AuctionUI.war"/>
+	<property name="tmplib.dir" value="${basedir}/tmpLib"/>
+	
+	<property name="project.war" value="${war-lib.dir}/AuctionUIApp.war"/>
 
 	<fileset id="lib.path" dir="${lib.dir}">
-		<include name="/*.jar" />
+		<include name="**/*.jar" />
 	</fileset>
 
 	<fileset id="runtime-lib.path" dir="${runtime-lib.dir}">
-		<include name="/*.jar" />
+		<include name="**/*.jar" />
 	</fileset>
 
 	<path id="build.classpath">
 		<fileset refid="lib.path" />
 	</path>
-
+	
+	<!-- create directories -->
 	<target name="init" description="Make build directories">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${classes.dir}"/>
 		<mkdir dir="${war-lib.dir}"/>
+		<mkdir dir="${tmplib.dir}"/>
 	</target>
-
-	<target name="compile" depends="init" description="compile the source" >
+	
+	<!-- copy all the libraries into one folder (for war archive) -->	
+	<target name="createTmpLib" depends="init" description="Create tmp folder lib for creating war file">
+		<copy todir="${tmplib.dir}">
+			<fileset dir="${lib.dir}">
+				<include name="*" />
+				<type type="file" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${tmplib.dir}">
+			<fileset dir="${lib.dir}/log4j">
+				<include name="*" />
+				<type type="file" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<!-- compile classes -->
+	<target name="compile" depends="createTmpLib" description="compile the source" >
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="build.classpath" includeantruntime="false"/>
 	</target>
 	
+	<!-- compile widgetset -->	
 	<target name="compileWidgestset" depends="compile" description="compile the widgestset" >
 		<ant antfile="${basedir}/build-widgetset.xml" dir="${basedir}" />
 	</target>	
 
+	<!-- archive to war file -->
 	<target name="package" depends="compileWidgestset" description="Packaging all files into ${project.war}">
 		<war destfile="${project.war}" webxml="${web-inf.dir}/web.xml">
 			<classes dir="${classes.dir}" />
-			<lib dir="${lib.dir}" />
+			<lib dir="${tmplib.dir}" />
 			<fileset dir="${web-content.dir}">
 				<include name="**/*.*" />
 			</fileset>
 		</war>
+		<delete dir="${tmplib.dir}" />
 	</target>
-
+	
+	<!-- clean (delete build.dir) -->
 	<target name="clean" description="clean up">
 		<delete dir="${build.dir}" />
 	</target>

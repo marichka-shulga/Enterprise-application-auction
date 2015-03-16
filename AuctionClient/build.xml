@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<project name = "AuctionClient" default = "dist" basedir = ".">
+<project name = "AuctionClient" default = "createClientLib" basedir = ".">
 
-		<property name="src.dir" value="${basedir}/src"/>
-		<property name="build.dir" value="${basedir}/build"/>
-		<property name="class.dir" value="${basedir}/build/class"/>
-		<property name="lib.dir" value="${basedir}/lib"/>	
-		
-		<property name="dist.namejar"  value="../AuctionUIApp/lib/auction.jar"/>
+	<!-- 1. clean (delete build.dir)  -->
+	<!-- 2. createClientLib (archive jar file and put on UI)  -->
 
-		<path id="lib.path"> 
-			<fileset dir="${lib.dir}">
-		  		<include name="**/*.jar"/>
-			</fileset>
-		</path>
-		
-		<target name="init" description="Make build directories">
-		    <mkdir dir="${build.dir}"/>
-			<mkdir dir="${class.dir}"/>
-		</target>		
+	<property name="src.dir" value="${basedir}/src"/>
+	<property name="build.dir" value="${basedir}/build"/>
+	<property name="class.dir" value="${basedir}/build/class"/>
+	<property name="lib.dir" value="${basedir}/lib"/>
 
-		<target name="compile" depends="init" description="compile the source" >
-		    <javac srcdir="${src.dir}" destdir="${class.dir}" classpathref="lib.path" includeantruntime="false"/>
-		</target>
-		
-		<target name="dist" depends="compile" description="generate the distribution" >
-		    <jar jarfile="${dist.namejar}" basedir="${class.dir}"/>
-		</target>
-		
-		<target name="clean" description="clean up" >
-		    <delete dir="${build.dir}"/>
-		</target>
+	<property name="client.namejar"  value="../AuctionUIApp/lib/auction.jar"/>
+
+	<path id="lib.path">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- create directories -->
+	<target name="init" description="Make build directories">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${class.dir}"/>
+	</target>
+
+	<!-- compile classes -->
+	<target name="compile" depends="init" description="compile the source" >
+		<javac srcdir="${src.dir}" destdir="${class.dir}" classpathref="lib.path" includeantruntime="false"/>
+	</target>
+	
+	<!-- archive jar file -->
+	<target name="createClientLib" depends="compile" description="generate the distribution" >
+		<jar jarfile="${client.namejar}" basedir="${class.dir}"/>
+	</target>
+	
+	<!-- clean (delete build.dir) -->
+	<target name="clean" description="clean up" >
+		<delete dir="${build.dir}"/>
+	</target>
 </project>

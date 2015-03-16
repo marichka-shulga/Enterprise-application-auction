@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="CompileWidgetset" default="generate-widgetset" basedir=".">
-
+	
+	<!-- 1. generate-widgetset (update and compile widgetset)  -->
+	
 	<property name="widgetset" value="auction.ui.widgetset.AuctionUIAppWidgetset" />
 	<property name="web-content.dir" value="${basedir}/WebContent" />
 	<property name="runtime-lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
@@ -27,17 +29,19 @@
 		<fileset refid="build-support-lib.path" />
 		<fileset refid="runtime-lib.path" />
 	</path>
-
+	
+	
+	<!-- update and compile widgetset -->
 	<target name="generate-widgetset" description="Generates the widgetset">
 
 		<property name="widgetset-xml.file"	value="${src.dir}/${widgetset-path}/${widgetset-name}.gwt.xml" />
 		<property name="widgetset-js.file" value="${client-side-destination}/${widgetset}/${widgetset}.nocache.js" />
-
 		<uptodate property="widgetset-xml.uptodate" targetfile="${widgetset-xml.file}">
 			<srcfiles refid="runtime-lib.path" />
 		</uptodate>
 
 		<mkdir dir="${src.dir}/${widgetset-path}" />
+		
 		<java classname="com.vaadin.terminal.gwt.widgetsetutils.WidgetSetBuilder"
 			failonerror="yes" fork="yes" maxmemory="256m">
 			<arg value="${widgetset}" />
@@ -46,7 +50,6 @@
 			<classpath refid="vaadin-tools.path" />
 		</java>
 		<touch file="${widgetset-xml.file}" />
-
 
 		<uptodate property="widgetset-js.uptodate" targetfile="${widgetset-js.file}">
 			<srcfiles refid="runtime-lib.path" />

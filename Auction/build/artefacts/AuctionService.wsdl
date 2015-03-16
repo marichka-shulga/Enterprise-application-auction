@@ -24,6 +24,12 @@
   <message name="getAllLotsResponse">
     <part name="parameters" element="tns:getAllLotsResponse"/>
   </message>
+  <message name="addLot">
+    <part name="parameters" element="tns:addLot"/>
+  </message>
+  <message name="addLotResponse">
+    <part name="parameters" element="tns:addLotResponse"/>
+  </message>
   <message name="cancelLot">
     <part name="parameters" element="tns:cancelLot"/>
   </message>
@@ -42,12 +48,6 @@
   <message name="getBidsResponse">
     <part name="parameters" element="tns:getBidsResponse"/>
   </message>
-  <message name="addLot">
-    <part name="parameters" element="tns:addLot"/>
-  </message>
-  <message name="addLotResponse">
-    <part name="parameters" element="tns:addLotResponse"/>
-  </message>
   <portType name="FacadeService">
     <operation name="userAuthentication">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/userAuthenticationRequest" message="tns:userAuthentication"/>
@@ -61,6 +61,10 @@
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getAllLotsRequest" message="tns:getAllLots"/>
       <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getAllLotsResponse" message="tns:getAllLotsResponse"/>
     </operation>
+    <operation name="addLot">
+      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotRequest" message="tns:addLot"/>
+      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotResponse" message="tns:addLotResponse"/>
+    </operation>
     <operation name="cancelLot">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/cancelLotRequest" message="tns:cancelLot"/>
       <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/cancelLotResponse" message="tns:cancelLotResponse"/>
@@ -72,10 +76,6 @@
     <operation name="getBids">
       <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getBidsRequest" message="tns:getBids"/>
       <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/getBidsResponse" message="tns:getBidsResponse"/>
-    </operation>
-    <operation name="addLot">
-      <input wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotRequest" message="tns:addLot"/>
-      <output wsam:Action="http://auction.facadeservice/jaxws/auctionservice/FacadeService/addLotResponse" message="tns:addLotResponse"/>
     </operation>
   </portType>
   <binding name="AuctionServicePortBinding" type="tns:FacadeService">
@@ -107,6 +107,15 @@
         <soap:body use="literal"/>
       </output>
     </operation>
+    <operation name="addLot">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
     <operation name="cancelLot">
       <soap:operation soapAction=""/>
       <input>
@@ -126,15 +135,6 @@
       </output>
     </operation>
     <operation name="getBids">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="addLot">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

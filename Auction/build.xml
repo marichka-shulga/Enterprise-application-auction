@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name = "AuctionService" default = "package" basedir = ".">
-
+	
+	<!-- 1. clean (delete build.dir)  -->	
+	<!-- 2. package (compile and archive to war file)  -->
+	
+	<!-- if there have been changes  -->
+	<!-- 3. publishWSDL (wsgen and publish WSDL)  -->	
+	<!-- 4. wsimport (wsimport artefacts to client)  -->	
+	
+	
 	<property name="src.dir" value="${basedir}/src"/>
 	<property name="build.dir" value="${basedir}/build"/>
 	<property name="classes.dir" value="${basedir}/build/classes"/>
 	<property name="artefacts.dir" value="${basedir}/build/artefacts"/>
-	<property name="war-lib.dir" value="${basedir}/build/lib"/>	
+	<property name="war-lib.dir" value="${basedir}/build/lib"/>
 	<property name="lib.dir" value="${basedir}/lib"/>
-	<property name="web-content.dir" value="${basedir}/WebContent"/>		
-	<property name="web-inf.dir" value="${basedir}/WebContent/WEB-INF/"/>	
+	<property name="web-content.dir" value="${basedir}/WebContent"/>
+	<property name="web-inf.dir" value="${basedir}/WebContent/WEB-INF/"/>
 	<property name="runtime-lib.dir" value="${basedir}/WebContent/WEB-INF/lib"/>
 	<property name="dist-artefacts.dir"  value="../AuctionClient/src"/>
 
-	<property name="service-endpoint-impl" value="auction.service.FacadeService"/>	
+	<property name="tmplib.dir" value="${basedir}/tmpLib"/>
+
+	<property name="service-endpoint-impl" value="auction.service.FacadeService"/>
 	<property name="wsdl" value="http://localhost:8080/Auction/AuctionService?wsdl"/>
 	<property name="package-client" value="client.artefacts"/>
-	<property name="project.war" value="${war-lib.dir}/AuctionService.war"/>
-	
-	<property name="publisher.dir" value="${build.dir}/publisher"/>	
-	<property name="publisher.jar" value="${publisher.dir}/AuctionWebServicePublisher.jar"/>	
+	<property name="project.war" value="${war-lib.dir}/Auction.war"/>
+
+	<property name="publisher.dir" value="${build.dir}/publisher"/>
+	<property name="publisher.jar" value="${publisher.dir}/AuctionWebServicePublisher.jar"/>
 	<property name="main-class" value="auction.webServicePublisher.AuctionWebServicePublisher"/>
 
 	<property name="lib-log.dir" value="${basedir}/lib/log4j"/>
-	
+
 	<fileset id="lib.path" dir="${lib.dir}">
-		<include name="*.jar"/>
+		<include name="**/*.jar"/>
 	</fileset>
 
 	<fileset id="runtime-lib.path" dir="${runtime-lib.dir}">
-		<include name="*.jar"/>
+		<include name="**/*.jar"/>
 	</fileset>
 
 	<path id="build.classpath">
@@ -38,21 +48,69 @@
 
 	<path id="jaxws.classpath">
 		<fileset refid="runtime-lib.path"/>
-	</path>	
-
+	</path>
+	
+	<!-- create directories -->
 	<target name="init" description="Make build directories">
 		<mkdir dir="${build.dir}"/>
 		<mkdir dir="${classes.dir}"/>
 		<mkdir dir="${artefacts.dir}"/>
 		<mkdir dir="${war-lib.dir}"/>
 		<mkdir dir="${publisher.dir}"/>
+		<mkdir dir="${tmplib.dir}"/>
 	</target>
 
-	<target name="compile" depends="init" description="compile the source" >
+	<!-- copy all the libraries into one folder (for war archive) -->
+	<target name="createTmpLib" depends="init" description="Create tmp folder lib for creating war file">
+		<copy todir="${tmplib.dir}">
+			<fileset dir="${lib.dir}">
+				<include name="*" />
+				<type type="file" />
+			</fileset>
+		</copy>
+
+		<copy todir="${tmplib.dir}">
+			<fileset dir="${lib.dir}/quartz">
+				<include name="*" />
+				<type type="file" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${tmplib.dir}">
+			<fileset dir="${lib.dir}/log4j">
+				<include name="*" />
+				<type type="file" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${tmplib.dir}">
+			<fileset dir="${lib.dir}/eclipselink">
+				<include name="*" />
+				<type type="file" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<!-- compile classes -->
+	<target name="compile" depends="createTmpLib" description="compile the source">
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="build.classpath" includeantruntime="false"/>
 	</target>
-	
-	<target name="wsgen" depends="compile">
+
+	<!-- archive to war file -->
+	<target name="package" depends="compile" description="Packaging all files into ${project.war}">
+		<war destfile="${project.war}" webxml="${web-inf.dir}/web.xml">
+			<classes dir="${classes.dir}" />
+			<lib dir="${tmplib.dir}" />
+			<fileset dir="${web-content.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war>
+		<delete dir="${tmplib.dir}" />
+	</target>
+
+	<!-- wsgen and publish wsdl -->
+	<target name="wsgen">
 		<taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
 			<classpath refid="jaxws.classpath"/>
 		</taskdef>
@@ -66,7 +124,6 @@
         		genwsdl="true" >
 		</wsgen>
 	</target>
-	
 	
 	<target name="publishWSDL" depends="wsgen">
         <jar destfile="${publisher.jar}" basedir="${classes.dir}">
@@ -85,9 +142,9 @@
 		</java>
 
 	</target>
-	
 
-	<target name="wsimport" depends="publishWSDL">
+	<!-- wsimport artefacts to client -->
+	<target name="wsimport">
 		<taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
 			<classpath refid="jaxws.classpath"/>
 		</taskdef>
@@ -99,17 +156,8 @@
 				verbose="true">
 		</wsimport>
 	</target>
-
-	<target name="package" depends="wsimport" description="Packaging all files into ${project.war}">
-		<war destfile="${project.war}" webxml="${web-inf.dir}/web.xml">
-			<classes dir="${classes.dir}" />
-			<lib dir="${lib.dir}" />
-			<fileset dir="${web-content.dir}">
-				<include name="**/*.*" />
-			</fileset>
-		</war>
-	</target>
-
+	
+	<!-- clean (delete build.dir) -->
 	<target name="clean" description="clean up">
 		<delete dir="${build.dir}" />
 	</target>
