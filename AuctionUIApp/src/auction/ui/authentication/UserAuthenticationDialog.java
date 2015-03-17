@@ -4,10 +4,10 @@ import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
 import auction.ui.log.LogFactory;
-import auction.ui.registration.MD5;
 import auction.ui.registration.UserFieldFactory;
 import auction.ui.registration.UserFieldFactorySinglton;
 import auction.ui.registration.UserRegistrationDialog;
+import auction.ui.supportingCapabilities.MD5;
 import client.artefacts.StateResult;
 import client.artefacts.User;
 import client.artefacts.UserAuthenticResponse;

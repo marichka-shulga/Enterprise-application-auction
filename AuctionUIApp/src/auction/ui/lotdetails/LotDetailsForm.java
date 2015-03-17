@@ -1,7 +1,7 @@
 package auction.ui.lotdetails;
 
 import auction.ui.ClientAuctionSinglton;
-import auction.ui.addlot.LotDelegate;
+import auction.ui.domainDelegate.LotDelegate;
 import auction.ui.lotsform.ClickedLotListenerForLotDetailsForm;
 import auction.ui.lotsform.LotsForm;
 import client.artefacts.BaseResponse;

@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import auction.ui.addbid.AddBidDialog;
 import auction.ui.addbid.AddBidListener;
+import auction.ui.domainDelegate.BidDelegate;
 import auction.ui.log.LogFactory;
 import auction.ui.lotsform.ClickedLotListenerForBidsForm;
 import auction.ui.lotsform.LotsForm;

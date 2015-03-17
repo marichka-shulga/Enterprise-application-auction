@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import auction.ui.ClientAuctionSinglton;
 import auction.ui.authentication.UserIdentifiedListener;
 import auction.ui.log.LogFactory;
+import auction.ui.supportingCapabilities.MD5;
 import client.artefacts.BaseResponse;
 import client.artefacts.StateResult;
 import client.artefacts.User;

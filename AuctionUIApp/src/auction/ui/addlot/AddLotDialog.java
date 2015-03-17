@@ -3,6 +3,7 @@ package auction.ui.addlot;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
+import auction.ui.domainDelegate.LotDelegate;
 import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.Lot;
