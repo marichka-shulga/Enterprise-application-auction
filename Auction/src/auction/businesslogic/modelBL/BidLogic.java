@@ -17,6 +17,10 @@ public class BidLogic {
 
 	private static final Logger LOGGRER = LogManager.getLogger(BidLogic.class);
 	
+	private static final String RATE_LOWER_PREVIOUS = "Rate should be higher than the previous";
+	private static final String RATE_LOWER_START_PRICE = "Rate can not be lower than the start price";	
+	private static final String FINISH_TRADES = "Trades have already finished";
+	
 	public BidLogic() {
 		bidDAO = new BidDAO();
 		lotDAO = new LotDAO();
@@ -37,9 +41,15 @@ public class BidLogic {
 						res.setStateResult(StateResult.SUCCESS);
 						res.setIdEntity(bid.getIdBid());
 						message = "The addition bid successfully idLot={}, userLogin={}";
-					}
-				}
-			}
+					} else 
+						res.setErrorMessage(RATE_LOWER_PREVIOUS);
+						
+				} else
+					res.setErrorMessage(RATE_LOWER_START_PRICE);
+				
+			} else 
+				res.setErrorMessage(FINISH_TRADES);
+			
 			if( null == res.getStateResult() ){
 				res.setStateResult(StateResult.NOT_SUCCESS);
 				message = "The addition bid not successfully idLot={}, userLogin={}";

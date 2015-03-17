@@ -100,7 +100,7 @@ public class AddBidDialog extends Window {
 					}
 					closeThisDialog();
 				} else if( response.getStateResult().equals(StateResult.NOT_SUCCESS) ){
-					getApplication().getMainWindow().showNotification("Less than the previous rate",
+					getApplication().getMainWindow().showNotification(response.getErrorMessage(),
 											Notification.TYPE_WARNING_MESSAGE);
 					clearBidField();
 				} else{
