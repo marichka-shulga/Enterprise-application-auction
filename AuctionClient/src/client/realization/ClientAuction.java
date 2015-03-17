@@ -4,7 +4,6 @@ import java.net.URL;
 
 import javax.xml.namespace.QName;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import client.artefacts.AuctionService;
@@ -17,10 +16,11 @@ import client.artefacts.Lot;
 import client.artefacts.Bid;
 import client.artefacts.UserAuthenticResponse;
 import client.artefacts.StateResult;
+import client.log.LogFactory;
 
 public class ClientAuction {
 	
-	private static final Logger LOGGRER = LogManager.getLogger(ClientAuction.class);	
+	private static final Logger LOGGRER = LogFactory.getLogger(ClientAuction.class);	
 	
 	private String namespaceService;
 	private String serviceName;

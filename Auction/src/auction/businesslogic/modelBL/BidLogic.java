@@ -1,10 +1,10 @@
 package auction.businesslogic.modelBL;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.dao.BidDAO;
 import auction.dao.LotDAO;
+import auction.log.LogFactory;
 import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.LotState;
@@ -15,7 +15,7 @@ public class BidLogic {
 	private BidDAO bidDAO;
 	private LotDAO lotDAO;
 
-	private static final Logger LOGGRER = LogManager.getLogger(BidLogic.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(BidLogic.class);
 	
 	private static final String RATE_LOWER_PREVIOUS = "Rate should be higher than the previous";
 	private static final String RATE_LOWER_START_PRICE = "Rate can not be lower than the start price";	

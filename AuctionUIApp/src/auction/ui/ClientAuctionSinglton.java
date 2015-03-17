@@ -1,16 +1,16 @@
 package auction.ui;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.loadproperties.AuctionServiceProperties;
+import auction.ui.log.LogFactory;
 import client.realization.ClientAuction;
 
 public class ClientAuctionSinglton {
 		
 		   public static class SingletonHolder {
 			   
-			   private static final Logger LOGGRER = LogManager.getLogger(ClientAuctionSinglton.class);
+			   private static final Logger LOGGRER = LogFactory.getLogger(ClientAuctionSinglton.class);
 
 			   private static ClientAuction getClientAuction(){
 				   ClientAuction client = null;

@@ -32,7 +32,6 @@ public class UserFieldFactory extends DefaultFieldFactory {
          if ("userLogin".equals(propertyId)) {
             TextField loginField = (TextField) field;
             loginField.setCaption("Login");
-           // loginField.setInputPrompt("UserLogin");
 			loginField.setRequired(true);
 			loginField.setRequiredError("Please enter a Login");
 			loginField.setNullRepresentation("");

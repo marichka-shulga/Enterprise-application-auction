@@ -10,11 +10,11 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.addbid.AddBidDialog;
 import auction.ui.addbid.AddBidListener;
+import auction.ui.log.LogFactory;
 import auction.ui.lotsform.ClickedLotListenerForBidsForm;
 import auction.ui.lotsform.LotsForm;
 import client.artefacts.Bid;
@@ -46,7 +46,7 @@ public class BidsForm extends Form {
 	
 	private BeanItemContainer<BidDelegate> beans = new BeanItemContainer<BidDelegate>(BidDelegate.class);
 	
-	private static final Logger LOGGRER = LogManager.getLogger(BidsForm.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(BidsForm.class);
 	
 	public BidsForm(LotsForm lotsForm){
 		this.lotsForm = lotsForm;

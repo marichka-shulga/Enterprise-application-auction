@@ -33,12 +33,9 @@ public class LotFieldFactory extends DefaultFieldFactory {
  			nameField.setRequired(true);
  			nameField.setRequiredError("Please enter a Lot name");
  			nameField.setNullRepresentation("");
-//             tf.addValidator(new StringLengthValidator(
-//                     "First Name must be 3-25 characters", 3, 25, false));
          } else if ("finishDate".equals(propertyId)) {
         	 
         	PopupDateField finishDateField = (PopupDateField) field;
-        	//finishDateField.setValue("");
         	finishDateField.setDateFormat("dd.MM.yyyy hh:mm:ss a");
         	finishDateField.setRequired(true);
         	finishDateField.setRequiredError("Please enter a Finish date");

@@ -1,10 +1,10 @@
 package auction.ui.registration;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
 import auction.ui.authentication.UserIdentifiedListener;
+import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.StateResult;
 import client.artefacts.User;
@@ -37,7 +37,7 @@ public class UserRegistrationDialog extends Window {
 
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
 	
-	private static final Logger LOGGRER = LogManager.getLogger(UserRegistrationDialog.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(UserRegistrationDialog.class);
 	
 	private static UserFieldFactory userFieldFactory = UserFieldFactorySinglton.getUserFieldFactory();
 	

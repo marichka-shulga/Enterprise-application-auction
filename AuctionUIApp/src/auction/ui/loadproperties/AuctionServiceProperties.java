@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import org.apache.logging.log4j.Logger;
 
-import client.log.LogFactory;
+import auction.ui.log.LogFactory;
 
 public class AuctionServiceProperties {
 

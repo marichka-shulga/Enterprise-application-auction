@@ -6,10 +6,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.businesslogic.modelBL.UserLogic;
+import auction.log.LogFactory;
 import auction.model.Lot;
 import auction.model.LotState;
 import auction.service.response.GetLotsResponse;
@@ -17,7 +17,7 @@ import auction.service.response.StateResult;
 
 public class LotDAO extends GenericDAO<Lot>{
 	
-	private static final Logger LOGGRER = LogManager.getLogger(UserLogic.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(UserLogic.class);
 	
 	@Override
 	public Class<Lot> getPersistentClass() {

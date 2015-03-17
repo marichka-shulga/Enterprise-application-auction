@@ -2,13 +2,13 @@ package auction.webServicePublisher;
 
 import javax.xml.ws.Endpoint;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import auction.log.LogFactory;
 import auction.service.FacadeService;
 
 public class AuctionWebServicePublisher {
-	private static final Logger LOGGRER = LogManager.getLogger(AuctionServiceProperties.class);	
+	private static final Logger LOGGRER = LogFactory.getLogger(AuctionServiceProperties.class);	
 	public static void main(String[] args) {
 		AuctionServiceProperties auctionServiceProperties = new AuctionServiceProperties();
 		String message = "";

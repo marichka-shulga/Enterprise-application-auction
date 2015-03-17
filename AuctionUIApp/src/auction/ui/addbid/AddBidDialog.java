@@ -1,9 +1,9 @@
 package auction.ui.addbid;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
+import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.Bid;
 import client.artefacts.StateResult;
@@ -45,7 +45,7 @@ public class AddBidDialog extends Window {
 	
 	private Bid bid;
 	
-	private static final Logger LOGGRER = LogManager.getLogger(AddBidDialog.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(AddBidDialog.class);
 	 
 	public AddBidDialog(Bid bid){
 		this.bid = bid;

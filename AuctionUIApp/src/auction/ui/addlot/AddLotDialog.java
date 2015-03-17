@@ -1,9 +1,9 @@
 package auction.ui.addlot;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.ui.ClientAuctionSinglton;
+import auction.ui.log.LogFactory;
 import client.artefacts.BaseResponse;
 import client.artefacts.Lot;
 import client.artefacts.StateResult;
@@ -43,7 +43,7 @@ public class AddLotDialog extends Window {
 	
 	private static ClientAuction client = ClientAuctionSinglton.getClientAuction();
 	
-	private static final Logger LOGGRER = LogManager.getLogger(AddLotDialog.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(AddLotDialog.class);
 	
 	private AddLotListener listener;
 	

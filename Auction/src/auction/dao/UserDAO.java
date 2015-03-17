@@ -4,15 +4,15 @@ package auction.dao;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import auction.businesslogic.modelBL.UserLogic;
+import auction.log.LogFactory;
 import auction.model.User;
 
 public class UserDAO extends GenericDAO<User> {
 	
-	private static final Logger LOGGRER = LogManager.getLogger(UserLogic.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(UserLogic.class);
 	
 	@Override
 	public Class<User> getPersistentClass() {

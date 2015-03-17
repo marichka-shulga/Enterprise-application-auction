@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.SchedulerException;
 
@@ -13,6 +12,7 @@ import auction.businesslogic.quartz.QuartzManager;
 import auction.businesslogic.quartz.QuartzManagerSingleton;
 import auction.dao.BidDAO;
 import auction.dao.LotDAO;
+import auction.log.LogFactory;
 import auction.model.Bid;
 import auction.model.Lot;
 import auction.model.LotState;
@@ -24,7 +24,7 @@ public class LotLogic {
 	private BidDAO bidDAO;
 	private static final QuartzManager manager = QuartzManagerSingleton.getQuartzManager();
 	
-	private static final Logger LOGGRER = LogManager.getLogger(LotLogic.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(LotLogic.class);
 	
 	public LotLogic(){		
 		lotDAO = new LotDAO();
