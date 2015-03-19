@@ -44,7 +44,7 @@ public class UserLogic {
 		BaseResponse res = new BaseResponse();
 		res.setStateResult(StateResult.NOT_SUCCESS);
 		try {
-			if( !(userDAO.isUserLogginExist(user.getUserLogin())) ){
+			if( !(userDAO.isUserLoginExist(user.getUserLogin())) ){
 				userDAO.save(user);
 				res.setStateResult(StateResult.SUCCESS);
 				res.setIdEntity(user.getIdUser());

@@ -8,7 +8,6 @@ import javax.persistence.Query;
 
 import org.apache.logging.log4j.Logger;
 
-import auction.businesslogic.modelBL.UserLogic;
 import auction.log.LogFactory;
 import auction.model.Lot;
 import auction.model.LotState;
@@ -17,7 +16,7 @@ import auction.service.response.StateResult;
 
 public class LotDAO extends GenericDAO<Lot>{
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(UserLogic.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(LotDAO.class);
 	
 	@Override
 	public Class<Lot> getPersistentClass() {
@@ -49,7 +48,9 @@ public class LotDAO extends GenericDAO<Lot>{
 			res.setStateResult(StateResult.ERROR);
 			res.setErrorMessage(e.getMessage());			
 		} finally {
-			entityManager.close();
+			if ( (null != entityManager) && (entityManager.isOpen()) ) {
+				entityManager.close();
+			}
 		}
 		return res;
 	}	

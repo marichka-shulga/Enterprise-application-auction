@@ -36,7 +36,9 @@ public class BidDAO extends GenericDAO<Bid>  {
 			//to do nothing
 		}
 		finally {
+			if ( (null != entityManager) && (entityManager.isOpen()) ) {
 				entityManager.close();
+			}
 		}
 		
 		return maxRate;	
@@ -57,7 +59,9 @@ public class BidDAO extends GenericDAO<Bid>  {
 						idLot, e.getMessage());				
 
 			} finally {
-				entityManager.close();
+				if ( (null != entityManager) && (entityManager.isOpen()) ) {
+					entityManager.close();
+				}
 			}
 		}
 		
@@ -83,7 +87,9 @@ public class BidDAO extends GenericDAO<Bid>  {
 			response.setStateResult(StateResult.ERROR);
 			response.setErrorMessage(e.getMessage());	
 		} finally {
-			entityManager.close();
+			if ( (null != entityManager) && (entityManager.isOpen()) ) {
+				entityManager.close();
+			}
 		}
 		
 		return response;
@@ -99,7 +105,9 @@ public class BidDAO extends GenericDAO<Bid>  {
 		} catch(Exception e){
 			LOGGRER.info("Is not satisfied: getCountBidsForLot{} reason={}, idLot{}", e, e.getMessage(), idLot);
 		} finally {
-			entityManager.close();
+			if ( (null != entityManager) && (entityManager.isOpen()) ) {
+				entityManager.close();
+			}
 		}
 		
 		return res;	

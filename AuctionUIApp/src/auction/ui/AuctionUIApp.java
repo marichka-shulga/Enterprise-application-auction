@@ -44,7 +44,6 @@ public class AuctionUIApp extends Application {
 	private void openUserAuhtenticationPanel(){
 		getUserDialogLayout().removeAllComponents();
 		getMainWindow().setContent(getUserDialogLayout());
-
 		
 		UserAuthenticationDialog userdialog = new UserAuthenticationDialog();
 		getUserDialogLayout().addComponent(userdialog);
@@ -126,7 +125,7 @@ public class AuctionUIApp extends Application {
 	
 	public LotsForm getLotsForm() {
 		if (lotsForm == null) {
-			lotsForm = new LotsForm(getUser());
+			lotsForm = new LotsForm();
 		}
 		return lotsForm;
 	}

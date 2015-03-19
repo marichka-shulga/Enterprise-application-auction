@@ -55,6 +55,7 @@ public class ClientAuction {
 		}
 		return port;
 	}
+	
 	public BaseResponse userRegistration(User user){
 		BaseResponse response = null;
 		try {

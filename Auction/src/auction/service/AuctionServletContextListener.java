@@ -10,8 +10,6 @@ import auction.dao.Resource;
 
 public class AuctionServletContextListener implements ServletContextListener {
 
-	private LotLogic lotLogic;
-	
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		QuartzManagerSingleton.getQuartzManager().shutdown();
@@ -20,8 +18,7 @@ public class AuctionServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		lotLogic = new LotLogic();
-		lotLogic.firstAssignJobToLot();		
+		new LotLogic().firstAssignJobToLot();		
 	}
 
 }

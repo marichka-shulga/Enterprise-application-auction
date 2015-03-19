@@ -6,13 +6,12 @@ import javax.persistence.Query;
 
 import org.apache.logging.log4j.Logger;
 
-import auction.businesslogic.modelBL.UserLogic;
 import auction.log.LogFactory;
 import auction.model.User;
 
 public class UserDAO extends GenericDAO<User> {
 	
-	private static final Logger LOGGRER = LogFactory.getLogger(UserLogic.class);
+	private static final Logger LOGGRER = LogFactory.getLogger(UserDAO.class);
 	
 	@Override
 	public Class<User> getPersistentClass() {
@@ -32,12 +31,14 @@ public class UserDAO extends GenericDAO<User> {
 		    throw e;
 		}
 		finally {
+			if ( (null != entityManager) && (entityManager.isOpen()) ) {
 				entityManager.close();
+			}
 		}
 		return user;
 	}
 	
-	public boolean isUserLogginExist(String login){
+	public boolean isUserLoginExist(String login){
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		boolean res = true;
 		try {
@@ -47,7 +48,9 @@ public class UserDAO extends GenericDAO<User> {
 			if( query.getResultList().isEmpty() )
 				res = false;
 		} finally {
-			entityManager.close();
+			if ( (null != entityManager) && (entityManager.isOpen()) ) {
+				entityManager.close();
+			}
 		}
 		return res;
 	}

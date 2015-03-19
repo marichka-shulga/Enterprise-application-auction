@@ -8,7 +8,7 @@ import auction.log.LogFactory;
 import auction.service.FacadeService;
 
 public class AuctionWebServicePublisher {
-	private static final Logger LOGGRER = LogFactory.getLogger(AuctionServiceProperties.class);	
+	private static final Logger LOGGRER = LogFactory.getLogger(AuctionWebServicePublisher.class);	
 	public static void main(String[] args) {
 		AuctionServiceProperties auctionServiceProperties = new AuctionServiceProperties();
 		String message = "";
@@ -18,7 +18,7 @@ public class AuctionWebServicePublisher {
 			System.out.println(message);
 			LOGGRER.info(message);
 		} catch (Exception e){
-			message = "WSDL is not published because it already published";
+			message = "WSDL is not published because it is already done";
 			System.out.println(message);
 			LOGGRER.info(message);
 		}

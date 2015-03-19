@@ -53,7 +53,6 @@ public class UserRegistrationDialog extends Window {
 	}	
 	
 	public void attach() {
-		
 		this.setCaption("Registration");
 		this.center();
 		this.setResizable(false);

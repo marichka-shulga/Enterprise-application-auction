@@ -62,8 +62,7 @@ public class LotsForm extends Form {
 	
 	private HorizontalLayout footer;
 	
-	public LotsForm(User user){
-		this.user = user;
+	public LotsForm(){
 		getAllLots();
 		getLotsTable();
 		
@@ -246,7 +245,7 @@ public class LotsForm extends Form {
 					sortBean(listLots);
 					
 					getLotsTable().setValue(lotDelegate);
-						lots.put((LotDelegate)getLotsTable().getValue(), new ArrayList<BidDelegate>());
+					lots.put((LotDelegate)getLotsTable().getValue(), new ArrayList<BidDelegate>());
 					updateForms();
 					
 				}

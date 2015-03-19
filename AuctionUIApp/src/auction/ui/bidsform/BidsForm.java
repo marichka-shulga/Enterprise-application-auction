@@ -189,7 +189,6 @@ public class BidsForm extends Form {
 			AddBidDialog addBidDialog = new AddBidDialog(bid);
 			getApplication().getMainWindow().addWindow(addBidDialog);
 			addBidDialog.setAddBidListener(new AddBidListener(){
-
 				@Override
 				public void thisLotAdded(Bid bid) {
 					BidDelegate bidDelegate = new BidDelegate(bid);

@@ -30,7 +30,7 @@ public class QuartzManager {
 		try {
 			schedulerFactory = new org.quartz.impl.StdSchedulerFactory();
 		} catch (Exception e) {
-			LOGGRER.error("Is not satisfied intitQuartzManager={}, reason={}", e, e.getMessage());
+			LOGGRER.error("Is not satisfied QuartzManager={}, reason={}", e, e.getMessage());
 		}		
 		
 	}
@@ -46,7 +46,9 @@ public class QuartzManager {
 	
 
 	public void addJob(final String triggerId, final Date date, final Class<? extends Job> jobClass) throws SchedulerException {
+		
 		Scheduler scheduler = schedulerFactory.getScheduler();
+		
 		if ( !scheduler.isStarted() ) {
 			scheduler.start();
 		}
@@ -67,7 +69,6 @@ public class QuartzManager {
 	}
 
 	public void removeTrigger(String triggerId) throws SchedulerException {
-		SchedulerFactory schedulerFactory = new org.quartz.impl.StdSchedulerFactory();
 		Scheduler scheduler = schedulerFactory.getScheduler();
 		scheduler.unscheduleJob(new TriggerKey(triggerId, JOB_GROUP));
 		scheduler.getContext().remove(new TriggerKey(triggerId, JOB_GROUP));

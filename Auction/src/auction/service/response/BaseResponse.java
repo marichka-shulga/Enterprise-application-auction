@@ -11,8 +11,7 @@ public class BaseResponse {
 	public StateResult getStateResult(){
 		return this.stateResult;
 	}
-	
-	
+		
 	public void setErrorMessage(String errorMessage){
 		this.errorMessage = errorMessage;
 	}

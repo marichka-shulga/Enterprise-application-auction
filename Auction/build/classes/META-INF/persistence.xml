@@ -6,7 +6,6 @@
 		<class>auction.model.Lot</class>
 		<class>auction.model.User</class>
         <properties>
- 
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
 			<property name="eclipselink.jdbc.native-sql" value="false"/>
 			<property name="eclipselink.jdbc.cache-statements" value="false"/>
